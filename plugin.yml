@@ -1,0 +1,9 @@
+main: me.gt3ch1.betterlife.Main.Main
+name: BetterLife
+version: 0.1
+api-level: 1.13
+commands:
+    toggledownfall:
+        description: Toggles the rain
+        usage: |
+                /toggledownfall

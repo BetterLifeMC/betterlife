@@ -1,35 +1,46 @@
 package me.gt3ch1.betterlife.commands;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 
 import me.gt3ch1.betterlife.Main.Main;
 
-public abstract class CommandTemplate {
+public class CommandTemplate {
 	public ArrayList<String> commandStrings = new ArrayList<>();
 	public static Main m = Main.getPlugin(Main.class);
-	static String customTrailsBanner = ChatColor.GREEN + "[[" + ChatColor.BLUE + "CustomTrails" + ChatColor.GREEN
-			+ "]] " + ChatColor.RESET;
-	public CommandTemplate() {
-		
+	public static String betterLifeBanner = ChatColor.RED + "[[" + ChatColor.BLUE + "BetterLife" + ChatColor.RED + "]] "
+			+ ChatColor.RESET;
+
+	private Main plugin;
+
+	public CommandTemplate(Main m) {
+		this.plugin = m;
+		for (Commands cmd : Commands.values()) {
+			try {
+				plugin.getCommand(cmd.toString().toLowerCase())
+					.setExecutor((CommandExecutor) Class.forName("me.gt3ch1.betterlife.commands." 
+						+ cmd.getCommand().toLowerCase() + "."
+						+ cmd.getCommand().toUpperCase())
+						.getConstructor(String.class).newInstance(cmd.getCommand().toLowerCase()));
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 
-	public static boolean doCommand(CommandSender sender, Command cmd, String CommandLabel, String[] args) {
-		// Overly complicated way of having a larger plugin.
-//		Trail.voidDoCommand(sender, cmd, CommandLabel, args);
-		return true;
-	}
-	
-	public static void sendMessageToPlayer(Player p, String message1, ChatColor message1Color, boolean banner) {
-		p.sendMessage(((banner) ? customTrailsBanner : "").toString() + message1Color + message1);
-	}
-	public static void sendMessageToPlayer(Player p, String message1, String message2, ChatColor message1Color, ChatColor message2Color, boolean banner) {
-		p.sendMessage(((banner) ? customTrailsBanner : "").toString() + message1Color + message1 + ChatColor.RESET + " | " + message2Color + message2);
+	public static void sendMessageToPlayer(Player p, String message1, ChatColor message1Color) {
+		p.sendMessage(betterLifeBanner + message1Color + message1);
 	}
 
+	public static void sendMessageToPlayer(Player p, String message1, String message2, ChatColor message1Color,
+			ChatColor message2Color, boolean banner) {
+		p.sendMessage(betterLifeBanner + message1Color + message1 + ChatColor.RESET + " | " + message2Color + message2);
+	}
 
 }

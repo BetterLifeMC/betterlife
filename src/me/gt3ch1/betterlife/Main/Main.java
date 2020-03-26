@@ -6,18 +6,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.gt3ch1.betterlife.commands.CommandTemplate;
 
-public class Main extends JavaPlugin{
+public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
-		
+		new CommandTemplate(this);
 	}
+
 	@Override
 	public void onDisable() {
-		
+
 	}
-	@Override
-	public boolean onCommand(CommandSender cs, Command c, String command, String[] args) {
-		CommandTemplate.doCommand(cs, c, command, args);
-		return true;
-	}
+
 }
