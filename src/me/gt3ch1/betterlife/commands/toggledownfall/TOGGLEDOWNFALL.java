@@ -12,9 +12,11 @@ import me.gt3ch1.betterlife.commands.CommandTemplate;
 
 public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecutor {
 	
-	public TOGGLEDOWNFALL(String permission) {
-		super(permission);
-		System.out.println(this.getClass().toString() + " :: permission -> " + permission);
+	public TOGGLEDOWNFALL(String permission, CommandSender cs, Command c, String label, String[] args) {
+		super(permission, cs, c, label, args);
+		System.out.println(this.getClass().toString() + " :: permission -> " + getPermission());
+		
+		this.onCommand(cs, c, label, args);
 	}
 
 	@Override
