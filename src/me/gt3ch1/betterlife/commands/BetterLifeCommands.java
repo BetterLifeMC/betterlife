@@ -3,7 +3,7 @@ package me.gt3ch1.betterlife.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class BetterLifeCommands {
+public abstract class BetterLifeCommands {
 	private String permission;
 	private CommandSender cs;
 	private Command c;
@@ -30,4 +30,5 @@ public class BetterLifeCommands {
 	public String getPermission() {
 		return "betterlife.command." + permission;
 	}
+	public abstract boolean onCommand(CommandSender sender, Command c, String command, String[] args);
 }
