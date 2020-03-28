@@ -3,13 +3,16 @@ package me.gt3ch1.betterlife.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public abstract class BetterLifeCommands {
+import me.gt3ch1.betterlife.Main.Main;
+
+public abstract class BetterLifeCommands extends CommandTemplate{
 	private String permission;
 	private CommandSender cs;
 	private Command c;
 	private String label;
 	private String[] args;
-	public BetterLifeCommands(String permission, CommandSender cs, Command c, String label, String[] args) {
+	private Main m;
+	public BetterLifeCommands(Main m, String permission, CommandSender cs, Command c, String label, String[] args) {
 		this.permission = permission;
 		this.cs = cs;
 		this.label = label;
@@ -29,6 +32,9 @@ public abstract class BetterLifeCommands {
 	}
 	public String getPermission() {
 		return "betterlife.command." + permission;
+	}
+	public Main getPlugin() {
+		return m;
 	}
 	public abstract boolean onCommand(CommandSender sender, Command c, String command, String[] args);
 }

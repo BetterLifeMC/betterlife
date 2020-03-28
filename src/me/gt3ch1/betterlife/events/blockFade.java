@@ -8,7 +8,7 @@ import org.bukkit.event.block.BlockFadeEvent;
 import me.gt3ch1.betterlife.Main.Main;
 
 public class blockFade implements Listener {
-	Main m = new Main();
+	Main m;
 	public blockFade(Main m) {
 		this.m = m;
 	}
@@ -16,8 +16,8 @@ public class blockFade implements Listener {
 	public void onCropTrample(BlockFadeEvent e) {
 
 		Material currentBlock = e.getBlock().getType();
-
-		if (materialEquals(currentBlock, Material.FARMLAND)) {
+		boolean cropTrampleEnabled = m.getMainConfiguration().getCustomConfig().getBoolean("events.croptrample");
+		if (materialEquals(currentBlock, Material.FARMLAND) && cropTrampleEnabled) {
 			e.setCancelled(true);
 		}
 	}

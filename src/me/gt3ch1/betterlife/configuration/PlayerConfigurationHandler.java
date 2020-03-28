@@ -41,7 +41,7 @@ public class PlayerConfigurationHandler {
 		if (customConfig == null) {
 			reloadCustomConfig();
 		}
-		return m.getConfig();
+		return customConfig;
 	}
 
 	public void saveCustomConfig() {

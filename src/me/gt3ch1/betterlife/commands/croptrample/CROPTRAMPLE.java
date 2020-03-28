@@ -1,7 +1,6 @@
-package me.gt3ch1.betterlife.commands.toggledownfall;
+package me.gt3ch1.betterlife.commands.croptrample;
 
 import org.bukkit.ChatColor;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,14 +8,14 @@ import org.bukkit.entity.Player;
 
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commands.BetterLifeCommands;
-import me.gt3ch1.betterlife.commands.CommandTemplate;
 
-public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecutor {
-	
-	public TOGGLEDOWNFALL(Main m, String permission, CommandSender cs, Command c, String label, String[] args) {
+public class CROPTRAMPLE extends BetterLifeCommands implements CommandExecutor {
+	private Main m;
+
+	public CROPTRAMPLE(Main m, String permission, CommandSender cs, Command c, String label, String[] args) {
 		super(m, permission, cs, c, label, args);
 		System.out.println(this.getClass().toString() + " :: permission -> " + getPermission());
-		
+		this.m = m;
 		this.onCommand(cs, c, label, args);
 	}
 
@@ -25,22 +24,19 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 			if (p.hasPermission(this.getPermission())) {
-				World w = p.getWorld();
-				if (w.hasStorm() || w.isThundering()) {
-					w.setStorm(false);
-					w.setThundering(false);
-					CommandTemplate.sendMessageToPlayer(p, "Setting weather to clear.", ChatColor.GREEN);
+				boolean hasCropTrampleEnabled = m.getMainConfiguration().getCustomConfig()
+						.getBoolean("events.croptrample");
+				m.getMainConfiguration().getCustomConfig().set("events.croptrample", !hasCropTrampleEnabled);
+				m.getMainConfiguration().saveCustomConfig();
+				if (!hasCropTrampleEnabled)
+					sendMessageToPlayer(p, "Anti-Crop-Trample has been enabled!", ChatColor.GREEN);
+				else
+					sendMessageToPlayer(p, "Anti-Crop-Trample has been disabled!!", ChatColor.RED);
 
-				} else {
-					w.setStorm(true);
-					w.setThundering(true);
-					CommandTemplate.sendMessageToPlayer(p, "Setting weather to storm.", ChatColor.GREEN);
-
-				}
 			}
-		} else {
+		} else
 			sender.sendMessage(ChatColor.DARK_RED + "This must be done from in game!");
-		}
+
 		return true;
 	}
 }
