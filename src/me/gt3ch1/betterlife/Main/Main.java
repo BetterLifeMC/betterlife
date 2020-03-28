@@ -7,15 +7,26 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
+import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+
 public class Main extends JavaPlugin {
+	MainConfigurationHandler ch;
+	PlayerConfigurationHandler pch;
+
 	@Override
 	public void onEnable() {
 //		new CommandTemplate(this);
+
+		ch = new MainConfigurationHandler(this);
+		pch = new PlayerConfigurationHandler(this);
+		saveDefaultConfig();
+		ch.getCustomConfig();
 	}
 
 	@Override
 	public void onDisable() {
-
+		ch = null;
 	}
 
 	@Override
