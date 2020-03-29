@@ -7,14 +7,17 @@ commands:
         description: Toggles whether or not it is storming
         usage: |
                 /toggledownfall
+        permission: betterlife.command.toggledownfall
     croptrample:
-        description: turns on or off crop trampling.
+        description: Toggles off crop trampling.
         usage: |
                 /croptrample
+        permission: betterlife.command.toggledownfall
     roadboost:
-        description: Gives you speed 1 when you are over a defined road.
-        usage: |
-            /roadboost
+    	description: Toggles if you get speed 1 when you are over a defined road.
+    	usage: |
+    			/roadboost
+		permission: betterlife.command.roadboost
     trail:
         description: Sets a fancy trail behind your player
         usage: |
@@ -24,3 +27,4 @@ commands:
             /trail set
             /trail add
             /trail rm
+        permission: betterlife.command.trail
