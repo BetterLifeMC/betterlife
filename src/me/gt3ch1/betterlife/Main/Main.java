@@ -11,12 +11,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
-import me.gt3ch1.betterlife.events.blockFade;
+import me.gt3ch1.betterlife.events.PlayerWalkEvent;
+import me.gt3ch1.betterlife.events.BlockFade;
+import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin {
 	MainConfigurationHandler ch;
 	PlayerConfigurationHandler pch;
-	Listener l;
+	Listener blockFadeListener,playerMoveListener;
 	@Override
 	public void onEnable() {
 //		new CommandTemplate(this);
@@ -26,15 +28,20 @@ public class Main extends JavaPlugin {
 		saveDefaultConfig();
 		pch.getCustomConfig();
 		pch.saveCustomConfig();
-		l = new blockFade(this);
-		Bukkit.getPluginManager().registerEvents(l, this);
-		
+		blockFadeListener = new BlockFade(this);
+	 	playerMoveListener = new PlayerWalkEvent(this);
+		Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
+		Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
+		getLogger().info(ChatColor.GREEN+"Enabled!");
 	}
 
 	@Override
 	public void onDisable() {
 		ch = null;
 		pch = null;
+		blockFadeListener = null;
+		playerMoveListener = null;
+		getLogger().info(ChatColor.BLUE + "Disabled!");
 	}
 
 	@Override

@@ -9,5 +9,9 @@ commands:
                 /toggledownfall
     croptrample:
         description: turns on or off crop trampling.
-        usabe: |
+        usage: |
                 /croptrample
+    roadboost:
+    	description: Gives you speed 1 when you are over a defined road.
+    	usage: |
+    			/roadboost

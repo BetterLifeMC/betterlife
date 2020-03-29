@@ -7,9 +7,9 @@ import org.bukkit.event.block.BlockFadeEvent;
 
 import me.gt3ch1.betterlife.Main.Main;
 
-public class blockFade implements Listener {
+public class BlockFade implements Listener {
 	Main m;
-	public blockFade(Main m) {
+	public BlockFade(Main m) {
 		this.m = m;
 	}
 	@EventHandler
