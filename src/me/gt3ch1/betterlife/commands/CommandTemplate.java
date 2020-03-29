@@ -19,7 +19,7 @@ public class CommandTemplate {
 	}
 
 	public static void sendMessageToPlayer(Player p, String message1, String message2, ChatColor message1Color,
-			ChatColor message2Color, boolean banner) {
+			ChatColor message2Color) {
 		p.sendMessage(betterLifeBanner + message1Color + message1 + ChatColor.RESET + " | " + message2Color + message2);
 	}
 
