@@ -3,6 +3,7 @@ package me.gt3ch1.betterlife.Main;
 import java.lang.reflect.InvocationTargetException;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +14,6 @@ import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import me.gt3ch1.betterlife.events.PlayerWalkEvent;
 import me.gt3ch1.betterlife.events.BlockFade;
-import net.md_5.bungee.api.ChatColor;
 
 public class Main extends JavaPlugin {
 	MainConfigurationHandler ch;
