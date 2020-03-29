@@ -15,3 +15,12 @@ commands:
         description: Gives you speed 1 when you are over a defined road.
         usage: |
             /roadboost
+    trail:
+        description: Sets a fancy trail behind your player
+        usage: |
+            /trail
+            /trail list
+            /trail help
+            /trail set
+            /trail add
+            /trail rm

@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -12,7 +13,7 @@ import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commands.BetterLifeCommands;
 import me.gt3ch1.betterlife.commands.CommandTemplate;
 
-public class TRAIL extends BetterLifeCommands {
+public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 	Main m;
 
 	public TRAIL(Main m, String permission, CommandSender cs, Command c, String label, String[] args) {
