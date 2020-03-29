@@ -27,8 +27,7 @@ public class PlayerWalkEvent implements Listener {
 		if (materialEquals(currentBlock, Material.GRASS_PATH) && e.getPlayer().isSprinting()) {
 			e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 0));
 		}
-	}public
-
+	}
 	private boolean materialEquals(Material m1, Material m2) {
 		return (m1 == m2);
 	}

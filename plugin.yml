@@ -12,6 +12,6 @@ commands:
         usage: |
                 /croptrample
     roadboost:
-    	description: Gives you speed 1 when you are over a defined road.
-    	usage: |
-    			/roadboost
+        description: Gives you speed 1 when you are over a defined road.
+        usage: |
+            /roadboost
