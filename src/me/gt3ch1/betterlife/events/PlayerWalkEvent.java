@@ -57,12 +57,13 @@ public class PlayerWalkEvent implements Listener {
 		Particle p;
 		location.setY(location.getY() + 1);	
 		try {
-			p = Particle.valueOf(m.getPlayerConfiguration().getCustomConfig().getString("player."+e.getPlayer().getUniqueId() +".particle"));
+			p = Particle.valueOf(m.getPlayerConfiguration().getCustomConfig().getString("player."+e.getPlayer().getUniqueId() +".trail"));
 			
 			e.getPlayer().getWorld().spawnParticle(p, location, 1);
 		} catch (Exception ex) {
-			p = Particle.valueOf(m.getPlayerConfiguration().getCustomConfig().getString("defaultparticle"));
+			p = Particle.valueOf(m.getMainConfiguration().getCustomConfig().getString("defaultparticle"));
 			e.getPlayer().getWorld().spawnParticle(p, location, 1);
+			ex.printStackTrace();
 		}
 	}
 
@@ -72,9 +73,9 @@ public class PlayerWalkEvent implements Listener {
 		Particle newPlayerParticle = Particle.valueOf(m.getMainConfiguration().getCustomConfig().getString("defaultparticle"));
 		try {
 			newPlayerParticle = Particle
-					.valueOf(m.getPlayerConfiguration().getCustomConfig().getString("player."+p.getUniqueId().toString() + ".particle"));
+					.valueOf(m.getPlayerConfiguration().getCustomConfig().getString("player."+p.getUniqueId().toString() + ".trail"));
 		} catch (Exception ex) {
-			m.getPlayerConfiguration().getCustomConfig().set("player."+p.getUniqueId().toString() + ".particle", newPlayerParticle.toString());
+			m.getPlayerConfiguration().getCustomConfig().set("player."+p.getUniqueId().toString() + ".trail", newPlayerParticle.toString());
 			m.getPlayerConfiguration().saveCustomConfig();
 		}
 	}
