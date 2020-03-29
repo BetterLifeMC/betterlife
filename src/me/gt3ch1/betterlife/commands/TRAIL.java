@@ -1,4 +1,4 @@
-package me.gt3ch1.betterlife.commands.trail;
+package me.gt3ch1.betterlife.commands;
 
 import java.util.List;
 
@@ -10,8 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.gt3ch1.betterlife.Main.Main;
-import me.gt3ch1.betterlife.commands.BetterLifeCommands;
-import me.gt3ch1.betterlife.commands.CommandTemplate;
 
 public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 	Main m;
@@ -41,12 +39,11 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 							m.getPlayerConfiguration().getCustomConfig()
 									.set("player." + player.getUniqueId().toString() + ".trail", args[1].toUpperCase());
 							m.getPlayerConfiguration().saveCustomConfig();
-							sendMessageToPlayer(player,
-									"Your trail is now set to: " + ChatColor.GOLD + args[1], ChatColor.YELLOW);
+							sendMessageToPlayer(player, "Your trail is now set to: " + ChatColor.GOLD + args[1],
+									ChatColor.YELLOW);
 							return true;
 						} else if (!player.hasPermission("betterlife.trails.particle." + args[1].toLowerCase())) {
-							sendMessageToPlayer(player, "You do not have permission!",
-									ChatColor.DARK_RED);
+							sendMessageToPlayer(player, "You do not have permission!", ChatColor.DARK_RED);
 							return true;
 						} else {
 							sendMessageToPlayer(player, "Sorry, you can't do that!", ChatColor.RED);
@@ -60,8 +57,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 					}
 				} else if (args[0].equalsIgnoreCase("add") && player.hasPermission("betterlife.trails.admin")) {
 					if (allowedParticles.contains(args[1])) {
-						sendMessageToPlayer(player, "This effect is already enabled!",
-								ChatColor.DARK_RED);
+						sendMessageToPlayer(player, "This effect is already enabled!", ChatColor.DARK_RED);
 						return true;
 					} else {
 						try {
@@ -70,8 +66,8 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 								m.getMainConfiguration().getCustomConfig().set("trail.enabledParticles",
 										allowedParticles);
 								m.getMainConfiguration().saveCustomConfig();
-								sendMessageToPlayer(player, "Effect " + ChatColor.GOLD + args
-										+ ChatColor.LIGHT_PURPLE + " has been enabled!", ChatColor.LIGHT_PURPLE);
+								sendMessageToPlayer(player, "Effect " + ChatColor.GOLD + args + ChatColor.LIGHT_PURPLE
+										+ " has been enabled!", ChatColor.LIGHT_PURPLE);
 								return true;
 							}
 						} catch (IllegalArgumentException e) {
@@ -87,8 +83,8 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 								m.getMainConfiguration().getCustomConfig().set("trail.enabledParticles",
 										allowedParticles);
 								m.getMainConfiguration().saveCustomConfig();
-								sendMessageToPlayer(player, "Effect " + ChatColor.GOLD + args
-										+ ChatColor.LIGHT_PURPLE + " has been disabled!", ChatColor.LIGHT_PURPLE);
+								sendMessageToPlayer(player, "Effect " + ChatColor.GOLD + args + ChatColor.LIGHT_PURPLE
+										+ " has been disabled!", ChatColor.LIGHT_PURPLE);
 								return true;
 							}
 						} catch (IllegalArgumentException e) {
@@ -96,20 +92,20 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 							return true;
 						}
 					} else {
-						sendMessageToPlayer(player, "This effect is already disabled!",
-								ChatColor.DARK_RED);
+						sendMessageToPlayer(player, "This effect is already disabled!", ChatColor.DARK_RED);
 						return true;
 					}
-				} else if(args[0].equalsIgnoreCase("toggle")) {
-					boolean trailsEnabled = m.getPlayerConfiguration().getCustomConfig().getBoolean("player."+player.getUniqueId().toString()+".trails.enabled");
-					m.getPlayerConfiguration().getCustomConfig().set("player."+player.getUniqueId().toString()+".trails.enabled", !trailsEnabled);
-					if(!trailsEnabled) 
+				} else if (args[0].equalsIgnoreCase("toggle")) {
+					boolean trailsEnabled = m.getPlayerConfiguration().getCustomConfig()
+							.getBoolean("player." + player.getUniqueId().toString() + ".trails.enabled");
+					m.getPlayerConfiguration().getCustomConfig()
+							.set("player." + player.getUniqueId().toString() + ".trails.enabled", !trailsEnabled);
+					if (!trailsEnabled)
 						sendMessageToPlayer(player, "Trails enabled!", ChatColor.GREEN);
 					else
 						sendMessageToPlayer(player, "Trails disabled!", ChatColor.RED);
 					m.getPlayerConfiguration().saveCustomConfig();
-				}
-				else {
+				} else {
 					sendHelpMessage(player);
 					return true;
 				}
@@ -134,16 +130,14 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 	private void sendHelpMessage(Player player) {
 		sendMessageToPlayer(player, "by GT3CH1", ChatColor.LIGHT_PURPLE);
 		sendMessageToPlayer(player, "--== [ Available commands ] ==--", ChatColor.GOLD);
-		sendMessageToPlayer(player, "/trail set <trail>", "Set's the current players trail",
-				ChatColor.LIGHT_PURPLE, ChatColor.YELLOW);
-		sendMessageToPlayer(player, "/trail add <trail>", "Adds the trail to the config",
-				ChatColor.LIGHT_PURPLE, ChatColor.YELLOW);
-		sendMessageToPlayer(player, "/trail rm <trail>", "Removes the trail from the config",
-				ChatColor.LIGHT_PURPLE, ChatColor.YELLOW);
-		sendMessageToPlayer(player, "/trail list", "List the enabled trails", ChatColor.LIGHT_PURPLE,
+		sendMessageToPlayer(player, "/trail set <trail>", "Set's the current players trail", ChatColor.LIGHT_PURPLE,
 				ChatColor.YELLOW);
-		sendMessageToPlayer(player, "/trail toggle", "Toggles your trail",
-				ChatColor.LIGHT_PURPLE, ChatColor.YELLOW);
+		sendMessageToPlayer(player, "/trail add <trail>", "Adds the trail to the config", ChatColor.LIGHT_PURPLE,
+				ChatColor.YELLOW);
+		sendMessageToPlayer(player, "/trail rm <trail>", "Removes the trail from the config", ChatColor.LIGHT_PURPLE,
+				ChatColor.YELLOW);
+		sendMessageToPlayer(player, "/trail list", "List the enabled trails", ChatColor.LIGHT_PURPLE, ChatColor.YELLOW);
+		sendMessageToPlayer(player, "/trail toggle", "Toggles your trail", ChatColor.LIGHT_PURPLE, ChatColor.YELLOW);
 	}
 
 	static private void invalidMessage(Player pl) {

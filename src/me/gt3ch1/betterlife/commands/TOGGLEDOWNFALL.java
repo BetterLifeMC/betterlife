@@ -1,4 +1,4 @@
-package me.gt3ch1.betterlife.commands.toggledownfall;
+package me.gt3ch1.betterlife.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -8,8 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.gt3ch1.betterlife.Main.Main;
-import me.gt3ch1.betterlife.commands.BetterLifeCommands;
-import me.gt3ch1.betterlife.commands.CommandTemplate;
 
 public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecutor {
 	

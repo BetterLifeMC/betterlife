@@ -48,7 +48,7 @@ public class Main extends JavaPlugin {
 	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
 		try {
 			this.getCommand(label).setExecutor((CommandExecutor) Class
-					.forName("me.gt3ch1.betterlife.commands." + label.toLowerCase() + "." + label.toUpperCase())
+					.forName("me.gt3ch1.betterlife.commands." + label.toUpperCase())
 					.getConstructor(Main.class, String.class, CommandSender.class, Command.class, String.class, String[].class)
 					.newInstance(this, label.toLowerCase(), cs, cmd, label, args));
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
