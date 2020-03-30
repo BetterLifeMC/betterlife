@@ -1,38 +1,36 @@
 package me.gt3ch1.betterlife.events;
 
-import org.bukkit.ChatColor;
+import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import me.gt3ch1.betterlife.Main.Main;
-
-public class PlayerWalkEvent implements Listener {
+public class PlayerWalk implements Listener {
 	Main m;
 
-	public PlayerWalkEvent(Main m) {
+	public PlayerWalk(Main m) {
 		this.m = m;
 	}
 
 	@EventHandler
 	public void roadBoostEvents(PlayerMoveEvent e) {
 
+		// Check if RoadBoost is enabled for the player
+		boolean boostEnabled = m.getPlayerConfiguration().getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".pathboost");
+
+		// Get the block the player is currently standing on
 		Location loc = e.getPlayer().getLocation();
 		loc.setY(loc.getY() + 0.06250);
-		boolean boostEnabled = m.getPlayerConfiguration().getCustomConfig()
-				.getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".pathboost");
-
 		Material currentBlock = loc.getWorld().getBlockAt(loc).getRelative(BlockFace.DOWN).getType();
 
-		if (materialEquals(currentBlock, Material.GRASS_PATH) && e.getPlayer().isSprinting() && boostEnabled) {
+		// Apply the potion effect
+		if (currentBlock == Material.GRASS_PATH && e.getPlayer().isSprinting() && boostEnabled) {
 			e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 0));
 		}
 	}
@@ -74,28 +72,5 @@ public class PlayerWalkEvent implements Listener {
 				ex.printStackTrace();
 			}
 		}
-	}
-
-	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent e) {
-		Player p = e.getPlayer();
-		Particle newPlayerParticle = Particle
-				.valueOf(m.getMainConfiguration().getCustomConfig().getString("defaultparticle"));
-
-		try {
-			newPlayerParticle = Particle.valueOf(m.getPlayerConfiguration().getCustomConfig()
-					.getString("player." + p.getUniqueId().toString() + ".trail"));
-		} catch (Exception ex) {
-			m.getPlayerConfiguration().getCustomConfig().set("player." + p.getUniqueId().toString() + ".trail",
-					newPlayerParticle.toString());
-			m.getPlayerConfiguration().getCustomConfig().set("player." + p.getUniqueId().toString() + ".trails.enabled",
-					false);
-			m.getPlayerConfiguration().saveCustomConfig();
-			p.sendMessage(ChatColor.BLUE + "Want to enable trail particles? Try /trail help!");
-		}
-	}
-
-	private boolean materialEquals(Material m1, Material m2) {
-		return (m1 == m2);
 	}
 }
