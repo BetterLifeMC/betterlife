@@ -10,7 +10,7 @@ commands:
     croptrample:
         description: Toggles off crop trampling.
         usage: "Usage: /croptrample"
-        permission: betterlife.command.toggledownfall
+        permission: betterlife.command.croptrample
     roadboost:
         description: Toggles if you get speed 1 when you are over a defined road.
         usage: "Usage: /roadboost"
