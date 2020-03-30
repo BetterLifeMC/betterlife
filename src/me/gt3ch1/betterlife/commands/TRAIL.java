@@ -16,98 +16,110 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 
 	public TRAIL(Main m, String permission, CommandSender cs, Command c, String label, String[] args) {
 		super(m, permission, cs, c, label, args);
-
 		this.m = m;
 		this.onCommand(cs, c, label, args);
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
-		List<String> allowedParticles = (List<String>) m.getMainConfiguration().getCustomConfig().getList("enabledParticles");
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
 			if (c.getName().equalsIgnoreCase("trail")) {
-				if (args.length > 0) {
-					if (args[0].equalsIgnoreCase("list")) {
-						sendListTrails(player, allowedParticles);
-					} else if (args[0].equalsIgnoreCase("set")) {
-						if (args.length > 1) {
-							System.out.println(args[1]);
-							if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.command.trail.particle." + args[1].toLowerCase()) || player.hasPermission("betterlife.command.trail.particle.*"))) {
-								m.getPlayerConfiguration().getCustomConfig().set("player." + player.getUniqueId().toString() + ".trail", args[1].toUpperCase());
-								m.getPlayerConfiguration().saveCustomConfig();
-								sendBannerMessage(player, ChatColor.GRAY + "Your trail is now set to: " + ChatColor.GOLD + args[1]);
-								return true;
-							} else if (!player.hasPermission("betterlife.command.trail.particle." + args[1].toLowerCase())) {
-								sendBannerMessage(player, ChatColor.DARK_RED + "You do not have permission!");
-								return true;
-							} else {
-								sendBannerMessage(player, ChatColor.DARK_RED + "Sorry, you can't do that!");
-								sendListTrails(player, allowedParticles);
-								return true;
-							}
-
-						} else {
-							sendHelp(player);
-							return true;
-						}
-					} else if (args[0].equalsIgnoreCase("add") && player.hasPermission("betterlife.command.trail.admin")) {
-						if (allowedParticles.contains(args[1])) {
-							sendBannerMessage(player, ChatColor.DARK_RED + "This effect is already enabled!");
-							return true;
-						} else {
-							try {
-								if (Particle.valueOf(args[1]) != null) {
-									allowedParticles.add(args[1]);
-									m.getMainConfiguration().getCustomConfig().set("trail.enabledParticles", allowedParticles);
-									m.getMainConfiguration().saveCustomConfig();
-									sendBannerMessage(player, ChatColor.GRAY + "Effect " + ChatColor.GOLD + args + ChatColor.GRAY + " has been " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + "!");
-									return true;
-								}
-							} catch (IllegalArgumentException e) {
-								sendBannerMessage(player, ChatColor.DARK_RED + "Invalid particle effect!");
-								return true;
-							}
-						}
-					} else if (args[0].equalsIgnoreCase("rm") && player.hasPermission("betterlife.command.trail.admin")) {
-						if (allowedParticles.contains(args[1])) {
-							try {
-								if (Particle.valueOf(args[1]) != null) {
-									allowedParticles.remove(args[1]);
-									m.getMainConfiguration().getCustomConfig().set("trail.enabledParticles", allowedParticles);
-									m.getMainConfiguration().saveCustomConfig();
-									sendBannerMessage(player, ChatColor.GRAY + "Effect " + ChatColor.GOLD + args + ChatColor.GRAY + " has been " + ChatColor.RED + "disabled" + ChatColor.GRAY + "!");
-									return true;
-								}
-							} catch (IllegalArgumentException e) {
-								sendBannerMessage(player, ChatColor.DARK_RED + "Invalid particle effect!");
-								return true;
-							}
-						} else {
-							sendBannerMessage(player, ChatColor.DARK_RED + "This effect is already disabled!");
-							return true;
-						}
-					} else if (args[0].equalsIgnoreCase("toggle")  && player.hasPermission("betterlife.command.trail.toggle")) {
-						boolean trailsEnabled = m.getPlayerConfiguration().getCustomConfig()
-								.getBoolean("player." + player.getUniqueId().toString() + ".trails.enabled");
-						m.getPlayerConfiguration().getCustomConfig()
-								.set("player." + player.getUniqueId().toString() + ".trails.enabled", !trailsEnabled);
-						if (!trailsEnabled)
-							sendBannerMessage(player, ChatColor.GRAY + "Trails " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + "!");
-						else
-							sendBannerMessage(player, ChatColor.GRAY + "Trails " + ChatColor.RED + "disabled" + ChatColor.GRAY + "!");
-						m.getPlayerConfiguration().saveCustomConfig();
-					} else {
+				List<String> allowedParticles = (List<String>) m.getMainConfiguration().getCustomConfig().getList("enabledParticles");
+				switch(args.length) {
+					case 0:
 						sendHelp(player);
 						return true;
+					case 1:
+						switch(args[0]) {
+							case "list":
+								sendListTrails(player, allowedParticles);
+								return true;
+							case "toggle":
+								if (player.hasPermission("betterlife.command.trail.toggle")) {
+									boolean trailsEnabled = m.getPlayerConfiguration().getCustomConfig().getBoolean("player." + player.getUniqueId().toString() + ".trails.enabled");
+									m.getPlayerConfiguration().getCustomConfig().set("player." + player.getUniqueId().toString() + ".trails.enabled", !trailsEnabled);
+									if (!trailsEnabled)
+										sendBannerMessage(player, ChatColor.GRAY + "Trails " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + "!");
+									else
+										sendBannerMessage(player, ChatColor.GRAY + "Trails " + ChatColor.RED + "disabled" + ChatColor.GRAY + "!");
+									m.getPlayerConfiguration().saveCustomConfig();
+									return true;
+								}
+							case "help":
+								sendHelp(player);
+								return true;
+							default:
+								sendBannerMessage(player, "That's not a valid command. Try /trail help.");
+								return true;
+						}
+					case 2:
+						switch(args[0]) {
+							case "set":
+								if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.command.trail.particle." + args[1].toLowerCase()) || player.hasPermission("betterlife.command.trail.particle.*"))) {
+									m.getPlayerConfiguration().getCustomConfig().set("player." + player.getUniqueId().toString() + ".trail", args[1].toUpperCase());
+									m.getPlayerConfiguration().saveCustomConfig();
+									sendBannerMessage(player, ChatColor.GRAY + "Your trail is now set to: " + ChatColor.GOLD + args[1].toUpperCase());
+									return true;
+								} else if (!player.hasPermission("betterlife.command.trail.particle." + args[1].toLowerCase())) {
+									sendBannerMessage(player, ChatColor.DARK_RED + "You need permission to use that trail!");
+									return true;
+								} else if (!allowedParticles.contains(args[1].toUpperCase())) {
+									sendBannerMessage(player, ChatColor.DARK_RED + "That particle is disabled on this server! Try /trail list to see the list of available trails.");
+									return true;
+								}
+							case "add":
+								if (player.hasPermission("betterlife.command.trail.admin")) {
+									if (allowedParticles.contains(args[1].toUpperCase())) {
+										sendBannerMessage(player, ChatColor.DARK_RED + "This effect is already enabled!");
+										return true;
+									} else {
+										try {
+											if (Particle.valueOf(args[1].toUpperCase()) != null) {
+												allowedParticles.add(args[1].toUpperCase());
+												m.getMainConfiguration().getCustomConfig().set("trail.enabledParticles", allowedParticles);
+												m.getMainConfiguration().saveCustomConfig();
+												sendBannerMessage(player, ChatColor.GRAY + "Effect " + ChatColor.GOLD + args[1].toUpperCase() + ChatColor.GRAY + " has been " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + "!");
+												return true;
+											}
+										} catch (IllegalArgumentException e) {
+											sendBannerMessage(player, ChatColor.DARK_RED + "Invalid particle effect!");
+											return true;
+										}
+									}
+								}
+							case "rm":
+								if (player.hasPermission("betterlife.command.trail.admin")) {
+									if (!allowedParticles.contains(args[1].toUpperCase())) {
+										sendBannerMessage(player, ChatColor.DARK_RED + "This effect is already disabled!");
+										return true;
+									} else {
+										try {
+											if (Particle.valueOf(args[1].toUpperCase()) != null) {
+												allowedParticles.remove(args[1].toUpperCase());
+												m.getMainConfiguration().getCustomConfig().set("trail.enabledParticles", allowedParticles);
+												m.getMainConfiguration().saveCustomConfig();
+												sendBannerMessage(player, ChatColor.GRAY + "Effect " + ChatColor.GOLD + args[1].toUpperCase() + ChatColor.GRAY + " has been " + ChatColor.RED + "disabled" + ChatColor.GRAY + "!");
+												return true;
+											}
+										} catch (IllegalArgumentException e) {
+											sendBannerMessage(player, ChatColor.DARK_RED + "Invalid particle effect!");
+											return true;
+										}
+									}
+								}
+							default:
+								sendBannerMessage(player, "That's not a valid command! Try /trail help.");
+								return true;
+						}
+					default:
+						sendBannerMessage(player, "Too many arguments! Try /trail help.");
+						return true;
 					}
-				} else {
-					invalidMessage(player);
-					return true;
 				}
-			}
-		} else {
+			} else {
 			sendBannerMessage(sender, "You must be a player to use this command!");
+			return true;
 		}
 		return true;
 	}
@@ -135,6 +147,5 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 
 	private void invalidMessage(CommandSender sender) {
 		sendInvalidMessage(sender, getClass().getSimpleName());
-
 	}
 }
