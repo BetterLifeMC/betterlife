@@ -26,7 +26,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
 			if (c.getName().equalsIgnoreCase("trail")) {
-				List<String> allowedParticles = (List<String>) m.getMainConfiguration().getCustomConfig().getList("enabledParticles");
+				List<String> allowedParticles = (List<String>) m.getMainConfiguration().getCustomConfig().getList("trail.enabledParticles");
 				switch(args.length) {
 					case 0:
 						sendHelp(player);
@@ -98,6 +98,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 										try {
 											if (Particle.valueOf(args[1].toUpperCase()) != null) {
 												allowedParticles.remove(args[1].toUpperCase());
+												System.out.println("Allowed particles :: " + allowedParticles.toString());
 												m.getMainConfiguration().getCustomConfig().set("trail.enabledParticles", allowedParticles);
 												m.getMainConfiguration().saveCustomConfig();
 												sendBannerMessage(player, ChatColor.GRAY + "Effect " + ChatColor.GOLD + args[1].toUpperCase() + ChatColor.GRAY + " has been " + ChatColor.RED + "disabled" + ChatColor.GRAY + "!");
