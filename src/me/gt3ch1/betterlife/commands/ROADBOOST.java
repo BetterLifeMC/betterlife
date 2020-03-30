@@ -13,7 +13,6 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
 
 	public ROADBOOST(Main m, String permission, CommandSender cs, Command c, String label, String[] args) {
 		super(m, permission, cs, c, label, args);
-		System.out.println(this.getClass().toString() + " :: permission -> " + getPermission());
 		this.m = m;
 		this.onCommand(cs, c, label, args);
 	}
@@ -23,19 +22,18 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 			if (p.hasPermission(this.getPermission())) {
-				boolean hasToggleSprintEnabled = m.getPlayerConfiguration().getCustomConfig()
-						.getBoolean("player."+p.getUniqueId().toString()+".pathboost");
+				boolean hasToggleSprintEnabled = m.getPlayerConfiguration().getCustomConfig().getBoolean("player."+p.getUniqueId().toString()+".pathboost");
 				m.getPlayerConfiguration().getCustomConfig().set("player."+p.getUniqueId().toString()+".pathboost", !hasToggleSprintEnabled);
 				m.getPlayerConfiguration().saveCustomConfig();
-				if (!hasToggleSprintEnabled)
-					sendMessageToPlayer(p, "Path-Speed has been enabled!", ChatColor.GREEN);
-				else
-					sendMessageToPlayer(p, "Path-Speed has been disabled!!", ChatColor.RED);
-
+				if (!hasToggleSprintEnabled) {
+					sendBannerMessage(p, ChatColor.GRAY + "Roadboost has been " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + "!");
+				} else {
+					sendBannerMessage(p, ChatColor.GRAY + "Roadboost has been " + ChatColor.RED + "disabled" + ChatColor.GRAY + "!");
+				}
 			}
-		} else
-			sender.sendMessage(ChatColor.DARK_RED + "This must be done from in game!");
-
+		} else {
+			sendBannerMessage(sender, ChatColor.DARK_RED + "This must be done from in game!");
+		}
 		return true;
 	}
 }
