@@ -21,7 +21,6 @@ public class Main extends JavaPlugin {
 	Listener blockFadeListener,playerMoveListener;
 	@Override
 	public void onEnable() {
-//		new CommandTemplate(this);
 
 		ch = new MainConfigurationHandler(this);
 		pch = new PlayerConfigurationHandler(this);
@@ -33,6 +32,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
 		Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
 		getLogger().info(ChatColor.GREEN+"Enabled!");
+		
 	}
 
 	@Override
