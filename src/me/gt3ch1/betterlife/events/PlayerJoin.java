@@ -20,7 +20,7 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        Particle newPlayerParticle = Particle.valueOf(m.getMainConfiguration().getCustomConfig().getString("defaultparticle").toUpperCase());
+        Particle newPlayerParticle = Particle.valueOf(m.getMainConfiguration().getCustomConfig().getString("defaultParticle").toUpperCase());
 
         try {
             // Try to fetch the player's current trail config setting
