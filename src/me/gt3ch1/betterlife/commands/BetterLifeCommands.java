@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 
 import me.gt3ch1.betterlife.Main.Main;
 
-public abstract class BetterLifeCommands extends CommandTemplate{
+public abstract class BetterLifeCommands extends CommandUtils {
 	private String permission;
 	private CommandSender cs;
 	private Command c;
