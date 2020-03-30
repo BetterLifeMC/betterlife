@@ -35,6 +35,7 @@ public class TabCompletorHelper implements TabCompleter {
 						String particle = subCommands.get(i);
 						if (player.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
 							newList.add(particle);
+							subCommands = newList;
 						}
 					}
 				} else if (args[0].equalsIgnoreCase("rm")) {
