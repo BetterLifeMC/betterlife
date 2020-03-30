@@ -1,7 +1,10 @@
 package me.gt3ch1.betterlife.Main;
 
-import java.lang.reflect.InvocationTargetException;
-
+import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
+import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+import me.gt3ch1.betterlife.events.BlockFade;
+import me.gt3ch1.betterlife.events.PlayerJoin;
+import me.gt3ch1.betterlife.events.PlayerWalk;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,38 +13,42 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
-import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
-import me.gt3ch1.betterlife.events.PlayerWalkEvent;
-import me.gt3ch1.betterlife.events.BlockFade;
+import java.lang.reflect.InvocationTargetException;
 
 public class Main extends JavaPlugin {
 	MainConfigurationHandler ch;
 	PlayerConfigurationHandler pch;
-	Listener blockFadeListener,playerMoveListener;
+	Listener blockFadeListener,playerMoveListener,playerJoinListener;
 	@Override
 	public void onEnable() {
-//		new CommandTemplate(this);
-
+		// Config setup
 		ch = new MainConfigurationHandler(this);
 		pch = new PlayerConfigurationHandler(this);
 		saveDefaultConfig();
 		pch.getCustomConfig();
 		pch.saveCustomConfig();
+
+		// Listener setup
 		blockFadeListener = new BlockFade(this);
-	 	playerMoveListener = new PlayerWalkEvent(this);
+	 	playerMoveListener = new PlayerWalk(this);
+	 	playerJoinListener = new PlayerJoin(this);
 		Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
 		Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
-		getLogger().info(ChatColor.GREEN+"Enabled!");
+		Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
+
+		getLogger().info(ChatColor.GREEN + "Enabled!");
 	}
 
 	@Override
 	public void onDisable() {
 		ch = null;
 		pch = null;
+
 		blockFadeListener = null;
 		playerMoveListener = null;
-		getLogger().info(ChatColor.BLUE + "Disabled!");
+		playerMoveListener = null;
+
+		getLogger().info(ChatColor.RED + "Disabled!");
 	}
 
 	@Override
