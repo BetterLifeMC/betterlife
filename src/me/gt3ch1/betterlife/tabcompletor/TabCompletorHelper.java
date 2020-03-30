@@ -1,5 +1,6 @@
 package me.gt3ch1.betterlife.tabcompletor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -11,7 +12,7 @@ import me.gt3ch1.betterlife.Main.Main;
 
 public class TabCompletorHelper implements TabCompleter {
 	// Initialize a string of variables
-	private List<String> subCommands = null;
+	private List<String> subCommands = new ArrayList<>();
 	private Main plugin;
 
 	public TabCompletorHelper(Main m) {
