@@ -19,6 +19,7 @@ public class Main extends JavaPlugin {
 	MainConfigurationHandler ch;
 	PlayerConfigurationHandler pch;
 	Listener blockFadeListener,playerMoveListener,playerJoinListener;
+	Main m;
 	@Override
 	public void onEnable() {
 		// Config setup
@@ -35,7 +36,9 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
 		Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
 		Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
-
+		// Initialize Main variable
+		m = this;
+		// Log output
 		getLogger().info(ChatColor.GREEN + "Enabled!");
 	}
 
