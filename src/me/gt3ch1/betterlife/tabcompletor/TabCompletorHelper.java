@@ -14,6 +14,7 @@ public class TabCompletorHelper implements TabCompleter {
 	// Initialize a string of variables
 	private List<String> subCommands = new ArrayList<>();
 	private Main plugin;
+	private List<String> newList = new ArrayList<>();
 
 	public TabCompletorHelper(Main m) {
 		this.plugin = m;
@@ -22,6 +23,7 @@ public class TabCompletorHelper implements TabCompleter {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> onTabComplete(CommandSender commandSender, Command command, String alias, String[] args) {
+		newList = null;
 		String cmd = command.getLabel();
 		if (cmd.equalsIgnoreCase("trail") && commandSender instanceof Player) {
 			Player player = (Player) commandSender;
@@ -31,24 +33,18 @@ public class TabCompletorHelper implements TabCompleter {
 							.getList("enabledParticles"));
 					for (int i = 0; i < subCommands.size(); i++) {
 						String particle = subCommands.get(i);
-						if (!player.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
-							subCommands.remove(i);
+						if (player.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
+							newList.add(particle);
 						}
 					}
 				} else if (args[0].equalsIgnoreCase("rm")) {
 					subCommands = (List<String>) (plugin.getMainConfiguration().getCustomConfig()
 							.getList("enabledParticles"));
-
 				}
-			} else {
-				subCommands.add("set");
-				subCommands.add("rm");
-				subCommands.add("help");
-				subCommands.add("add");
-				subCommands.add("list");
 			}
+			return subCommands;
 		}
-		return subCommands;
+		return null;
 	}
 
 }
