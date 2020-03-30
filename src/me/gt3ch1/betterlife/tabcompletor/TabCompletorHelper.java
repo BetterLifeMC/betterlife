@@ -36,9 +36,11 @@ public class TabCompletorHelper implements TabCompleter {
 						if (player.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
 							newList.add(particle);
 							System.out.println("Player " + player.getName() + " has permission for: " + particle.toLowerCase());
-							subCommands = newList;
+							
 						}
 					}
+					subCommands = newList;
+
 				} else if (args[0].equalsIgnoreCase("rm")) {
 					subCommands = (List<String>) (plugin.getMainConfiguration().getCustomConfig()
 							.getList("enabledParticles"));
