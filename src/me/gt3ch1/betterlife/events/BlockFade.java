@@ -12,17 +12,14 @@ public class BlockFade implements Listener {
 	public BlockFade(Main m) {
 		this.m = m;
 	}
+
 	@EventHandler
 	public void onCropTrample(BlockFadeEvent e) {
 
 		Material currentBlock = e.getBlock().getType();
 		boolean cropTrampleEnabled = m.getMainConfiguration().getCustomConfig().getBoolean("events.croptrample");
-		if (materialEquals(currentBlock, Material.FARMLAND) && cropTrampleEnabled) {
+		if (currentBlock == Material.FARMLAND && cropTrampleEnabled) {
 			e.setCancelled(true);
 		}
-	}
-
-	private boolean materialEquals(Material m1, Material m2) {
-		return (m1 == m2);
 	}
 }
