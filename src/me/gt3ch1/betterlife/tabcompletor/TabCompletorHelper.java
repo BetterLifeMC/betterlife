@@ -46,6 +46,11 @@ public class TabCompletorHelper implements TabCompleter {
 				subCommands.add("add");
 				subCommands.add("list");
 			}
+			subCommands.add("set");
+			subCommands.add("rm");
+			subCommands.add("help");
+			subCommands.add("add");
+			subCommands.add("list");
 		}
 		return subCommands;
 	}
