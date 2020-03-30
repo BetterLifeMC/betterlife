@@ -33,13 +33,14 @@ public class TabCompletorHelper implements TabCompleter {
 		String cmd = command.getLabel();
 		if (cmd.equalsIgnoreCase("trail") && commandSender instanceof Player) {
 			Player player = (Player) commandSender;
-			if (args.length > 1) {
+			if (args.length == 2) {
 				if (args[0].equalsIgnoreCase("set")) {
 					subCommands = (List<String>) (plugin.getMainConfiguration().getCustomConfig()
 							.getList("trail.enabledParticles"));
 					for (int i = 0; i < subCommands.size(); i++) {
 						String particle = subCommands.get(i);
-						if (player.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
+						if (Arrays.stream(args).anyMatch(particle::contains) && player
+								.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
 							newList.add(particle);
 						}
 					}
@@ -65,7 +66,8 @@ public class TabCompletorHelper implements TabCompleter {
 					}
 					subCommands = newList;
 				}
-			} else {
+			}
+			if (args.length == 1) {
 				if (Arrays.stream(args).anyMatch("set"::contains)) {
 					subCommands.add("set");
 				}
