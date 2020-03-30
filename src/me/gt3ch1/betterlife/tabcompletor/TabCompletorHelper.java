@@ -22,6 +22,7 @@ public class TabCompletorHelper implements TabCompleter {
 	@Override
 	public List<String> onTabComplete(CommandSender commandSender, Command command, String alias, String[] args) {
 		String cmd = command.toString();
+		System.out.println(cmd);
 		if (cmd.equalsIgnoreCase("trail") && commandSender instanceof Player) {
 			Player player = (Player) commandSender;
 			if (args.length > 1) {
