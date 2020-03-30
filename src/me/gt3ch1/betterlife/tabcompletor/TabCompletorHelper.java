@@ -6,13 +6,30 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-public class TabCompletorHelper implements TabCompleter{
+import me.gt3ch1.betterlife.Main.Main;
+
+public class TabCompletorHelper implements TabCompleter {
+	// Initialize a string of variables
+	private List<String> subCommands = null;
+	private Main plugin;
+
+	public TabCompletorHelper(Main m) {
+		this.plugin = m;
+	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender arg0, Command arg1,
-		 String arg2, String[] arg3) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> onTabComplete(CommandSender arg0, Command command, String alias, String[] args) {
+		String cmd = command.toString();
+		if (cmd.equalsIgnoreCase("cmd")) {
+			if (args[0].equalsIgnoreCase("set")) {
+				subCommands = (List<String>) (plugin.getMainConfiguration().getCustomConfig()
+						.getList("enabledParticles"));
+			} else if (args[0].equalsIgnoreCase("rm")) {
+				subCommands = (List<String>) (plugin.getMainConfiguration().getCustomConfig()
+						.getList("enabledParticles"));
+			}
+		}
+		return subCommands;
 	}
 
 }

@@ -5,6 +5,8 @@ import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import me.gt3ch1.betterlife.events.BlockFade;
 import me.gt3ch1.betterlife.events.PlayerJoin;
 import me.gt3ch1.betterlife.events.PlayerWalk;
+import me.gt3ch1.betterlife.tabcompletor.TabCompletorHelper;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -38,6 +40,8 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
 		// Initialize Main variable
 		m = this;
+		// Set tab completors
+		getCommand("trail").setTabCompleter(new TabCompletorHelper(m));
 		// Log output
 		getLogger().info(ChatColor.GREEN + "Enabled!");
 	}
