@@ -20,7 +20,7 @@ public class TabCompletorHelper implements TabCompleter {
 	@Override
 	public List<String> onTabComplete(CommandSender arg0, Command command, String alias, String[] args) {
 		String cmd = command.toString();
-		if (cmd.equalsIgnoreCase("cmd")) {
+		if (cmd.equalsIgnoreCase(cmd)) {
 			if (args[0].equalsIgnoreCase("set")) {
 				subCommands = (List<String>) (plugin.getMainConfiguration().getCustomConfig()
 						.getList("enabledParticles"));
