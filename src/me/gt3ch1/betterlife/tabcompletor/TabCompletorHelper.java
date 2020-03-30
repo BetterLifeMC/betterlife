@@ -23,29 +23,34 @@ public class TabCompletorHelper implements TabCompleter {
 	public List<String> onTabComplete(CommandSender commandSender, Command command, String alias, String[] args) {
 		String cmd = command.toString();
 		if (cmd.equalsIgnoreCase("trail") && commandSender instanceof Player) {
-			Player player = (Player)commandSender;
-			if (args.length > 0) {
+			Player player = (Player) commandSender;
+			if (args.length > 1) {
 				if (args[0].equalsIgnoreCase("set")) {
 					subCommands = (List<String>) (plugin.getMainConfiguration().getCustomConfig()
 							.getList("enabledParticles"));
 					for (int i = 0; i < subCommands.size(); i++) {
 						String particle = subCommands.get(i);
-						if(!player.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
+						if (!player.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
 							subCommands.remove(i);
 						}
 					}
 				} else if (args[0].equalsIgnoreCase("rm")) {
 					subCommands = (List<String>) (plugin.getMainConfiguration().getCustomConfig()
 							.getList("enabledParticles"));
-					
+
 				}
-			}else {
+			} else {
 				subCommands.add("set");
 				subCommands.add("rm");
 				subCommands.add("help");
 				subCommands.add("add");
 				subCommands.add("list");
 			}
+			subCommands.add("set");
+			subCommands.add("rm");
+			subCommands.add("help");
+			subCommands.add("add");
+			subCommands.add("list");
 		}
 		return subCommands;
 	}
