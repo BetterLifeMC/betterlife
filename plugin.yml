@@ -1,25 +1,21 @@
 main: me.gt3ch1.betterlife.Main.Main
 name: BetterLife
-version: 0.1
-api-version: 1.13
+version: '0.1'
+api-version: '1.13'
 commands:
     toggledownfall:
         description: Toggles whether or not it is storming
-        usage: |
-                /toggledownfall
+        usage: "Usage: /toggledownfall"
         permission: betterlife.command.toggledownfall
     croptrample:
         description: Toggles off crop trampling.
-        usage: |
-                /croptrample
+        usage: "Usage: /croptrample"
         permission: betterlife.command.toggledownfall
     roadboost:
-    	description: Toggles if you get speed 1 when you are over a defined road.
-    	usage: |
-    			/roadboost
-		permission: betterlife.command.roadboost
+        description: Toggles if you get speed 1 when you are over a defined road.
+        usage: "Usage: /roadboost"
+        permission: betterlife.command.roadboost
     trail:
         description: Sets a fancy trail behind your player
-        usage: |
-            /trail
+        usage: "Usage: /trail [list|help|set|add|rm]"
         permission: betterlife.command.trail
