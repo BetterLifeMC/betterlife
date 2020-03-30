@@ -21,7 +21,7 @@ public class TabCompletorHelper implements TabCompleter {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> onTabComplete(CommandSender commandSender, Command command, String alias, String[] args) {
-		String cmd = command.toString();
+		String cmd = command.getLabel();
 		System.out.println(cmd);
 		if (cmd.equalsIgnoreCase("trail") && commandSender instanceof Player) {
 			Player player = (Player) commandSender;
