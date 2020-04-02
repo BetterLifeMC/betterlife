@@ -5,7 +5,11 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Particle;
+import org.bukkit.World;
+import org.bukkit.WorldType;
+import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -91,6 +95,12 @@ public class TabCompletorHelper implements TabCompleter {
 						subCommands = newList;
 
 					}
+				}
+			case "toggledownfall":
+				for (World w : plugin.getServer().getWorlds()) {
+					if (w.getEnvironment() != Environment.NETHER)
+						if (w.getEnvironment() != Environment.THE_END)
+							subCommands.add(w.getName());
 				}
 			}
 			return subCommands;
