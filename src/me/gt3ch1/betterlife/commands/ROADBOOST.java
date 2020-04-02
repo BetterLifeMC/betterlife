@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 
 public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
 	private Main m;

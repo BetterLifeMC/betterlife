@@ -1,8 +1,10 @@
 package me.gt3ch1.betterlife.Main;
 
+import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import me.gt3ch1.betterlife.events.BlockFade;
+import me.gt3ch1.betterlife.events.ComposterClick;
 import me.gt3ch1.betterlife.events.PlayerJoin;
 import me.gt3ch1.betterlife.events.PlayerWalk;
 import me.gt3ch1.betterlife.tabcompletor.TabCompletorHelper;
@@ -16,11 +18,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public class Main extends JavaPlugin {
 	MainConfigurationHandler ch;
 	PlayerConfigurationHandler pch;
-	Listener blockFadeListener,playerMoveListener,playerJoinListener;
+	Listener blockFadeListener,playerMoveListener,playerJoinListener,composterClickListener;
 	Main m;
 	@Override
 	public void onEnable() {
@@ -35,13 +38,16 @@ public class Main extends JavaPlugin {
 		blockFadeListener = new BlockFade(this);
 	 	playerMoveListener = new PlayerWalk(this);
 	 	playerJoinListener = new PlayerJoin(this);
+	 	composterClickListener = new ComposterClick(this);
 		Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
 		Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
 		Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
+		Bukkit.getPluginManager().registerEvents(composterClickListener,this);
 		// Initialize Main variable
 		m = this;
-		// Set tab completors
-		getCommand("trail").setTabCompleter(new TabCompletorHelper(m));
+		//TODO: Set tab completors.  Need a way to load all of the commands.  I've got an idea
+		// Make the superclass of BetterLifeCommands add to an array of strings in this class.
+		
 		// Log output
 		getLogger().info(ChatColor.GREEN + "Enabled!");
 	}
@@ -54,7 +60,8 @@ public class Main extends JavaPlugin {
 		blockFadeListener = null;
 		playerMoveListener = null;
 		playerMoveListener = null;
-
+		composterClickListener = null;
+		
 		getLogger().info(ChatColor.RED + "Disabled!");
 	}
 

@@ -1,14 +1,15 @@
 package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.Main.Main;
+
+import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.*;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import static me.gt3ch1.betterlife.commands.CommandUtils.*;
 
 public class PlayerJoin implements Listener {
     Main m;
