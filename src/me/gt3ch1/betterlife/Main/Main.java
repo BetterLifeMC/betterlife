@@ -1,6 +1,5 @@
 package me.gt3ch1.betterlife.Main;
 
-import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import me.gt3ch1.betterlife.events.BlockFade;
@@ -18,13 +17,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Main extends JavaPlugin {
-	MainConfigurationHandler ch;
-	PlayerConfigurationHandler pch;
-	Listener blockFadeListener,playerMoveListener,playerJoinListener,composterClickListener;
-	Main m;
+	private MainConfigurationHandler ch;
+	private PlayerConfigurationHandler pch;
+	private Listener blockFadeListener,playerMoveListener,playerJoinListener,composterClickListener;
+	public static ArrayList<String> enabledCommands = new ArrayList<>();
+	public Main m;
 	@Override
 	public void onEnable() {
 		// Config setup
@@ -47,7 +47,9 @@ public class Main extends JavaPlugin {
 		m = this;
 		//TODO: Set tab completors.  Need a way to load all of the commands.  I've got an idea
 		// Make the superclass of BetterLifeCommands add to an array of strings in this class.
-		
+		for (String command : enabledCommands) {
+			getCommand(command).setTabCompleter(new TabCompletorHelper(m));
+		}
 		// Log output
 		getLogger().info(ChatColor.GREEN + "Enabled!");
 	}
@@ -56,7 +58,7 @@ public class Main extends JavaPlugin {
 	public void onDisable() {
 		ch = null;
 		pch = null;
-
+		enabledCommands.clear();
 		blockFadeListener = null;
 		playerMoveListener = null;
 		playerMoveListener = null;
