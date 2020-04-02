@@ -1,4 +1,4 @@
-package me.gt3ch1.betterlife.commands;
+package me.gt3ch1.betterlife.commandhelpers;
 
 import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.ChatColor;

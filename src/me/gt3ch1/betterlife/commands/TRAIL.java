@@ -1,6 +1,8 @@
 package me.gt3ch1.betterlife.commands;
 
 import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
