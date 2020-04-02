@@ -17,6 +17,7 @@ public abstract class BetterLifeCommands extends CommandUtils {
 		this.cs = cs;
 		this.label = label;
 		this.args = args;
+		Main.enabledCommands.add(label);
 	}
 	public CommandSender getCs() {
 		return cs;
