@@ -23,7 +23,6 @@ public class Main extends JavaPlugin {
 	private MainConfigurationHandler ch;
 	private PlayerConfigurationHandler pch;
 	private Listener blockFadeListener,playerMoveListener,playerJoinListener,composterClickListener;
-	public static ArrayList<String> enabledCommands = new ArrayList<>();
 	public Main m;
 	@Override
 	public void onEnable() {
@@ -33,7 +32,7 @@ public class Main extends JavaPlugin {
 		saveDefaultConfig();
 		pch.getCustomConfig();
 		pch.saveCustomConfig();
-
+		String[] enabledTabCommands = {"toggledownfall","trail"};
 		// Listener setup
 		blockFadeListener = new BlockFade(this);
 	 	playerMoveListener = new PlayerWalk(this);
@@ -47,7 +46,7 @@ public class Main extends JavaPlugin {
 		m = this;
 		//TODO: Set tab completors.  Need a way to load all of the commands.  I've got an idea
 		// Make the superclass of BetterLifeCommands add to an array of strings in this class.
-		for (String command : enabledCommands) {
+		for (String command : enabledTabCommands) {
 			getCommand(command).setTabCompleter(new TabCompletorHelper(m));
 		}
 		// Log output
@@ -58,7 +57,7 @@ public class Main extends JavaPlugin {
 	public void onDisable() {
 		ch = null;
 		pch = null;
-		enabledCommands.clear();
+	
 		blockFadeListener = null;
 		playerMoveListener = null;
 		playerMoveListener = null;
