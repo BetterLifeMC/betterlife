@@ -1,4 +1,4 @@
-package me.gt3ch1.betterlife.commands;
+package me.gt3ch1.betterlife.commandhelpers;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -36,5 +36,6 @@ public abstract class BetterLifeCommands extends CommandUtils {
 	public Main getPlugin() {
 		return m;
 	}
+	
 	public abstract boolean onCommand(CommandSender sender, Command c, String command, String[] args);
 }
