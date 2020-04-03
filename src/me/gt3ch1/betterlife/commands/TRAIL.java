@@ -39,7 +39,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 								sendListTrails(player, allowedParticles);
 								return true;
 							case "toggle":
-								if (player.hasPermission("betterlife.command.trail.toggle")) {
+								if (player.hasPermission("betterlife.trail.toggle")) {
 									boolean trailsEnabled = CommandUtils.getPlayerConfiguration().getCustomConfig().getBoolean("player." + player.getUniqueId().toString() + ".trails.enabled");
 									CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." + player.getUniqueId().toString() + ".trails.enabled", !trailsEnabled);
 									if (!trailsEnabled)
@@ -59,12 +59,12 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 					case 2:
 						switch(args[0]) {
 							case "set":
-								if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.command.trail.particle." + args[1].toLowerCase()) || player.hasPermission("betterlife.command.trail.particle.*"))) {
+								if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()) || player.hasPermission("betterlife.trail.particle.*"))) {
 									CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." + player.getUniqueId().toString() + ".trail", args[1].toUpperCase());
 									CommandUtils.getPlayerConfiguration().saveCustomConfig();
 									sendBannerMessage(player, ChatColor.GRAY + "Your trail is now set to: " + ChatColor.GOLD + args[1].toUpperCase());
 									return true;
-								} else if (!player.hasPermission("betterlife.command.trail.particle." + args[1].toLowerCase())) {
+								} else if (!player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase())) {
 									sendBannerMessage(player, ChatColor.DARK_RED + "You need permission to use that trail!");
 									return true;
 								} else if (!allowedParticles.contains(args[1].toUpperCase())) {
@@ -72,7 +72,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 									return true;
 								}
 							case "add":
-								if (player.hasPermission("betterlife.command.trail.admin")) {
+								if (player.hasPermission("betterlife.trail.admin")) {
 									if (allowedParticles.contains(args[1].toUpperCase())) {
 										sendBannerMessage(player, ChatColor.DARK_RED + "This effect is already enabled!");
 										return true;
@@ -92,7 +92,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 									}
 								}
 							case "rm":
-								if (player.hasPermission("betterlife.command.trail.admin")) {
+								if (player.hasPermission("betterlife.trail.admin")) {
 									if (!allowedParticles.contains(args[1].toUpperCase())) {
 										sendBannerMessage(player, ChatColor.DARK_RED + "This effect is already disabled!");
 										return true;
