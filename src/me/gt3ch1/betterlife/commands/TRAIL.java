@@ -100,7 +100,6 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 										try {
 											if (Particle.valueOf(args[1].toUpperCase()) != null) {
 												allowedParticles.remove(args[1].toUpperCase());
-												System.out.println("Allowed particles :: " + allowedParticles.toString());
 												CommandUtils.getMainConfiguration().getCustomConfig().set("trail.enabledParticles", allowedParticles);
 												CommandUtils.getMainConfiguration().saveCustomConfig();
 												sendBannerMessage(player, ChatColor.GRAY + "Effect " + ChatColor.GOLD + args[1].toUpperCase() + ChatColor.GRAY + " has been " + ChatColor.RED + "disabled" + ChatColor.GRAY + "!");
