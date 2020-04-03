@@ -78,8 +78,9 @@ public class TabCompleterHelper implements TabCompleter {
 						subCommands = newList;
 						break;
 					case "add":
-						subCommands = (List<String>) (CommandUtils.getMainConfiguration().getCustomConfig()
-								.getList("trail.enabledParticles"));
+						subCommands = (List<String>) CommandUtils.getMainConfiguration().getCustomConfig()
+								.getList("trail.enabledParticles");
+						System.out.println(Arrays.asList(subCommands));
 						for (Particle p : particles) {
 							if (!subCommands.contains(p.toString())
 									&& Arrays.stream(args).anyMatch(p.toString()::contains)) {
