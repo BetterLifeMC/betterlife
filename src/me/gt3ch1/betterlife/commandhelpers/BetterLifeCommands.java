@@ -29,7 +29,7 @@ public abstract class BetterLifeCommands extends CommandUtils {
 		return args;
 	}
 	public String getPermission() {
-		return "betterlife.command." + permission;
+		return "betterlife." + permission;
 	}
 	
 	public abstract boolean onCommand(CommandSender sender, Command c, String command, String[] args);
