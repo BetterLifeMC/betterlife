@@ -114,6 +114,7 @@ public class TabCompleterHelper implements TabCompleter {
 						if (Arrays.stream(args).anyMatch("version"::contains)) {
 							subCommands.add("version");
 						}
+						break;
 					default:
 						break;
 				}
