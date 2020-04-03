@@ -61,6 +61,11 @@ public class CommandUtils {
 		return pch;
 	}
 
+	public static void reloadConfiguration(Main m) {
+		m.reloadConfig();
+		pch.reloadCustomConfig();
+	}
+
 	public static String[] getEnabledTabCommands() {
 		return enabledTabCommands;
 	}
