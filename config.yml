@@ -10,7 +10,7 @@ defaultParticle: NOTE
 # Make sure they are in ALL CAPS
 # You can add them in game or here, though be careful of the format
 trail:
-	enabledParticles:
-	  - NOTE
-	  - CRIT
-	  - CLOUD
+    enabledParticles:
+        - NOTE
+        - CRIT
+        - CLOUD
