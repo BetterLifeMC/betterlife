@@ -9,7 +9,8 @@ defaultParticle: NOTE
 # The list of particle effects that players are allowed to use
 # Make sure they are in ALL CAPS
 # You can add them in game or here, though be careful of the format
-enabledParticles:
-  - NOTE
-  - CRIT
-  - CLOUD
+trail:
+    enabledParticles:
+        - NOTE
+        - CRIT
+        - CLOUD
