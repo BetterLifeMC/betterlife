@@ -3,19 +3,22 @@ name: BetterLife
 version: '0.1'
 api-version: '1.13'
 commands:
+    bl:
+        description: The primary command for BetterLife
+        usage: "Usage: /bl [args]"
     toggledownfall:
         description: Toggles whether or not it is storming
         usage: "Usage: /toggledownfall"
-        permission: betterlife.command.toggledownfall
+        permission: betterlife.toggledownfall
     croptrample:
         description: Toggles off crop trampling.
         usage: "Usage: /croptrample"
-        permission: betterlife.command.croptrample
+        permission: betterlife.croptrample
     roadboost:
         description: Toggles if you get speed 1 when you are over a defined road.
         usage: "Usage: /roadboost"
-        permission: betterlife.command.roadboost
+        permission: betterlife.roadboost
     trail:
         description: Sets a fancy trail behind your player
         usage: "Usage: /trail [list|help|set|add|rm]"
-        permission: betterlife.command.trail
+        permission: betterlife.trail
