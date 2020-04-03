@@ -31,77 +31,91 @@ public class TabCompleterHelper implements TabCompleter {
 			switch (cmd) {
 			case "trail":
 				switch (args.length) {
-				case 1:
-					if (Arrays.stream(args).anyMatch("set"::contains)) {
-						subCommands.add("set");
-					}
-					if (Arrays.stream(args).anyMatch("list"::contains)) {
-						subCommands.add("list");
-					}
-					if (Arrays.stream(args).anyMatch("help"::contains)) {
-						subCommands.add("help");
-					}
-					if (Arrays.stream(args).anyMatch("toggle"::contains)) {
-						subCommands.add("toggle");
-					}
-					if (player.hasPermission("betterlife.command.trail.admin")) {
-						if (Arrays.stream(args).anyMatch("add"::contains)) {
-							subCommands.add("add");
+					case 1:
+						if (Arrays.stream(args).anyMatch("set"::contains)) {
+							subCommands.add("set");
 						}
-						if (Arrays.stream(args).anyMatch("rm"::contains)) {
-							subCommands.add("rm");
+						if (Arrays.stream(args).anyMatch("list"::contains)) {
+							subCommands.add("list");
 						}
-					}
-					break;
-				case 2:
-					switch (args[0]) {
-					case "set":
-						subCommands = (List<String>) (CommandUtils.getMainConfiguration().getCustomConfig()
-								.getList("trail.enabledParticles"));
-						for (int i = 0; i < subCommands.size(); i++) {
-							String particle = subCommands.get(i);
-							if (Arrays.stream(args).anyMatch(particle::contains) && player
-									.hasPermission("betterlife.command.trail.particle." + particle.toLowerCase())) {
-								newList.add(particle);
+						if (Arrays.stream(args).anyMatch("help"::contains)) {
+							subCommands.add("help");
+						}
+						if (Arrays.stream(args).anyMatch("toggle"::contains)) {
+							subCommands.add("toggle");
+						}
+						if (player.hasPermission("betterlife.trail.admin")) {
+							if (Arrays.stream(args).anyMatch("add"::contains)) {
+								subCommands.add("add");
+							}
+							if (Arrays.stream(args).anyMatch("rm"::contains)) {
+								subCommands.add("rm");
 							}
 						}
-						subCommands = newList;
 						break;
-					case "rm":
-						subCommands = (List<String>) (CommandUtils.getMainConfiguration().getCustomConfig()
-								.getList("trail.enabledParticles"));
-						for (int i = 0; i < subCommands.size(); i++) {
-							if (Arrays.stream(args).anyMatch(subCommands.get(i)::contains)) {
-								newList.add(subCommands.get(i));
-							}
+					case 2:
+						switch (args[0]) {
+							case "set":
+								subCommands = (List<String>) (CommandUtils.getMainConfiguration().getCustomConfig()
+										.getList("trail.enabledParticles"));
+								for (int i = 0; i < subCommands.size(); i++) {
+									String particle = subCommands.get(i);
+									if (Arrays.stream(args).anyMatch(particle::contains) && player
+											.hasPermission("betterlife.trail.particle." + particle.toLowerCase())) {
+										newList.add(particle);
+									}
+								}
+								subCommands = newList;
+								break;
+							case "rm":
+								subCommands = (List<String>) (CommandUtils.getMainConfiguration().getCustomConfig()
+										.getList("trail.enabledParticles"));
+								for (int i = 0; i < subCommands.size(); i++) {
+									if (Arrays.stream(args).anyMatch(subCommands.get(i)::contains)) {
+										newList.add(subCommands.get(i));
+									}
+								}
+								subCommands = newList;
+								break;
+							case "add":
+								subCommands = (List<String>) CommandUtils.getMainConfiguration().getCustomConfig()
+										.getList("trail.enabledParticles");
+								System.out.println(Arrays.asList(subCommands));
+								for (Particle p : particles) {
+									if (!subCommands.contains(p.toString())
+											&& Arrays.stream(args).anyMatch(p.toString()::contains)) {
+										newList.add(p.toString());
+									}
+								}
+								subCommands = newList;
+								break;
+							default:
+								break;
 						}
-						subCommands = newList;
-						break;
-					case "add":
-						subCommands = (List<String>) CommandUtils.getMainConfiguration().getCustomConfig()
-								.getList("trail.enabledParticles");
-						System.out.println(Arrays.asList(subCommands));
-						for (Particle p : particles) {
-							if (!subCommands.contains(p.toString())
-									&& Arrays.stream(args).anyMatch(p.toString()::contains)) {
-								newList.add(p.toString());
-							}
-						}
-						subCommands = newList;
-						break;
 					default:
 						break;
-					}
-				default:
-					break;
 				}
 				break;
 			case "toggledownfall":
 				for (World w : Bukkit.getServer().getWorlds()) {
 					if (w.getEnvironment() != Environment.NETHER && w.getEnvironment() != Environment.THE_END) {
 						subCommands.add(w.getName());
-						player.sendMessage("Why me?");
 					}
+				}
+				break;
+			case "bl":
+				switch (args.length) {
+					case 1:
+						if (player.hasPermission("betterlife.reload") || player.hasPermission("betterlife.admin")) {
+							if (Arrays.stream(args).anyMatch("reload"::contains)) {
+								subCommands.add("reload");
+							}
+						}
+						if (Arrays.stream(args).anyMatch("version"::contains)) {
+							subCommands.add("version");
+						}
+					default:
+						break;
 				}
 				break;
 			default:
