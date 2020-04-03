@@ -1,18 +1,20 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
 import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
+import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class CommandUtils {
-	public ArrayList<String> commandStrings = new ArrayList<>();
 	public static Main m = Main.getPlugin(Main.class);
+	private static MainConfigurationHandler ch;
+	private static PlayerConfigurationHandler pch;
 	public static String betterLifeBanner = ChatColor.RED + "[[" + ChatColor.BLUE + "BetterLife" + ChatColor.RED + "]] " + ChatColor.RESET;
-
+	public static String[] enabledTabCommands = {"toggledownfall","trail"};
 
 	public static void sendBannerMessage(CommandSender sender, String message1) {
 		if (sender instanceof Player) {
@@ -38,7 +40,28 @@ public class CommandUtils {
 		});
 	}
 
-	public static void sendInvalidMessage(CommandSender sender, String cmd) {
-		sendBannerMessage(sender, ChatColor.DARK_RED + "Invalid usage! Try /" + cmd.toLowerCase() + " help");
+    public static void enableConfiguration(Main m) {
+		ch = new MainConfigurationHandler(m);
+		pch = new PlayerConfigurationHandler(m);
+		m.saveDefaultConfig();
+		pch.getCustomConfig();
+		pch.saveCustomConfig();
+    }
+
+	public static void disableConfiguration(Main m) {
+		ch = null;
+		pch = null;
+	}
+
+	public static MainConfigurationHandler getMainConfiguration() {
+		return ch;
+	}
+
+	public static PlayerConfigurationHandler getPlayerConfiguration() {
+		return pch;
+	}
+
+	public static String[] getEnabledTabCommands() {
+		return enabledTabCommands;
 	}
 }
