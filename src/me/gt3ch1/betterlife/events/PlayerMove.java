@@ -1,6 +1,6 @@
 package me.gt3ch1.betterlife.events;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -11,18 +11,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class PlayerWalk implements Listener {
-	Main m;
-
-	public PlayerWalk(Main m) {
-		this.m = m;
-	}
+public class PlayerMove implements Listener {
 
 	@EventHandler
 	public void roadBoostEvents(PlayerMoveEvent e) {
 
 		// Check if RoadBoost is enabled for the player
-		boolean boostEnabled = m.getPlayerConfiguration().getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".pathboost");
+		boolean boostEnabled = CommandUtils.getPlayerConfiguration().getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".pathboost");
 
 		// Get the block the player is currently standing on
 		Location loc = e.getPlayer().getLocation();
@@ -38,8 +33,7 @@ public class PlayerWalk implements Listener {
 	@EventHandler
 	public void trailsEvents(PlayerMoveEvent e) {
 		Location location = e.getPlayer().getLocation();
-		boolean trailEnabled = m.getPlayerConfiguration().getCustomConfig()
-				.getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".trails.enabled");
+		boolean trailEnabled = CommandUtils.getPlayerConfiguration().getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".trails.enabled");
 		if (trailEnabled) {
 
 			int direction = (int) location.getYaw();
@@ -62,12 +56,11 @@ public class PlayerWalk implements Listener {
 			Particle p;
 			location.setY(location.getY() + 1);
 			try {
-				p = Particle.valueOf(m.getPlayerConfiguration().getCustomConfig()
-						.getString("player." + e.getPlayer().getUniqueId() + ".trail"));
+				p = Particle.valueOf(CommandUtils.getPlayerConfiguration().getCustomConfig().getString("player." + e.getPlayer().getUniqueId() + ".trail"));
 
 				e.getPlayer().getWorld().spawnParticle(p, location, 1);
 			} catch (Exception ex) {
-				p = Particle.valueOf(m.getMainConfiguration().getCustomConfig().getString("defaultparticle"));
+				p = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultparticle"));
 				e.getPlayer().getWorld().spawnParticle(p, location, 1);
 				ex.printStackTrace();
 			}
