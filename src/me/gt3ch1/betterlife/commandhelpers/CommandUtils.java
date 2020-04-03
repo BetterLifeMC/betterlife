@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import java.util.LinkedHashMap;
 
 public class CommandUtils {
-	public static Main m = Main.getPlugin(Main.class);
-	private static MainConfigurationHandler ch;
-	private static PlayerConfigurationHandler pch;
+	public static Main m = Main.m;
+	public static MainConfigurationHandler ch;
+	public static PlayerConfigurationHandler pch;
 	public static String betterLifeBanner = ChatColor.RED + "[[" + ChatColor.BLUE + "BetterLife" + ChatColor.RED + "]] " + ChatColor.RESET;
 	public static String[] enabledTabCommands = {"toggledownfall","trail"};
 
