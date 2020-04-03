@@ -14,7 +14,7 @@ public class CommandUtils {
 	public static MainConfigurationHandler ch;
 	public static PlayerConfigurationHandler pch;
 	public static String betterLifeBanner = ChatColor.RED + "[[" + ChatColor.BLUE + "BetterLife" + ChatColor.RED + "]] " + ChatColor.RESET;
-	public static String[] enabledTabCommands = {"toggledownfall","trail"};
+	public static String[] enabledTabCommands = {"toggledownfall","trail","bl"};
 
 	public static void sendBannerMessage(CommandSender sender, String message1) {
 		if (sender instanceof Player) {
