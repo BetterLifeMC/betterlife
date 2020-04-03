@@ -20,6 +20,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 		this.onCommand(cs, c, label, args);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
 		if (sender instanceof Player) {
@@ -145,6 +146,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 		sendHelpMessage(sender, "trail", helpHash);
 	}
 
+	@SuppressWarnings("unused")
 	private void invalidMessage(CommandSender sender) {
 		sendInvalidMessage(sender, getClass().getSimpleName());
 	}
