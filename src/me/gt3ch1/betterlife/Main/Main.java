@@ -19,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 public class Main extends JavaPlugin {
 	private Listener blockFadeListener,playerMoveListener,playerJoinListener,composterClickListener;
 	Listener[] enabledListeners = {blockFadeListener,playerMoveListener,playerJoinListener,composterClickListener};
-	public Main m;
+	public static Main m;
 
 	@Override
 	public void onEnable() {
@@ -52,8 +52,8 @@ public class Main extends JavaPlugin {
 		// Set the configuration managers to null
 		CommandUtils.disableConfiguration(m);
 		// Set all listeners to null
-		for (Listener listener : enabledListeners) {
-			listener = null;
+		for (Listener l : enabledListeners) {
+			l = null;
 		}
 		// Log output
 		getLogger().info(ChatColor.RED + "Disabled!");
