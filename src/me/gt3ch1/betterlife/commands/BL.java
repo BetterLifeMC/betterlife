@@ -3,7 +3,6 @@ package me.gt3ch1.betterlife.commands;
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,7 +30,7 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
                             if (p.hasPermission("betterlife.reload")) {
                                 reloadConfig(p);
                             } else {
-                                sendBannerMessage(p, ChatColor.DARK_RED + "You don't have permission!");
+                                sendBannerMessage(p, "&4You don't have permission!");
                             }
                         } else {
                             reloadConfig(sender);
@@ -51,12 +50,12 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
     }
 
     private static void sendVersion(CommandSender sender) {
-        sendBannerMessage(sender, ChatColor.GRAY + "Version " + ChatColor.GOLD + m.getDescription().getVersion() + ChatColor.GRAY + " of BetterLife installed.");
+        sendBannerMessage(sender, "&7Version &6" + m.getDescription().getVersion() + " &7of BetterLife installed.");
     }
 
     private static void reloadConfig(CommandSender sender) {
-        sendBannerMessage(sender, ChatColor.RED + "Configuration file reloading...");
+        sendBannerMessage(sender, "&eConfiguration file reloading...");
         CommandUtils.reloadConfiguration(m);
-        sendBannerMessage(sender, ChatColor.GREEN + "Configuration file reloaded!");
+        sendBannerMessage(sender, "&aConfiguration file reloaded!");
     }
 }
