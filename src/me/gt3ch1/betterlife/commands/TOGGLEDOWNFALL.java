@@ -72,6 +72,11 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
 		return true;
 	}
 
+	/**
+	 * Toggles the weather in @world
+	 * @param world
+	 * @param sender
+	 */
 	private void toggleWeather(World world, CommandSender sender) {
 		if (world.hasStorm() || world.isThundering()) {
 			world.setStorm(false);
