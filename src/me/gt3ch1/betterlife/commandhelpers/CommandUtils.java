@@ -2,6 +2,7 @@ package me.gt3ch1.betterlife.commandhelpers;
 
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
+import me.gt3ch1.betterlife.configuration.ParticleConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -14,6 +15,7 @@ public class CommandUtils {
 	private static Main m = Main.m;
 	public static MainConfigurationHandler ch;
 	public static PlayerConfigurationHandler pch;
+	public static ParticleConfigurationHandler partch;
 	public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[[&9BetterLife&c]] ") + ChatColor.RESET;
 	public static String[] enabledTabCommands = {"toggledownfall","trail","bl"};
 
@@ -64,11 +66,16 @@ public class CommandUtils {
      * Enables & loads the configuration
      */
     public static void enableConfiguration() {
+    	// TODO: Setup a scheme to recognize out-of-date config files,
+		// move them to old files, and generate current versions
 		ch = new MainConfigurationHandler(m);
 		pch = new PlayerConfigurationHandler(m);
+		partch = new ParticleConfigurationHandler(m);
 		m.saveDefaultConfig();
 		pch.getCustomConfig();
 		pch.saveCustomConfig();
+		partch.getParticleConfig();
+		partch.saveParticleConfig();
     }
 
 	/**
@@ -77,6 +84,7 @@ public class CommandUtils {
 	public static void disableConfiguration() {
 		ch = null;
 		pch = null;
+		partch = null;
 	}
 
 	/**
@@ -94,11 +102,19 @@ public class CommandUtils {
 	}
 
 	/**
+	 * @return ParticleConfigurationHandler
+	 */
+	public static ParticleConfigurationHandler getParticleConfiguration() {
+		return partch;
+	}
+
+	/**
 	 * Reloads all configuration helpers
 	 */
 	public static void reloadConfiguration() {
 		m.reloadConfig();
 		pch.reloadCustomConfig();
+		partch.reloadParticleConfig();
 	}
 
 	/**
