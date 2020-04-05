@@ -85,7 +85,7 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
      */
     private static void reloadConfig(CommandSender sender) {
         sendBannerMessage(sender, "&eConfiguration file reloading...");
-        CommandUtils.reloadConfiguration(m);
+        CommandUtils.reloadConfiguration();
         sendBannerMessage(sender, "&aConfiguration file reloaded!");
     }
 }
