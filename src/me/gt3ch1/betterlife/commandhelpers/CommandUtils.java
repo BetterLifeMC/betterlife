@@ -20,10 +20,10 @@ public class CommandUtils {
 	/**
 	 * Send the sender the BetterLife banner.
 	 * @param sender
-	 * @param message1
+	 * @param message
 	 */
-	public static void sendBannerMessage(CommandSender sender, String message1) {
-		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message1);
+	public static void sendBannerMessage(CommandSender sender, String message) {
+		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message);
 		if (sender instanceof Player) {
 			sender.sendMessage(betterLifeBanner + coloredMessage);
 		} else {
@@ -34,11 +34,11 @@ public class CommandUtils {
 	/**
 	 * Sends the sender a message minus the BetterLife banner.
 	 * @param sender
-	 * @param message1
+	 * @param message
 	 * @param banner
 	 */
-	public static void sendBannerMessage(CommandSender sender, String message1, boolean banner) {
-		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message1);
+	public static void sendBannerMessage(CommandSender sender, String message, boolean banner) {
+		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message);
 		if (sender instanceof Player) {
 			sender.sendMessage(coloredMessage);
 		} else {
