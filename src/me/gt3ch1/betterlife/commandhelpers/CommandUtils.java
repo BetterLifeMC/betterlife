@@ -75,7 +75,7 @@ public class CommandUtils {
 		pch.getCustomConfig();
 		pch.saveCustomConfig();
 		partch.getParticleConfig();
-		partch.saveParticleConfig();
+		partch.saveDefaultParticleConfig();
     }
 
 	/**
