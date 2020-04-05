@@ -2,7 +2,6 @@ package me.gt3ch1.betterlife.commands;
 
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
@@ -25,28 +24,26 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
 					Player player = (Player) sender;
 					World world = player.getWorld();
 					toggleWeather(world, player);
-					break;
 				} else {
 					World world = Bukkit.getServer().getWorlds().get(0);
 					toggleWeather(world, sender);
-					break;
 				}
+				break;
 			case 1:
 				try {
 					World world = Bukkit.getServer().getWorld(args[0]);
 					if (world.getEnvironment() != Environment.NETHER && world.getEnvironment() != Environment.THE_END) {
 						toggleWeather(world, sender);
-						break;
 					} else {
-						sendBannerMessage(sender, ChatColor.DARK_RED + "Can't change weather in that world!");
-						break;
+						sendBannerMessage(sender, "&4Can't change weather in that world!");
 					}
+					break;
 				} catch (NullPointerException ex) {
-					sendBannerMessage(sender, ChatColor.DARK_RED + "That world doesn't exist!");
+					sendBannerMessage(sender, "&4That world doesn't exist!");
 					break;
 				}
 			default:
-				sendBannerMessage(sender, ChatColor.DARK_RED + "Too many arguments!");
+				sendBannerMessage(sender, "&4Too many arguments!");
 				return false;
 			}
 		return true;
@@ -56,13 +53,11 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
 		if (world.hasStorm() || world.isThundering()) {
 			world.setStorm(false);
 			world.setThundering(false);
-			sendBannerMessage(sender, ChatColor.GRAY + "Setting weather to " + ChatColor.GOLD + "clear" + ChatColor.GRAY
-					+ " in world " + ChatColor.GOLD + world.getName() + ChatColor.GRAY + "!");
+			sendBannerMessage(sender, "&7Setting weather to &6clear &7in world &6" + world.getName() + "&7!");
 		} else {
 			world.setStorm(true);
 			world.setThundering(true);
-			sendBannerMessage(sender, ChatColor.GRAY + "Setting weather to " + ChatColor.GOLD + "storm" + ChatColor.GRAY
-					+ " in world " + ChatColor.GOLD + world.getName() + ChatColor.GRAY + "!");
+			sendBannerMessage(sender, "&7Setting weather to &6stormy &7in world &6" + world.getName() + "&7!");
 		}
 	}
 }
