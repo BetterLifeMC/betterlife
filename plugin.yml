@@ -1,6 +1,9 @@
 main: me.gt3ch1.betterlife.Main.Main
 name: BetterLife
-version: '0.1'
+version: '0.2'
+description: "Basic server Essentials for the outgoing server owner"
+author: GT3CH1
+authors: [Starmism]
 api-version: '1.13'
 commands:
     bl:
