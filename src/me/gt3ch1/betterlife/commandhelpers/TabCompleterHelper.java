@@ -1,6 +1,5 @@
-package me.gt3ch1.betterlife.tabcompleter;
+package me.gt3ch1.betterlife.commandhelpers;
 
-import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Particle;
 import org.bukkit.World;
