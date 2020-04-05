@@ -20,8 +20,6 @@ public class HelpHelper {
 
     private static void setupTrailHelpHash() {
         trailHelpHash.put("set <trail>", "Sets the current player's trail");
-        trailHelpHash.put("add <trail>", "Adds the trail to the config");
-        trailHelpHash.put("rm <trail>", "Removes the trail from the config");
         trailHelpHash.put("list", "Lists the enabled trails");
         trailHelpHash.put("toggle", "Toggles your trail");
     }

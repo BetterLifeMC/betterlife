@@ -3,7 +3,6 @@ package me.gt3ch1.betterlife.commands;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
-import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -65,46 +64,6 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 							} else if (!allowedParticles.contains(args[1].toUpperCase())) {
 								sendBannerMessage(player, "&4That particle is disabled on this server! Try /trail list to see the list of available trails.");
 								return true;
-							}
-						case "add":
-							if (player.hasPermission("betterlife.trail.admin")) {
-								if (allowedParticles.contains(args[1].toUpperCase())) {
-									sendBannerMessage(player, "&4This effect is already enabled!");
-									return true;
-								} else {
-									try {
-										if (Particle.valueOf(args[1].toUpperCase()) != null) {
-											allowedParticles.add(args[1].toUpperCase());
-											CommandUtils.getMainConfiguration().getCustomConfig().set("trail.enabledParticles", allowedParticles);
-											CommandUtils.getMainConfiguration().saveCustomConfig();
-											sendBannerMessage(player, "&7Effect &6" + args[1].toUpperCase() + " &7has been &aenabled&7!");
-											return true;
-										}
-									} catch (IllegalArgumentException e) {
-										sendBannerMessage(player, "&4Invalid particle effect!");
-										return true;
-									}
-								}
-							}
-						case "rm":
-							if (player.hasPermission("betterlife.trail.admin")) {
-								if (!allowedParticles.contains(args[1].toUpperCase())) {
-									sendBannerMessage(player, "&4This effect is already disabled!");
-									return true;
-								} else {
-									try {
-										if (Particle.valueOf(args[1].toUpperCase()) != null) {
-											allowedParticles.remove(args[1].toUpperCase());
-											CommandUtils.getMainConfiguration().getCustomConfig().set("trail.enabledParticles", allowedParticles);
-											CommandUtils.getMainConfiguration().saveCustomConfig();
-											sendBannerMessage(player, "&7Effect &6" + args[1].toUpperCase() + " &7has been &cdisabled&7!");
-											return true;
-										}
-									} catch (IllegalArgumentException e) {
-										sendBannerMessage(player, "&4Invalid particle effect!");
-										return true;
-									}
-								}
 							}
 						default:
 							sendBannerMessage(player, "&4That's not a valid command! Try /trail help.");
