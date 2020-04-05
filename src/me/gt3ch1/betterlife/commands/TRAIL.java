@@ -22,7 +22,11 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
 		LinkedHashMap<String, String> helpHash = HelpHelper.getAHelpHash("trail");
-		List<String> allowedParticles = (List<String>) CommandUtils.getMainConfiguration().getCustomConfig().getList("trail.enabledParticles");
+		List<String> allowedParticles = (List<String>) CommandUtils.getParticleConfiguration().getParticleConfig().getList("enabledParticles");
+		if (args.length == 0) {
+			sendHelpMessage(sender, "trail", helpHash);
+			return true;
+		}
 		switch(args[0]) {
 			case "list":
 				if (sender instanceof Player) {
