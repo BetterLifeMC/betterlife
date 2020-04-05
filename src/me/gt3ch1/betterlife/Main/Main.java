@@ -22,10 +22,10 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		// Initialize Main variable
+		// Initialize Main variable to reference
 		m = this;
 		// Config setup
-		CommandUtils.enableConfiguration(m);
+		CommandUtils.enableConfiguration();
 		// Listener setup
 		blockFadeListener = new BlockFade();
 		playerMoveListener = new PlayerMove();
@@ -33,6 +33,8 @@ public class Main extends JavaPlugin {
 /*		for (Listener listener : enabledListeners) {
 			Bukkit.getPluginManager().registerEvents(listener, this);
 		}*/
+		// Somehow our for loop to enable the listeners doesn't work.
+		// This will have to suffice.
 		Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
 		Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
 		Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
@@ -46,10 +48,13 @@ public class Main extends JavaPlugin {
 		getLogger().info("Hello!");
 	}
 
+	/**
+	 * Prep the plugin for shutdown.
+	 */
 	@Override
 	public void onDisable() {
 		// Set the configuration managers to null
-		CommandUtils.disableConfiguration(m);
+		CommandUtils.disableConfiguration();
 		// Set all listeners to null
 		for (Listener l : enabledListeners) {
 			l = null;
@@ -58,10 +63,19 @@ public class Main extends JavaPlugin {
 		getLogger().info("Goodbye!");
 	}
 
+	/**
+	 * Runs a command designated for the plugin
+	 */
 	@Override
 	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
 		// Creates a new instance of the command file
 		try {
+			/* 
+			 * This will set the command executor for the command passed in.
+			 * Once it is set, this does nothing.  The commands class file
+			 * is located in package me.gt3ch1.betterlife.commands.LABEL
+			 * where label is the name of the command in caps.
+			 */
 			this.getCommand(label).setExecutor((CommandExecutor) Class
 					.forName("me.gt3ch1.betterlife.commands." + label.toUpperCase())
 					.getConstructor(String.class, CommandSender.class, Command.class, String.class, String[].class)
