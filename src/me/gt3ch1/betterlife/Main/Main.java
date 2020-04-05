@@ -2,7 +2,6 @@ package me.gt3ch1.betterlife.Main;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.events.BlockFade;
-import me.gt3ch1.betterlife.events.ComposterClick;
 import me.gt3ch1.betterlife.events.PlayerJoin;
 import me.gt3ch1.betterlife.events.PlayerMove;
 import me.gt3ch1.betterlife.tabcompleter.TabCompleterHelper;
@@ -17,8 +16,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.lang.reflect.InvocationTargetException;
 
 public class Main extends JavaPlugin {
-	private Listener blockFadeListener,playerMoveListener,playerJoinListener,composterClickListener;
-	Listener[] enabledListeners = {blockFadeListener,playerMoveListener,playerJoinListener,composterClickListener};
+	private Listener blockFadeListener,playerMoveListener,playerJoinListener;
+	Listener[] enabledListeners = {blockFadeListener,playerMoveListener,playerJoinListener};
 	public static Main m;
 
 	@Override
@@ -29,7 +28,6 @@ public class Main extends JavaPlugin {
 		CommandUtils.enableConfiguration(m);
 		// Listener setup
 		blockFadeListener = new BlockFade();
-		composterClickListener = new ComposterClick();
 		playerMoveListener = new PlayerMove();
 		playerJoinListener = new PlayerJoin();
 /*		for (Listener listener : enabledListeners) {
@@ -38,7 +36,6 @@ public class Main extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
 		Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
 		Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
-		Bukkit.getPluginManager().registerEvents(composterClickListener, this);
 		// Tab Completion setup
 		for (String command : CommandUtils.getEnabledTabCommands()) {
 			getCommand(command).setTabCompleter(new TabCompleterHelper());
