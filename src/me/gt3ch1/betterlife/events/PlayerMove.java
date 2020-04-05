@@ -32,18 +32,23 @@ public class PlayerMove implements Listener {
 
 	@EventHandler
 	public void trailsEvents(PlayerMoveEvent e) {
+		// Get the players location
 		Location location = e.getPlayer().getLocation();
+		// Get whether or not the player has enabled trails
 		boolean trailEnabled = CommandUtils.getPlayerConfiguration().getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".trails.enabled");
+		// If it is
 		if (trailEnabled) {
-
+			// Get the yaw of the player
 			int direction = (int) location.getYaw();
-
+			// Get some directions
 			if (direction < 0) {
 				direction += 360;
 				direction = (direction + 45) / 90;
 			} else {
 				direction = (direction + 45) / 90;
 			}
+			// Set the location of the particle spawn to be directly
+			// behind the player at any given time
 			if (direction == 1) {
 				location.setX(location.getX() + 1);
 			} else if (direction == 2) {
@@ -53,16 +58,22 @@ public class PlayerMove implements Listener {
 			} else {
 				location.setZ(location.getZ() - 1);
 			}
+			// Create the particle
 			Particle p;
+			// Move the particle up one block so it isn't in the ground.
 			location.setY(location.getY() + 1);
 			try {
+				// Actually create the particle based off of the
+				// players preference.
 				p = Particle.valueOf(CommandUtils.getPlayerConfiguration().getCustomConfig().getString("player." + e.getPlayer().getUniqueId() + ".trail"));
-
+				// Spawn the particle at the location.
 				e.getPlayer().getWorld().spawnParticle(p, location, 1);
 			} catch (Exception ex) {
+				// Get the default particle from the main configuration.
 				p = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultparticle"));
+				// Spawn the particle at the location
 				e.getPlayer().getWorld().spawnParticle(p, location, 1);
-				ex.printStackTrace();
+				// The exception is now handled.
 			}
 		}
 	}
