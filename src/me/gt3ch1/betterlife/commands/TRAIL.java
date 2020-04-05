@@ -1,8 +1,8 @@
 package me.gt3ch1.betterlife.commands;
 
-import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import org.bukkit.Particle;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,7 +13,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class TRAIL extends BetterLifeCommands implements CommandExecutor {
-	Main m;
 
 	public TRAIL(String permission, CommandSender cs, Command c, String label, String[] args) {
 		super(permission, cs, c, label, args);
@@ -23,12 +22,13 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
+		LinkedHashMap<String, String> helpHash = HelpHelper.getAHelpHash("trail");
 		if (sender instanceof Player) {
 			Player player = (Player) sender;
 			List<String> allowedParticles = (List<String>) CommandUtils.getMainConfiguration().getCustomConfig().getList("trail.enabledParticles");
 			switch(args.length) {
 				case 0:
-					sendHelp(player);
+					sendHelpMessage(player, "trail", helpHash);
 					return true;
 				case 1:
 					switch(args[0]) {
@@ -45,7 +45,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 								return true;
 							}
 						case "help":
-							sendHelp(player);
+							sendHelpMessage(player, "trail", helpHash);
 							return true;
 						default:
 							sendBannerMessage(player, "&4That's not a valid command. Try /trail help.");
@@ -128,16 +128,5 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 				sendBannerMessage(player, "&d" + allowedParticles.get(i), false);
 			}
 		}
-	}
-
-	private void sendHelp(CommandSender sender) {
-		LinkedHashMap<String, String> helpHash = new LinkedHashMap<>();
-		helpHash.put("set <trail>", "Sets the current player's trail");
-		helpHash.put("add <trail>", "Adds the trail to the config");
-		helpHash.put("rm <trail>", "Removes the trail from the config");
-		helpHash.put("list", "Lists the enabled trails");
-		helpHash.put("toggle", "Toggles your trail");
-
-		sendHelpMessage(sender, "trail", helpHash);
 	}
 }

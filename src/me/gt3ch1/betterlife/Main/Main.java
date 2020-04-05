@@ -1,10 +1,11 @@
 package me.gt3ch1.betterlife.Main;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import me.gt3ch1.betterlife.events.BlockFade;
 import me.gt3ch1.betterlife.events.PlayerJoin;
 import me.gt3ch1.betterlife.events.PlayerMove;
-import me.gt3ch1.betterlife.tabcompleter.TabCompleterHelper;
+import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -39,6 +40,8 @@ public class Main extends JavaPlugin {
 		for (String command : CommandUtils.getEnabledTabCommands()) {
 			getCommand(command).setTabCompleter(new TabCompleterHelper());
 		}
+		// Setup help hashes
+		HelpHelper.setupAllHelpHashes();
 		// Log output
 		getLogger().info("Hello!");
 	}
@@ -57,7 +60,7 @@ public class Main extends JavaPlugin {
 
 	@Override
 	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
-		// Sends the command to the designated class file
+		// Creates a new instance of the command file
 		try {
 			this.getCommand(label).setExecutor((CommandExecutor) Class
 					.forName("me.gt3ch1.betterlife.commands." + label.toUpperCase())
