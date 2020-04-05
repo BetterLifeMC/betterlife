@@ -32,7 +32,7 @@ public class CommandUtils {
 	}
 
 	/**
-	 * Sends the sender a BetterLife banner with a message
+	 * Sends the sender a message minus the BetterLife banner.
 	 * @param sender
 	 * @param message1
 	 * @param banner
@@ -53,8 +53,7 @@ public class CommandUtils {
 	 * @param args
 	 */
 	public static void sendHelpMessage(CommandSender sender, String commandName, LinkedHashMap<String, String> args) {
-		//TODO: Ethan add your IGN.
-		sendBannerMessage(sender, "&b&lby GT3CH1");
+		sendBannerMessage(sender, "&b&lby GT3CH1 & Starmism");
 		sendBannerMessage(sender, "&6--== [ Available commands ] ==--", false);
 		args.forEach((cmd, desc) -> {
 			sendBannerMessage(sender, "&d/" + commandName + " " + cmd + " &r| " + "&6" + desc, false);
