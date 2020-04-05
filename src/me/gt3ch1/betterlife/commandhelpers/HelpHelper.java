@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 
 public class HelpHelper {
 
-    private static LinkedHashMap<String, String> trailHelpHash = new LinkedHashMap<String, String>();
+    private static LinkedHashMap<String, String> trailHelpHash = new LinkedHashMap<>();
 
     /**
      * Returns the help commands for the given command
