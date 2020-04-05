@@ -57,24 +57,15 @@ public class TabCompleterHelper implements TabCompleter {
 						if (Arrays.stream(args).anyMatch("toggle"::contains)) {
 							subCommands.add("toggle");
 						}
-						if (player.hasPermission("betterlife.trail.admin")) {
-							if (Arrays.stream(args).anyMatch("add"::contains)) {
-								subCommands.add("add");
-							}
-							if (Arrays.stream(args).anyMatch("rm"::contains)) {
-								subCommands.add("rm");
-							}
-						}
 						break;
 					// If there is TWO!
 					case 2:
 						// Test the arguments.
 						switch (args[0]) {
-							// If it is set, or rm, return the list of currently enabled particles,
+							// If it is set, return the list of currently enabled particles,
 							// and append them to the tablist list.
 							case "set":
-								subCommands = (List<String>) (CommandUtils.getMainConfiguration().getCustomConfig()
-										.getList("trail.enabledParticles"));
+								subCommands = (List<String>) (CommandUtils.getParticleConfiguration().getParticleConfig().getList("enabledParticles"));
 								for (int i = 0; i < subCommands.size(); i++) {
 									String particle = subCommands.get(i);
 									if (Arrays.stream(args).anyMatch(particle::contains) && player
@@ -82,32 +73,6 @@ public class TabCompleterHelper implements TabCompleter {
 										newList.add(particle);
 									}
 								}
-								subCommands = newList;
-								break;
-							case "rm":
-								subCommands = (List<String>) (CommandUtils.getMainConfiguration().getCustomConfig()
-										.getList("trail.enabledParticles"));
-								for (int i = 0; i < subCommands.size(); i++) {
-									if (Arrays.stream(args).anyMatch(subCommands.get(i)::contains)
-											&& player.hasPermission("betterlife.trail.admin")) {
-										newList.add(subCommands.get(i));
-									}
-								}
-								subCommands = newList;
-								break;
-							// If it is add, and the player has permission, show the particles that AREN'T enabled.
-							case "add":
-								subCommands = (List<String>) CommandUtils.getMainConfiguration().getCustomConfig()
-										.getList("trail.enabledParticles");
-								System.out.println(Arrays.asList(subCommands));
-								for (Particle p : particles) {
-									if (!subCommands.contains(p.toString())
-											&& Arrays.stream(args).anyMatch(p.toString()::contains)
-											&& player.hasPermission("betterlife.trail.admin")) {
-										newList.add(p.toString());
-									}
-								}
-								// Set the tab list to the new list.
 								subCommands = newList;
 								break;
 							default:
