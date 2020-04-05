@@ -1,16 +1,7 @@
 # Main BetterLife Configuration File
 events:
-  # Whether or not crops can be trampled. Default: false
-  croptrample: false
+  # Whether crop trample protection is enabled or not. Default: true
+  croptrample: true
 
 # Set the default particle effect given when players first join the server. Default: NOTE
 defaultParticle: NOTE
-
-# The list of particle effects that players are allowed to use
-# Make sure they are in ALL CAPS
-# You can add them in game or here, though be careful of the format
-trail:
-    enabledParticles:
-        - NOTE
-        - CRIT
-        - CLOUD
