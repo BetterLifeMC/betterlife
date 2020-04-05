@@ -17,18 +17,21 @@ public class CommandUtils {
 	public static String[] enabledTabCommands = {"toggledownfall","trail","bl"};
 
 	public static void sendBannerMessage(CommandSender sender, String message1) {
+		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message1);
 		if (sender instanceof Player) {
-			sender.sendMessage(betterLifeBanner + message1);
+			sender.sendMessage(betterLifeBanner + coloredMessage);
 		} else {
-			sender.sendMessage(ChatColor.stripColor(message1));
+			sender.sendMessage(ChatColor.stripColor(coloredMessage));
 		}
 	}
 
 	public static void sendBannerMessage(CommandSender sender, String message1, String message2) {
+		String coloredMessage1 = ChatColor.translateAlternateColorCodes('&', message1);
+		String coloredMessage2 = ChatColor.translateAlternateColorCodes('&', message2);
 		if (sender instanceof Player) {
-			sender.sendMessage(betterLifeBanner + message1 + ChatColor.RESET + " | " + message2);
+			sender.sendMessage(betterLifeBanner + coloredMessage1 + ChatColor.RESET + " | " + coloredMessage2);
 		} else {
-			sender.sendMessage(ChatColor.stripColor(message1 + " | " + message2));
+			sender.sendMessage(ChatColor.stripColor(coloredMessage1 + " | " + coloredMessage2));
 		}
 	}
 
