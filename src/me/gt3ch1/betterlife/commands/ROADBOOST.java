@@ -2,7 +2,6 @@ package me.gt3ch1.betterlife.commands;
 
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,14 +22,12 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
 				boolean hasToggleSprintEnabled = CommandUtils.getPlayerConfiguration().getCustomConfig().getBoolean("player."+p.getUniqueId().toString()+".pathboost");
 				CommandUtils.getPlayerConfiguration().getCustomConfig().set("player."+p.getUniqueId().toString()+".pathboost", !hasToggleSprintEnabled);
 				CommandUtils.getPlayerConfiguration().saveCustomConfig();
-				if (!hasToggleSprintEnabled) {
-					sendBannerMessage(p, ChatColor.GRAY + "Roadboost has been " + ChatColor.GREEN + "enabled" + ChatColor.GRAY + "!");
-				} else {
-					sendBannerMessage(p, ChatColor.GRAY + "Roadboost has been " + ChatColor.RED + "disabled" + ChatColor.GRAY + "!");
-				}
+				String toggleState = hasToggleSprintEnabled ? "&cdisabled" : "&aenabled";
+				sendBannerMessage(p, "&7Roadboost has been " + toggleState + "&7!");
 			}
 		} else {
-			sendBannerMessage(sender, ChatColor.DARK_RED + "This must be done from in game!");
+			// TODO: Add second arg for targeting a player
+			sendBannerMessage(sender, "&4This command can only be done in-game!");
 		}
 		return true;
 	}

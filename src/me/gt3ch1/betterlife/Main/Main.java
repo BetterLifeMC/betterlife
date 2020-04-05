@@ -6,7 +6,6 @@ import me.gt3ch1.betterlife.events.PlayerJoin;
 import me.gt3ch1.betterlife.events.PlayerMove;
 import me.gt3ch1.betterlife.tabcompleter.TabCompleterHelper;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,7 +40,7 @@ public class Main extends JavaPlugin {
 			getCommand(command).setTabCompleter(new TabCompleterHelper());
 		}
 		// Log output
-		getLogger().info(ChatColor.GREEN + "Enabled!");
+		getLogger().info("Hello!");
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class Main extends JavaPlugin {
 			l = null;
 		}
 		// Log output
-		getLogger().info(ChatColor.RED + "Disabled!");
+		getLogger().info("Goodbye!");
 	}
 
 	@Override
