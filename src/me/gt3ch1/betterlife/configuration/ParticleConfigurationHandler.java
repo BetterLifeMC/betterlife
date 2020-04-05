@@ -22,8 +22,6 @@ public class ParticleConfigurationHandler {
     // Initiate a file
     private static File particleConfigFile = null;
 
-    // TODO: Find a way to save the default config on start
-
     /**
      *  Reloads the configuration of all particles
      */
@@ -74,6 +72,15 @@ public class ParticleConfigurationHandler {
             getParticleConfig().save(particleConfigFile);
         } catch (IOException ex) {
             m.getLogger().severe("Could not save config to " + particleConfigFile + "!\n" + ex);
+        }
+    }
+
+    public void saveDefaultParticleConfig() {
+        if (particleConfigFile == null) {
+            particleConfigFile = new File(m.getDataFolder(), "particles.yml");
+        }
+        if (!particleConfigFile.exists()) {
+            m.saveResource("particles.yml", false);
         }
     }
 }
