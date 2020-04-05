@@ -6,6 +6,11 @@ public class HelpHelper {
 
     private static LinkedHashMap<String, String> trailHelpHash = new LinkedHashMap<String, String>();
 
+    /**
+     * Returns the help commands for the given command
+     * @param hash
+     * @return
+     */
     public static LinkedHashMap<String, String> getAHelpHash(String hash) {
         switch(hash) {
             case "trail":
@@ -14,6 +19,9 @@ public class HelpHelper {
         return null;
     }
 
+    /**
+     * Sets up all of the hashes.
+     */
     public static void setupAllHelpHashes() {
         setupTrailHelpHash();
     }

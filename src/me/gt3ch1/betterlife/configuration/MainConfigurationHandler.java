@@ -12,17 +12,28 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import me.gt3ch1.betterlife.Main.Main;
 
 public class MainConfigurationHandler {
+	// Initiate main variable
 	private Main m;
+	/**
+	 * Plug-in wide configuration handler
+	 * @param m
+	 */
 	public MainConfigurationHandler(Main m) {
 		this.m = m;
 	}
+	// Initialize the configuration and file for the configuration
 	private static FileConfiguration customConfig = null;
 	private static File customConfigFile = null;
 
+	/**
+	 * Reloads the current state of the configuration file (config.yml)
+	 */
 	public void reloadCustomConfig() {
 		if (customConfigFile == null) {
+			// Sets customConfigFile to BetterLife/config.yml
 			customConfigFile = new File(m.getDataFolder(), "config.yml");
 		}
+		// Loads the configuration stored in that file.
 		customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
 
 		Reader defConfigStream = null;
@@ -37,6 +48,11 @@ public class MainConfigurationHandler {
 		}
 	}
 
+	/**
+	 * Returns the current instance of the main configuration
+	 * file.
+	 * @return MainConfiguration
+	 */
 	public FileConfiguration getCustomConfig() {
 		if (customConfig == null) {
 			reloadCustomConfig();
@@ -44,6 +60,10 @@ public class MainConfigurationHandler {
 		return m.getConfig();
 	}
 
+	/**
+	 * Saves the current working state of the main configuration
+	 * to it's file (config.yml)
+	 */
 	public void saveCustomConfig() {
 		if (customConfig == null || customConfigFile == null) {
 			return;

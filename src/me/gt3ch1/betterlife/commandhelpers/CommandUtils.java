@@ -10,12 +10,18 @@ import org.bukkit.entity.Player;
 import java.util.LinkedHashMap;
 
 public class CommandUtils {
-	public static Main m = Main.m;
+	// Initializes some important variables.
+	private static Main m = Main.m;
 	public static MainConfigurationHandler ch;
 	public static PlayerConfigurationHandler pch;
 	public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[[&9BetterLife&c]] ") + ChatColor.RESET;
 	public static String[] enabledTabCommands = {"toggledownfall","trail","bl"};
 
+	/**
+	 * Send the sender the BetterLife banner.
+	 * @param sender
+	 * @param message1
+	 */
 	public static void sendBannerMessage(CommandSender sender, String message1) {
 		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message1);
 		if (sender instanceof Player) {
@@ -25,6 +31,12 @@ public class CommandUtils {
 		}
 	}
 
+	/**
+	 * Sends the sender a BetterLife banner with a message
+	 * @param sender
+	 * @param message1
+	 * @param banner
+	 */
 	public static void sendBannerMessage(CommandSender sender, String message1, boolean banner) {
 		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message1);
 		if (sender instanceof Player) {
@@ -34,7 +46,14 @@ public class CommandUtils {
 		}
 	}
 
+	/**
+	 * Sends a help header
+	 * @param sender
+	 * @param commandName
+	 * @param args
+	 */
 	public static void sendHelpMessage(CommandSender sender, String commandName, LinkedHashMap<String, String> args) {
+		//TODO: Ethan add your IGN.
 		sendBannerMessage(sender, "&b&lby GT3CH1");
 		sendBannerMessage(sender, "&6--== [ Available commands ] ==--", false);
 		args.forEach((cmd, desc) -> {
@@ -42,7 +61,10 @@ public class CommandUtils {
 		});
 	}
 
-    public static void enableConfiguration(Main m) {
+    /**
+     * Enables & loads the configuration
+     */
+    public static void enableConfiguration() {
 		ch = new MainConfigurationHandler(m);
 		pch = new PlayerConfigurationHandler(m);
 		m.saveDefaultConfig();
@@ -50,24 +72,40 @@ public class CommandUtils {
 		pch.saveCustomConfig();
     }
 
-	public static void disableConfiguration(Main m) {
+	/**
+	 * Disables all configuration helpers.
+	 */
+	public static void disableConfiguration() {
 		ch = null;
 		pch = null;
 	}
 
+	/**
+	 * @return MainConfiguration
+	 */
 	public static MainConfigurationHandler getMainConfiguration() {
 		return ch;
 	}
 
+	/**
+	 * @return PlayerConfigurationHandler
+	 */
 	public static PlayerConfigurationHandler getPlayerConfiguration() {
 		return pch;
 	}
 
-	public static void reloadConfiguration(Main m) {
+	/**
+	 * Reloads all configuration helpers
+	 */
+	public static void reloadConfiguration() {
 		m.reloadConfig();
 		pch.reloadCustomConfig();
 	}
 
+	/**
+	 * 
+	 * @return TabCommands
+	 */
 	public static String[] getEnabledTabCommands() {
 		return enabledTabCommands;
 	}

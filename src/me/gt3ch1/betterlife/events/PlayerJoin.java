@@ -11,7 +11,9 @@ public class PlayerJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+    	// Get the player
         Player p = e.getPlayer();
+        // Get the default particle
         Particle newPlayerParticle = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle").toUpperCase());
 
         try {
