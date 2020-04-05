@@ -13,7 +13,7 @@ public class CommandUtils {
 	public static Main m = Main.m;
 	public static MainConfigurationHandler ch;
 	public static PlayerConfigurationHandler pch;
-	public static String betterLifeBanner = ChatColor.RED + "[[" + ChatColor.BLUE + "BetterLife" + ChatColor.RED + "]] " + ChatColor.RESET;
+	public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[[&9BetterLife&c]] ") + ChatColor.RESET;
 	public static String[] enabledTabCommands = {"toggledownfall","trail","bl"};
 
 	public static void sendBannerMessage(CommandSender sender, String message1) {
@@ -25,21 +25,20 @@ public class CommandUtils {
 		}
 	}
 
-	public static void sendBannerMessage(CommandSender sender, String message1, String message2) {
-		String coloredMessage1 = ChatColor.translateAlternateColorCodes('&', message1);
-		String coloredMessage2 = ChatColor.translateAlternateColorCodes('&', message2);
+	public static void sendBannerMessage(CommandSender sender, String message1, boolean banner) {
+		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message1);
 		if (sender instanceof Player) {
-			sender.sendMessage(betterLifeBanner + coloredMessage1 + ChatColor.RESET + " | " + coloredMessage2);
+			sender.sendMessage(coloredMessage);
 		} else {
-			sender.sendMessage(ChatColor.stripColor(coloredMessage1 + " | " + coloredMessage2));
+			sender.sendMessage(ChatColor.stripColor(coloredMessage));
 		}
 	}
 
 	public static void sendHelpMessage(CommandSender sender, String commandName, LinkedHashMap<String, String> args) {
-		sendBannerMessage(sender, ChatColor.AQUA + "by GT3CH1");
-		sendBannerMessage(sender, ChatColor.GOLD + "--== [ Available commands ] ==--");
+		sendBannerMessage(sender, "&b&lby GT3CH1");
+		sendBannerMessage(sender, "&6--== [ Available commands ] ==--", false);
 		args.forEach((cmd, desc) -> {
-			sendBannerMessage(sender, ChatColor.LIGHT_PURPLE + "/" + commandName + " " + cmd, ChatColor.GOLD + desc);
+			sendBannerMessage(sender, "&d/" + commandName + " " + cmd + " &r| " + "&6" + desc, false);
 		});
 	}
 
