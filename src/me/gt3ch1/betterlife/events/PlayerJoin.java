@@ -1,14 +1,11 @@
 package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendBannerMessage;
 
 public class PlayerJoin implements Listener {
 
@@ -25,7 +22,6 @@ public class PlayerJoin implements Listener {
             CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." + p.getUniqueId().toString() + ".trail", newPlayerParticle.toString());
             CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." + p.getUniqueId().toString() + ".trails.enabled", false);
             CommandUtils.getPlayerConfiguration().saveCustomConfig();
-            sendBannerMessage(p, ChatColor.AQUA + "Want to enable trail particles? Try /trail help!");
         }
     }
 }
