@@ -25,7 +25,7 @@ public class Main extends JavaPlugin {
 		// Initialize Main variable to reference
 		m = this;
 		// Config setup
-		CommandUtils.enableConfiguration(m);
+		CommandUtils.enableConfiguration();
 		// Listener setup
 		blockFadeListener = new BlockFade();
 		playerMoveListener = new PlayerMove();
@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		// Set the configuration managers to null
-		CommandUtils.disableConfiguration(m);
+		CommandUtils.disableConfiguration();
 		// Set all listeners to null
 		for (Listener l : enabledListeners) {
 			l = null;
