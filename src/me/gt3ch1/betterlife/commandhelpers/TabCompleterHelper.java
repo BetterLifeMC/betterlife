@@ -43,14 +43,6 @@ public class TabCompleterHelper implements TabCompleter {
 						if (Arrays.stream(args).anyMatch("toggle"::contains)) {
 							subCommands.add("toggle");
 						}
-						if (player.hasPermission("betterlife.trail.admin")) {
-							if (Arrays.stream(args).anyMatch("add"::contains)) {
-								subCommands.add("add");
-							}
-							if (Arrays.stream(args).anyMatch("rm"::contains)) {
-								subCommands.add("rm");
-							}
-						}
 						break;
 					case 2:
 						switch (args[0]) {
@@ -62,28 +54,6 @@ public class TabCompleterHelper implements TabCompleter {
 									if (Arrays.stream(args).anyMatch(particle::contains) && player
 											.hasPermission("betterlife.trail.particle." + particle.toLowerCase())) {
 										newList.add(particle);
-									}
-								}
-								subCommands = newList;
-								break;
-							case "rm":
-								subCommands = (List<String>) (CommandUtils.getMainConfiguration().getCustomConfig()
-										.getList("trail.enabledParticles"));
-								for (int i = 0; i < subCommands.size(); i++) {
-									if (Arrays.stream(args).anyMatch(subCommands.get(i)::contains)) {
-										newList.add(subCommands.get(i));
-									}
-								}
-								subCommands = newList;
-								break;
-							case "add":
-								subCommands = (List<String>) CommandUtils.getMainConfiguration().getCustomConfig()
-										.getList("trail.enabledParticles");
-								System.out.println(Arrays.asList(subCommands));
-								for (Particle p : particles) {
-									if (!subCommands.contains(p.toString())
-											&& Arrays.stream(args).anyMatch(p.toString()::contains)) {
-										newList.add(p.toString());
 									}
 								}
 								subCommands = newList;

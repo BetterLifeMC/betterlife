@@ -1,7 +1,7 @@
 main: me.gt3ch1.betterlife.Main.Main
 name: BetterLife
 version: '0.2'
-description: "Basic server Essentials for the outgoing server owner"
+description: "Making running a Minecraft server a little more humane."
 author: GT3CH1
 authors: [Starmism]
 api-version: '1.13'
@@ -19,5 +19,5 @@ commands:
         permission: betterlife.roadboost
     trail:
         description: Sets a fancy trail behind your player
-        usage: "Usage: /trail [list|help|set|add|rm]"
+        usage: "Usage: /trail [list|help|set]"
         permission: betterlife.trail
