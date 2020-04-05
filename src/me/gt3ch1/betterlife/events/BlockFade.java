@@ -10,9 +10,12 @@ public class BlockFade implements Listener {
 
 	@EventHandler
 	public void onCropTrample(BlockFadeEvent e) {
+		// Get the block that faded.
 		Material currentBlock = e.getBlock().getType();
+		// Get whether or not croptrample is enabled in settings.
 		boolean cropTrampleEnabled = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("events.croptrample");
 		if (currentBlock == Material.FARMLAND && cropTrampleEnabled) {
+			// Cancel the event.
 			e.setCancelled(true);
 		}
 	}
