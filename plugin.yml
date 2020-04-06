@@ -22,22 +22,22 @@ commands:
         usage: "Usage: /trail [ list | help | set ]"
         permission: betterlife.trail
 permissions:
-	betterlife.trail.set:
-		description: Allows the trail to be set per-player
-		default: op
-	betterlife.trail.toggle:
-		description: Allows toggling of the trail.
-		default: op
-	betterlife.trail.particle.*:
-		description: Allows access to every trail particle.
-		default: op
-	betterlife.toggledownfall:
-		description: Toggles the weather
-		default: op
-	betterlife.roadboost:
-		description: Gain a speed 1 boost over paths.
-		default: op
-	betterlife.reload:
-		description: Reloads the configuration files of betterlife
-		default: op
-	
+    betterlife.trail.set:
+        description: Allows the trail to be set per-player
+        default: op
+    betterlife.trail.toggle:
+        description: Allows toggling of the trail.
+        default: op
+    betterlife.trail.particle.*:
+        description: Allows access to every trail particle.
+        default: op
+    betterlife.toggledownfall:
+        description: Toggles the weather
+        default: op
+    betterlife.roadboost:
+        description: Gain a speed 1 boost over paths.
+        default: op
+    betterlife.reload:
+        description: Reloads the configuration files of betterlife
+        default: op
+    
