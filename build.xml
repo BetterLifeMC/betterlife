@@ -10,6 +10,7 @@
         <pathelement location="bin"/>
         <pathelement location="../../libs/spigot.jar"/>
         <pathelement location="../../libs/bukkit.jar"/>
+        <pathelement location="../../libs/Vault.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
