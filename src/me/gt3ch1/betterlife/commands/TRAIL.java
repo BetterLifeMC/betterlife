@@ -79,7 +79,6 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 					return true;
 				}
 				return true;
-				// TODO: Add a case for arg[0] not existing!
 			default:
 				sendHelpMessage(sender, "trail", helpHash);
 				return true;
