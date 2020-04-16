@@ -101,7 +101,7 @@ public class Main extends JavaPlugin {
 		return (economy != null);
 	}
 
-	public Economy getEconomy() {
+	public static Economy getEconomy() {
 		return economy;
 	}
 }
