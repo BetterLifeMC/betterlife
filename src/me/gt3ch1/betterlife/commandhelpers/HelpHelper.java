@@ -31,7 +31,7 @@ public class HelpHelper {
         setupEcoHelpHash();
     }
 
-    private static void setupTrailHelpHash() {~
+    private static void setupTrailHelpHash() {
         trailHelpHash.put("set <trail>", "Sets the current player's trail");
         trailHelpHash.put("list", "Lists the enabled trails");
         trailHelpHash.put("toggle", "Toggles your trail");
