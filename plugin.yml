@@ -22,6 +22,10 @@ commands:
         description: Sets a fancy trail behind your player
         usage: "Usage: /trail [ list | help | set ]"
         permission: betterlife.trail
+    eco:
+        description: Various economy-related commands
+        usage: "Usage: /eco [ bal ]"
+        permission: betterlife.eco
 permissions:
     betterlife.trail.set:
         description: Allows the trail to be set per-player
@@ -40,5 +44,10 @@ permissions:
         default: op
     betterlife.reload:
         description: Reloads the configuration files of betterlife
+        default: op
+    betterlife.eco.bal:
+        description: Allows player to see their current balance
+    betterlife.eco.bal.others:
+        description: Allows player to see other players' current balance
         default: op
     
