@@ -2,13 +2,11 @@ package me.gt3ch1.betterlife.commands;
 
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class TRAIL extends BetterLifeCommands implements CommandExecutor {
@@ -21,7 +19,6 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
-		LinkedHashMap<String, String> helpHash = HelpHelper.getAHelpHash("trail");
 		List<String> allowedParticles = (List<String>) CommandUtils.getParticleConfiguration().getParticleConfig().getList("enabledParticles");
 		if (args.length == 0) {
 			sendHelpMessage(sender, "trail", helpHash);
@@ -82,7 +79,6 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 					return true;
 				}
 				return true;
-				// TODO: Add a case for arg[0] not existing!
 			default:
 				sendHelpMessage(sender, "trail", helpHash);
 				return true;
