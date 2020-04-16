@@ -34,7 +34,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                 case 1:
                     switch (args[0]) {
                         case "bal":
-                            sendBannerMessage(player, "&a Balance: " + economy.getBalance(player));
+                            sendBannerMessage(player, "&aBalance: " + economy.getBalance(player));
                             return true;
                         default:
                             return false;
