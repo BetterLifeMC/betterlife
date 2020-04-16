@@ -1,7 +1,11 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
+import me.gt3ch1.betterlife.Main.Main;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
+import java.util.LinkedHashMap;
 
 /**
  * @author gcpease
@@ -18,6 +22,8 @@ public abstract class BetterLifeCommands extends CommandUtils {
 	private Command c;
 	private String label;
 	private String[] args;
+	protected Economy economy = Main.getEconomy();
+	public LinkedHashMap<String, String> helpHash;
 	/**
 	 * @param permission
 	 * @param cs
@@ -30,6 +36,7 @@ public abstract class BetterLifeCommands extends CommandUtils {
 		this.cs = cs;
 		this.label = label;
 		this.args = args;
+		helpHash = HelpHelper.getAHelpHash(this.label.toLowerCase());
 	}
 
 	/**
@@ -67,7 +74,6 @@ public abstract class BetterLifeCommands extends CommandUtils {
 	public String getPermission() {
 		return "betterlife." + permission;
 	}
-	
 	/**
 	 * This needs to be implemented if the a class extends this one.  It is 
 	 * the boolean needed for CommandExecutor.
