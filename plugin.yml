@@ -5,6 +5,7 @@ description: "Making running a Minecraft server a little more humane."
 author: GT3CH1
 authors: [Starmism]
 api-version: '1.13'
+softdepend: [Vault]
 commands:
     bl:
         description: The primary command for BetterLife
