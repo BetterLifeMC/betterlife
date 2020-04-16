@@ -1,5 +1,7 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
+import me.gt3ch1.betterlife.Main.Main;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -20,6 +22,7 @@ public abstract class BetterLifeCommands extends CommandUtils {
 	private Command c;
 	private String label;
 	private String[] args;
+	protected Economy economy = Main.getEconomy();
 	public LinkedHashMap<String, String> helpHash;
 	/**
 	 * @param permission

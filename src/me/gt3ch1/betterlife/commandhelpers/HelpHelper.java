@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 public class HelpHelper {
 
     private static LinkedHashMap<String, String> trailHelpHash = new LinkedHashMap<>();
+    private static LinkedHashMap<String, String> ecoHelpHash = new LinkedHashMap<>();
 
     /**
      * Returns the help commands for the given command
@@ -15,8 +16,11 @@ public class HelpHelper {
         switch(hash) {
             case "trail":
                 return trailHelpHash;
+            case "eco":
+                return ecoHelpHash;
+            default:
+                return null;
         }
-        return null;
     }
 
     /**
@@ -24,11 +28,17 @@ public class HelpHelper {
      */
     public static void setupAllHelpHashes() {
         setupTrailHelpHash();
+        setupEcoHelpHash();
     }
 
-    private static void setupTrailHelpHash() {
+    private static void setupTrailHelpHash() {~
         trailHelpHash.put("set <trail>", "Sets the current player's trail");
         trailHelpHash.put("list", "Lists the enabled trails");
         trailHelpHash.put("toggle", "Toggles your trail");
+    }
+    private static void setupEcoHelpHash(){
+        ecoHelpHash.put("bal [player]", "lists the balance of the given player");
+        ecoHelpHash.put("give <player> <bal>", "gives the player some money");
+        ecoHelpHash.put("set <player> <bal>", "sets the player's balance.");
     }
 }
