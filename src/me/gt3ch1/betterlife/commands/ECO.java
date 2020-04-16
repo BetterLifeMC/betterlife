@@ -2,6 +2,7 @@ package me.gt3ch1.betterlife.commands;
 
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,6 +36,8 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                         case "bal":
                             sendBannerMessage(player, "&a Balance: " + economy.getBalance(player));
                             return true;
+                        default:
+                            return false;
                     }
                 default:
                     return false;
