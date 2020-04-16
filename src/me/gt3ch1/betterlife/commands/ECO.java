@@ -34,16 +34,14 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                     switch (args[0]) {
                         case "bal":
                             economy.getBalance(player);
-                            break;
+                            return true;
                     }
-                case 2:
-                    switch ()
                 default:
-                    break;
+                    return false;
             }
 
             return false;
         }
+        return false;
     }
 }
-    LinkedHashMap<String, String> helpHash = HelpHelper.getAHelpHash("trail");
