@@ -96,6 +96,7 @@ public class Main extends JavaPlugin {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
+            getLogger().info("Using economy provider: " + economy.toString());
         }
 
         return (economy != null);
