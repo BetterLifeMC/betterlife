@@ -21,7 +21,7 @@ public class Main extends JavaPlugin {
     private Listener blockFadeListener,playerMoveListener,playerJoinListener;
     Listener[] enabledListeners = {blockFadeListener,playerMoveListener,playerJoinListener};
     public static Main m;
-    public Economy economy;
+    public static Economy economy;
     @Override
     public void onEnable() {
 
@@ -101,7 +101,7 @@ public class Main extends JavaPlugin {
         return (economy != null);
     }
 
-    public  Economy getEconomy() {
+    public static Economy getEconomy() {
         return economy;
     }
 }
