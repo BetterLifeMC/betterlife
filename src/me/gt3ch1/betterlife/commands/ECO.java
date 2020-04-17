@@ -30,7 +30,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
             switch (args.length) {
                 case 0:
                     sendHelpMessage(sender, "eco", helpHash);
-                    break;
+                    return false;
                 case 1:
                     switch (args[0]) {
                         case "bal":
@@ -42,8 +42,6 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                 default:
                     return false;
             }
-
-            return false;
         }
         return false;
     }
