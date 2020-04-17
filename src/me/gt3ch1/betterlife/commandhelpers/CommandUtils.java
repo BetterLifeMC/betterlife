@@ -37,9 +37,8 @@ public class CommandUtils {
 	 * Sends the sender a message minus the BetterLife banner.
 	 * @param sender
 	 * @param message
-	 * @param banner
 	 */
-	public static void sendBannerMessage(CommandSender sender, String message, boolean banner) {
+	public static void sendMessage(CommandSender sender, String message) {
 		String coloredMessage = ChatColor.translateAlternateColorCodes('&', message);
 		if (sender instanceof Player) {
 			sender.sendMessage(coloredMessage);
@@ -56,9 +55,9 @@ public class CommandUtils {
 	 */
 	public static void sendHelpMessage(CommandSender sender, String commandName, LinkedHashMap<String, String> args) {
 		sendBannerMessage(sender, "&b&lby GT3CH1 & Starmism");
-		sendBannerMessage(sender, "&6--== [ Available commands ] ==--", false);
+		sendBannerMessage(sender, "&6--== [ Available commands ] ==--");
 		args.forEach((cmd, desc) -> {
-			sendBannerMessage(sender, "&d/" + commandName + " " + cmd + " &r| " + "&6" + desc, false);
+			sendBannerMessage(sender, "&d/" + commandName + " " + cmd + " &r| " + "&6" + desc);
 		});
 	}
 
