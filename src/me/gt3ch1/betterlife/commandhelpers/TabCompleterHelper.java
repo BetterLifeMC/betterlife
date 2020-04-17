@@ -118,7 +118,7 @@ public class TabCompleterHelper implements TabCompleter {
                                     if (player.hasPermission("betterlife.eco.bal")) {
                                         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                                             if (Arrays.stream(args).anyMatch(p.getName().toString()::contains))
-                                                newList.add(p.getName().toString());
+                                                subCommands.add(p.getName().toString());
 
                                         }
                                     }
