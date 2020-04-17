@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 
 public class ECO extends BetterLifeCommands implements CommandExecutor {
@@ -24,6 +25,8 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
         super(permission, cs, c, label, args);
     }
 
+    Player commandReceiver = null;
+
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         if (sender instanceof Player) {
@@ -35,7 +38,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                 case 1:
                     switch (args[0]) {
                         case "bal":
-                            sendBannerMessage(player, "&aBalance: " + economy.getBalance(player));
+                            sendMessage(player, "&aBalance: " + economy.getBalance(player));
                             return true;
                         case "give":
                         case "set":
@@ -45,22 +48,37 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                             return false;
                     }
                 case 2:
-                    switch (args[0]){
+                    switch (args[0]) {
+                        case "bal":
+                            commandReceiver = Bukkit.getPlayer(args[1]);
+                            sendMessage(player, "&aBalance of&6 " + commandReceiver.getName() + "&7:&a " + economy.getBalance(commandReceiver));
+                            return true;
+                        default:
+                            return false;
+                    }
+                case 3:
+                    switch (args[0]) {
                         case "give":
-                            Player commandReceiver = Bukkit.getPlayer(args[1]);
-                            if (commandReceiver instanceof Player && args.length==3){
+                            commandReceiver = Bukkit.getPlayer(args[1]);
+                            if (commandReceiver instanceof Player && args.length >= 2) {
                                 double playerBalance = Double.valueOf(args[2]);
-                                if((economy.getBalance(player) - playerBalance) > 0) {
-                                    economy.bankDeposit(commandReceiver.getName(), playerBalance);
-                                    economy.withdrawPlayer(commandReceiver, playerBalance);
-                                    sendBannerMessage(player, "&aYou sent &e" + playerBalance +"&a to " + commandReceiver.getName());
+                                if ((economy.getBalance(player) - playerBalance) > 0) {
+                                    economy.depositPlayer(commandReceiver, playerBalance);
+                                    economy.withdrawPlayer(player, playerBalance);
+                                    sendMessage(player, "&aYou sent &6" + playerBalance + "&a to &7" + commandReceiver.getName());
                                     return true;
                                 }
                                 return false;
                             }
                             return false;
                         case "set":
-                            sendHelpMessage(sender, "eco", helpHash);
+                            commandReceiver = Bukkit.getPlayer(args[1]);
+                            double balance = Double.valueOf(args[2]);
+                            if (commandReceiver instanceof Player) {
+                                economy.withdrawPlayer(commandReceiver, economy.getBalance(commandReceiver));
+                                economy.depositPlayer(commandReceiver, balance);
+                                sendMessage(sender,"&aSetting player &7" + commandReceiver.getName() + "'s&a balance to &6" +balance);
+                            }
                             return true;
                         default:
                             return false;
