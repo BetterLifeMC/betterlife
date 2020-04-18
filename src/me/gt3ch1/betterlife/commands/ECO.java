@@ -23,6 +23,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
      */
     public ECO(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
+        this.onCommand(cs, c, label, args);
     }
 
     Player commandReceiver = null;
@@ -38,7 +39,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                 case 1:
                     switch (args[0]) {
                         case "bal":
-                            sendMessage(player, "&aBalance: " + economy.getBalance(player));
+                            sendMessage(player, "&aBalance of &7" + player.getName() + "&7:&a " + economy.getBalance(player));
                             return true;
                         case "give":
                         case "set":
@@ -51,7 +52,13 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                     switch (args[0]) {
                         case "bal":
                             commandReceiver = Bukkit.getPlayer(args[1]);
-                            sendMessage(player, "&aBalance of&6 " + commandReceiver.getName() + "&7:&a " + economy.getBalance(commandReceiver));
+                            double bal = economy.getBalance(args[1]);
+                            // This needs to be redone, but I can't care at the moment.
+                            if(commandReceiver != null || bal > 0) {
+                                sendMessage(player, "&aBalance of&7 " + args[1] + "&7:&a " + bal);
+                            }else{
+                                sendMessage(player, "&4Player not found!");
+                            }
                             return true;
                         default:
                             return false;
@@ -77,7 +84,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                             if (commandReceiver instanceof Player) {
                                 economy.withdrawPlayer(commandReceiver, economy.getBalance(commandReceiver));
                                 economy.depositPlayer(commandReceiver, balance);
-                                sendMessage(sender,"&aSetting player &7" + commandReceiver.getName() + "'s&a balance to &6" +balance);
+                                sendMessage(sender, "&aSetting player &7" + commandReceiver.getName() + "'s&a balance to &6" + balance);
                             }
                             return true;
                         default:
