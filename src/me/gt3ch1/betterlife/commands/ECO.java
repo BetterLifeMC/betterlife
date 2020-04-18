@@ -39,7 +39,10 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                 case 1:
                     switch (args[0]) {
                         case "bal":
-                            sendMessage(player, "&aBalance of &7" + player.getName() + "&7:&a " + economy.getBalance(player));
+                            if(player.hasPermission(getPermission()+".bal"))
+                                sendMessage(player, "&aBalance of &7" + player.getName() + "&7:&a " + economy.getBalance(player));
+                            else
+                                sendPermissionErrorMessage(sender);
                             return true;
                         case "give":
                         case "set":
@@ -51,15 +54,19 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                 case 2:
                     switch (args[0]) {
                         case "bal":
-                            commandReceiver = Bukkit.getPlayer(args[1]);
-                            double bal = economy.getBalance(args[1]);
-                            // This needs to be redone, but I can't care at the moment.
-                            if(commandReceiver != null || bal > 0) {
-                                sendMessage(player, "&aBalance of&7 " + args[1] + "&7:&a " + bal);
+                            if(player.hasPermission(getPermission()+".bal.others")) {
+                                commandReceiver = Bukkit.getPlayer(args[1]);
+                                double bal = economy.getBalance(args[1]);
+                                // This needs to be redone, but I can't care at the moment.
+                                if (commandReceiver != null || bal > 0) {
+                                    sendMessage(player, "&aBalance of&7 " + args[1] + "&7:&a " + bal);
+                                } else {
+                                    sendMessage(player, "&4Player not found!");
+                                }
+                                return true;
                             }else{
-                                sendMessage(player, "&4Player not found!");
+                                sendBannerMessage(sender,"&4You do not have permissions!");
                             }
-                            return true;
                         default:
                             return false;
                     }
@@ -67,7 +74,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                     switch (args[0]) {
                         case "give":
                             commandReceiver = Bukkit.getPlayer(args[1]);
-                            if (commandReceiver instanceof Player && args.length >= 2) {
+                            if (commandReceiver instanceof Player && args.length >= 2 && player.hasPermission(getPermission()+".give")) {
                                 double playerBalance = Double.valueOf(args[2]);
                                 if ((economy.getBalance(player) - playerBalance) > 0) {
                                     economy.depositPlayer(commandReceiver, playerBalance);
@@ -77,14 +84,21 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                                 }
                                 return false;
                             }
+                            if(!player.hasPermission(getPermission()+".give")){
+                                sendPermissionErrorMessage(sender);
+                                return false;
+                            }
                             return false;
                         case "set":
                             commandReceiver = Bukkit.getPlayer(args[1]);
                             double balance = Double.valueOf(args[2]);
-                            if (commandReceiver instanceof Player) {
+                            if (commandReceiver instanceof Player && player.hasPermission(getPermission()+".set")) {
                                 economy.withdrawPlayer(commandReceiver, economy.getBalance(commandReceiver));
                                 economy.depositPlayer(commandReceiver, balance);
                                 sendMessage(sender, "&aSetting player &7" + commandReceiver.getName() + "'s&a balance to &6" + balance);
+                            }
+                            if(!player.hasPermission(getPermission()+".set")){
+                                sendPermissionErrorMessage(sender);
                             }
                             return true;
                         default:
