@@ -31,13 +31,13 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 					sendBannerMessage(player, "&7The currently enabled trails are: ");
 					for (int i = 0; i < allowedParticles.size(); i++) {
 						if (player.hasPermission("betterlife.trails.particle." + allowedParticles.get(i).toLowerCase())) {
-							sendBannerMessage(player, "&d" + allowedParticles.get(i), false);
+							sendBannerMessage(player, "&d" + allowedParticles.get(i));
 						}
 					}
 				} else {
 					sendBannerMessage(sender, "&7The currently enabled trails are: ");
 					for (int i = 0; i < allowedParticles.size(); i++) {
-						sendBannerMessage(sender, "&d" + allowedParticles.get(i), false);
+						sendBannerMessage(sender, "&d" + allowedParticles.get(i));
 					}
 				}
 				return true;
