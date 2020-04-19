@@ -2,9 +2,7 @@ package me.gt3ch1.betterlife.Main;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
-import me.gt3ch1.betterlife.events.BlockFade;
-import me.gt3ch1.betterlife.events.PlayerJoin;
-import me.gt3ch1.betterlife.events.PlayerMove;
+import me.gt3ch1.betterlife.events.*;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -16,10 +14,11 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 
 public class Main extends JavaPlugin {
-    private Listener blockFadeListener,playerMoveListener,playerJoinListener;
-    Listener[] enabledListeners = {blockFadeListener,playerMoveListener,playerJoinListener};
+    private Listener blockFadeListener,playerMoveListener,playerJoinListener,playerInteractListener,playerBlockBreakListener,blockExplodeListener;
+    Listener[] enabledListeners = {blockFadeListener,playerMoveListener,playerJoinListener,playerInteractListener,playerBlockBreakListener,blockExplodeListener};
     public static Main m;
     public static Economy economy;
     @Override
@@ -32,6 +31,10 @@ public class Main extends JavaPlugin {
         blockFadeListener = new BlockFade();
         playerMoveListener = new PlayerMove();
         playerJoinListener = new PlayerJoin();
+        playerInteractListener = new PlayerInteract();
+        playerBlockBreakListener = new BlockBreak();
+        blockExplodeListener = new BlockExplode();
+
 /*		for (Listener listener : enabledListeners) {
 			Bukkit.getPluginManager().registerEvents(listener, this);
 		}*/
@@ -40,6 +43,9 @@ public class Main extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
         Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
         Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
+        Bukkit.getPluginManager().registerEvents(playerInteractListener, this);
+        Bukkit.getPluginManager().registerEvents(playerBlockBreakListener, this);
+        Bukkit.getPluginManager().registerEvents(blockExplodeListener,this);
         // Tab Completion setup, janky way but it works I guess, might need to refactor.
         for (String command : CommandUtils.getEnabledTabCommands()) {
             getCommand(command).setTabCompleter(new TabCompleterHelper());
