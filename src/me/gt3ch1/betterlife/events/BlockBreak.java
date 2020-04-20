@@ -10,6 +10,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
 public class BlockBreak implements Listener {
 
     PlayerConfigurationHandler playerConfigs = CommandUtils.getPlayerConfiguration();
@@ -22,35 +26,41 @@ public class BlockBreak implements Listener {
         Player player = e.getPlayer();
         Block block = e.getClickedBlock();
         playerUUIDS = playerConfigs.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
+        Location location = null;
+        double locationX = 0.0;
+        double locationZ = 0.0;
         try {
-            Location location = block.getLocation();
-            double locationX = location.getX();
-            double locationZ = location.getZ();
+            location = block.getLocation();
+            locationX = location.getX();
+            locationZ = location.getZ();
+        } catch (NullPointerException ex) {}
+
             for (int i = 0; i < playerUUIDS.length; i++) {
+
                 String playerUUID = playerUUIDS[i].toString();
-                boolean antiGriefEnabledPerPlayer = playerConfigs.getCustomConfig().isConfigurationSection("player." + playerUUID + ".antigrief");
+                Location loc1,loc2;
+
+                boolean antiGriefEnabledPerPlayer = false;
+                try {
+                    antiGriefEnabledPerPlayer = playerConfigs.getCustomConfig().isConfigurationSection("player." + playerUUID + ".antigrief");
+                    loc1 = (Location) playerConfigs.getCustomConfig().get("player." + playerUUID + ".antigrief.location.a");
+                    loc2 = (Location) playerConfigs.getCustomConfig().get("player." + playerUUID + ".antigrief.location.b");
+                }catch(Exception ex){
+                    break;
+                }
                 if (antiGriefEnabledPerPlayer) {
+                    //TODO:
+                    // https://www.spigotmc.org/threads/checking-if-location-is-in-an-area.293771/?__cf_chl_jschl_tk__=804fccba25a70d6d60a8506cc7ab2884f7570d2c-1587361040-0-Aej_8dExCvRix2dyw9P9yuv5HG-sWxa2nH2qnSJoMay_Vc50OEUKGpctbazC4wfo54vw-EsZUombuhncVUNG-BgtkMhuHjA4RpiOkhphGStZ9hnlCsJZ6YeNj_J81sDjaLkACEvyMOcKaVDMbf0VDRNicYy3Kn0fOdiUrVoyeNlb1D9dB8b0-5KHwGu7kO2VCTo7s3sFrX1MNA-Bb1n05Ysl8DbrkvIeiY-QmGD82D1na4Zu0Zw7QtZqtC-_S9DORS0_bOQcOxcIJs8n_uOwopJFQS4dm1bBeJW6cL992r10nXNjKKjbYyZIPhf8Xf5VmXAFX3a8LlI2T89NtnexWRw
 
-                    Object[] locationXList = playerConfigs.getCustomConfig().getList("player." + playerUUID + ".antigrief.location.1").toArray();
-                    Object[] locationZList =  playerConfigs.getCustomConfig().getList("player." + playerUUID + ".antigrief.location.2").toArray();
-
-                    double x1 = (Double)locationXList[0];
-                    double z1 = (Double)locationXList[1];
-
-                    double x2 = (Double)locationZList[0];
-                    double z2 = (Double)locationZList[1];
-
-                    if (bbh.isWithinClaimedArea(x1,x2,z1,z2,locationX,locationZ)) {
-                        if (bbh.playerCanBreakBlock(playerUUID,player)) {
-                            CommandUtils.sendBannerMessage(player, "&cHey! you can't do that here!");
-                            e.setCancelled(true);
-                        }
-                    }
+                    try {
+                        if (bbh.isWithinClaimedArea(loc1,loc2,block))
+                            if (!bbh.playerCanBreakBlock(playerUUID, player)) {
+                                CommandUtils.sendBannerMessage(player,"&bHey! You can't do that here!t");
+                                e.setCancelled(true);
+                            }
+                    }catch(NullPointerException npe){}
                 }
             }
-        } catch (NullPointerException ex) {
-        }
-
 
     }
 }
