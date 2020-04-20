@@ -7,22 +7,44 @@ public class BlockBreakHelper {
      * Determines whether or not the location? variables are within the area determined
      * by blockLocation?{1..2}
      *
-     * @param blockLocationX1
-     * @param blockLocationX2
-     * @param blockLocationZ1
-     * @param blockLocationZ2
+     * @param x1
+     * @param x2
+     * @param z1
+     * @param z2
      * @param locationX
      * @param locationZ
      * @return boolean
      */
-    public static boolean isWithinClaimedArea(double blockLocationX1, double blockLocationX2, double blockLocationZ1,
-                                              double blockLocationZ2, double locationX, double locationZ) {
-        return ((locationX >= blockLocationX2 && locationX <= blockLocationX1) &&
-                (locationZ >= blockLocationZ2 + 1 && locationZ <= blockLocationZ1 + 1));
+    public static boolean isWithinClaimedArea(double x1, double x2, double z1,
+                                              double z2, double locationX, double locationZ) {
+
+        boolean xComparator;
+        boolean zComparator;
+        boolean x1Greater = isX1GreaterOrEqualToThanX2(x1,x2);
+        boolean z1Greater = isZ1GreaterOrEqualToThanZ2(z1,z2);
+        if(x1Greater)
+            xComparator = locationX  >= x2 && locationX <= x1;
+        else
+            xComparator = locationX >= x1 && locationX <= x2;
+
+        if(z1Greater)
+            zComparator = locationZ >= z2 && locationZ <= z1;
+        else
+            zComparator = locationZ >= z1 && locationZ <= z2;
+
+        return (xComparator && zComparator);
+
+    }
+
+    private static boolean isX1GreaterOrEqualToThanX2(double x1, double x2){
+        return(x1>=x2);
+    }
+    private static boolean isZ1GreaterOrEqualToThanZ2(double z1, double z2){
+        return(z1>=z2);
     }
 
     /**
-     * Returns whether or not playerInteracting can interact with ownerUUID's claim.  If the playerInteracting's UUID
+     * Returns whether or not playerInteracting can intxeract with ownerUUID's claim.  If the playerInteracting's UUID
      * and ownerUUID's UUID matches, then this method returns true.  It will also return true if the player is OP'd, or
      * if the player has the ability to bypass restrictions.a
      *
