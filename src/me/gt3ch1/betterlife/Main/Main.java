@@ -14,45 +14,30 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main extends JavaPlugin {
-    private Listener blockFadeListener,playerMoveListener,playerJoinListener,playerInteractListener,playerBlockBreakListener,blockExplodeListener;
-    Listener[] enabledListeners = {blockFadeListener,playerMoveListener,playerJoinListener,playerInteractListener,playerBlockBreakListener,blockExplodeListener};
+
+    protected ArrayList<Listener> listeners = new ArrayList<>();
     public static Main m;
     public static Economy economy;
+
     @Override
     public void onEnable() {
 
         m = this;
-        // Config setup
-        CommandUtils.enableConfiguration();
-        // Listener setup
-        blockFadeListener = new BlockFade();
-        playerMoveListener = new PlayerMove();
-        playerJoinListener = new PlayerJoin();
-        playerInteractListener = new PlayerInteract();
-        playerBlockBreakListener = new BlockBreak();
-        blockExplodeListener = new BlockExplode();
 
-/*		for (Listener listener : enabledListeners) {
-			Bukkit.getPluginManager().registerEvents(listener, this);
-		}*/
-        // Somehow our for loop to enable the listeners doesn't work.
-        // This will have to suffice.
-        Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
-        Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
-        Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
-        Bukkit.getPluginManager().registerEvents(playerInteractListener, this);
-        Bukkit.getPluginManager().registerEvents(playerBlockBreakListener, this);
-        Bukkit.getPluginManager().registerEvents(blockExplodeListener,this);
-        // Tab Completion setup, janky way but it works I guess, might need to refactor.
+        CommandUtils.enableConfiguration();
+        new ListenersSetup(m);
+
         for (String command : CommandUtils.getEnabledTabCommands()) {
             getCommand(command).setTabCompleter(new TabCompleterHelper());
         }
 
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
+
     }
 
     /**
@@ -63,7 +48,7 @@ public class Main extends JavaPlugin {
         // Set the configuration managers to null
         CommandUtils.disableConfiguration();
         // Set all listeners to null
-        for (Listener l : enabledListeners) {
+        for (Listener l : listeners) {
             l = null;
         }
         // Log output
