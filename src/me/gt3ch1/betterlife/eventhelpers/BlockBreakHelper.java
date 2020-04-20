@@ -1,11 +1,15 @@
 package me.gt3ch1.betterlife.eventhelpers;
 
+import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class BlockBreakHelper {
     /**
-     * Determines whether or not the location? variables are within the area determined
-     * by blockLocation?{1..2}
+     * Determines whether or not the location? variables are within the area
      *
      * @param x1
      * @param x2
@@ -15,32 +19,31 @@ public class BlockBreakHelper {
      * @param locationZ
      * @return boolean
      */
-    public static boolean isWithinClaimedArea(double x1, double x2, double z1,
-                                              double z2, double locationX, double locationZ) {
 
-        boolean xComparator;
-        boolean zComparator;
-        boolean x1Greater = isX1GreaterOrEqualToThanX2(x1,x2);
-        boolean z1Greater = isZ1GreaterOrEqualToThanZ2(z1,z2);
-        if(x1Greater)
-            xComparator = locationX  >= x2 && locationX <= x1;
-        else
-            xComparator = locationX >= x1 && locationX <= x2;
+      private static double maxX;
+      private static double maxY;
+      private static double maxZ;
 
-        if(z1Greater)
-            zComparator = locationZ >= z2 && locationZ <= z1;
-        else
-            zComparator = locationZ >= z1 && locationZ <= z2;
+      private static double minX;
+      private static double minY;
+      private static double minZ;
 
-        return (xComparator && zComparator);
+      private static UUID worldUniqueId;
 
-    }
 
-    private static boolean isX1GreaterOrEqualToThanX2(double x1, double x2){
-        return(x1>=x2);
-    }
-    private static boolean isZ1GreaterOrEqualToThanZ2(double z1, double z2){
-        return(z1>=z2);
+    public static boolean isWithinClaimedArea(Location firstPoint, Location secondPoint, Block b) {
+        worldUniqueId = firstPoint.getWorld().getUID();
+
+        maxX = Math.max(firstPoint.getX(), secondPoint.getX());
+        maxZ = Math.max(firstPoint.getZ(), secondPoint.getZ());
+
+        minX = Math.min(firstPoint.getX(), secondPoint.getX());
+        minZ = Math.min(firstPoint.getZ(), secondPoint.getZ());
+        Location loc = b.getLocation();
+        return loc.getWorld().getUID().equals(worldUniqueId)
+                && loc.getX() >= minX && loc.getX() <= maxX
+                && loc.getZ() >= minZ && loc.getZ() <= maxZ;
+
     }
 
     /**
@@ -53,7 +56,12 @@ public class BlockBreakHelper {
      * @return
      */
     public static boolean playerCanBreakBlock(String ownerUUID, Player playerInteracting) {
-        return (!playerInteracting.getUniqueId().toString().equalsIgnoreCase(ownerUUID)
-                && !(playerInteracting.isOp() || playerInteracting.hasPermission("betterlife.antigrief.bypass")));
+
+        return (playerInteracting.getUniqueId().toString().equalsIgnoreCase(ownerUUID))
+          || (playerInteracting.isOp() || playerInteracting.hasPermission("betterlife.antigrief.bypass")) &&
+                        CommandUtils.getMainConfiguration().getCustomConfig().getStringList("zoneprotection.worlds")
+                                .contains(playerInteracting.getWorld().getName());
+
     }
+
 }
