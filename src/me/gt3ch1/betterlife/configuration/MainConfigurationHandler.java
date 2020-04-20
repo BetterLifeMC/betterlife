@@ -12,8 +12,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import me.gt3ch1.betterlife.Main.Main;
 
 public class MainConfigurationHandler {
-	// Initiate main variable
+
 	private Main m;
+
 	/**
 	 * Plug-in wide configuration handler
 	 * @param m
@@ -21,7 +22,7 @@ public class MainConfigurationHandler {
 	public MainConfigurationHandler(Main m) {
 		this.m = m;
 	}
-	// Initialize the configuration and file for the configuration
+
 	private static FileConfiguration customConfig = null;
 	private static File customConfigFile = null;
 
@@ -29,14 +30,12 @@ public class MainConfigurationHandler {
 	 * Reloads the current state of the configuration file (config.yml)
 	 */
 	public void reloadCustomConfig() {
-		if (customConfigFile == null) {
-			// Sets customConfigFile to BetterLife/config.yml
+		if (customConfigFile == null)
 			customConfigFile = new File(m.getDataFolder(), "config.yml");
-		}
-		// Loads the configuration stored in that file.
-		customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
 
+		customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
 		Reader defConfigStream = null;
+
 		try {
 			defConfigStream = new InputStreamReader(m.getResource("config.yml"), "UTF8");
 		} catch (UnsupportedEncodingException e) {
@@ -54,9 +53,9 @@ public class MainConfigurationHandler {
 	 * @return MainConfiguration
 	 */
 	public FileConfiguration getCustomConfig() {
-		if (customConfig == null) {
+		if (customConfig == null)
 			reloadCustomConfig();
-		}
+
 		return m.getConfig();
 	}
 
@@ -65,9 +64,8 @@ public class MainConfigurationHandler {
 	 * to it's file (config.yml)
 	 */
 	public void saveCustomConfig() {
-		if (customConfig == null || customConfigFile == null) {
+		if (customConfig == null || customConfigFile == null)
 			return;
-		}
 		try {
 			getCustomConfig().save(customConfigFile);
 		} catch (IOException ex) {
