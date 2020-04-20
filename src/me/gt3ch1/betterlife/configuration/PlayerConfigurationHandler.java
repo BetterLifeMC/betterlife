@@ -22,9 +22,7 @@ public class PlayerConfigurationHandler {
 	public PlayerConfigurationHandler(Main m) {
 		this.m = m;
 	}
-	// Initiate a file configuration
 	private static FileConfiguration customConfig = null;
-	// Initiate a file
 	private static File customConfigFile = null;
 
 	/**
@@ -32,23 +30,25 @@ public class PlayerConfigurationHandler {
 	 */
 	public void reloadCustomConfig() {
 		
-		if (customConfigFile == null) {
-			// Set the file to BetterLife/player_config.yml
+		if (customConfigFile == null)
 			customConfigFile = new File(m.getDataFolder(), "player_config.yml");
-		}
-		// Load the configuration inside the file
-		customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
 
+		customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
 		Reader defConfigStream = null;
+
 		try {
-			// Try to read the file.
+
 			defConfigStream = new InputStreamReader(m.getResource("player_config.yml"), "UTF8");
+
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
+
 		if (defConfigStream != null) {
+
 			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
 			customConfig.setDefaults(defConfig);
+
 		}
 	}
 
@@ -58,9 +58,10 @@ public class PlayerConfigurationHandler {
 	 * @return PlayerConfiguration
 	 */
 	public FileConfiguration getCustomConfig() {
-		if (customConfig == null) {
+
+		if (customConfig == null)
 			reloadCustomConfig();
-		}
+
 		return customConfig;
 	}
 
@@ -69,9 +70,10 @@ public class PlayerConfigurationHandler {
 	 * it's file.
 	 */
 	public void saveCustomConfig() {
-		if (customConfig == null || customConfigFile == null) {
+
+		if (customConfig == null || customConfigFile == null)
 			return;
-		}
+
 		try {
 			getCustomConfig().save(customConfigFile);
 		} catch (IOException ex) {
