@@ -8,17 +8,6 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class BlockBreakHelper {
-    /**
-     * Determines whether or not the location? variables are within the area
-     *
-     * @param x1
-     * @param x2
-     * @param z1
-     * @param z2
-     * @param locationX
-     * @param locationZ
-     * @return boolean
-     */
 
       private static double maxX;
       private static double maxY;
@@ -31,6 +20,13 @@ public class BlockBreakHelper {
       private static UUID worldUniqueId;
 
 
+    /**
+     * Returns whether or not the Block b resides within the two points given.
+     * @param firstPoint
+     * @param secondPoint
+     * @param b
+     * @return
+     */
     public static boolean isWithinClaimedArea(Location firstPoint, Location secondPoint, Block b) {
         worldUniqueId = firstPoint.getWorld().getUID();
 
