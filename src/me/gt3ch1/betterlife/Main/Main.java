@@ -2,10 +2,8 @@ package me.gt3ch1.betterlife.Main;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
-import me.gt3ch1.betterlife.events.*;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,14 +13,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
+/**
+ * Main class for BetterLife. It enables all of the listeners, economy, and tab completion.
+ * @author gt3ch1
+ * @authoer Starmism
+ */
 public class Main extends JavaPlugin {
 
     protected ArrayList<Listener> listeners = new ArrayList<>();
     public static Main m;
     public static Economy economy;
 
+    /**
+     * Prep the plugin for startup
+     */
     @Override
     public void onEnable() {
 

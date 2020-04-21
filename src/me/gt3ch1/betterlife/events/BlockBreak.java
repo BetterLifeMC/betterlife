@@ -10,10 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-
+/** Contains the events fired that are related to anti-griefing.
+ * @author gt3ch1
+ */
 public class BlockBreak implements Listener {
 
     PlayerConfigurationHandler playerConfigs = CommandUtils.getPlayerConfiguration();

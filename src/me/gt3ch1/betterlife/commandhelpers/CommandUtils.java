@@ -10,6 +10,11 @@ import org.bukkit.entity.Player;
 
 import java.util.LinkedHashMap;
 
+/**
+ * Base class for BetterLifeCommands, and various other methods required to send messages to players,
+ * or to add tab completion for certain commands.  This class also stores all of the configuration
+ * data required to run the plugin.
+ */
 public class CommandUtils {
     // Initializes some important variables.
     private static Main m = Main.m;
