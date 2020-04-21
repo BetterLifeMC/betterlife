@@ -11,19 +11,23 @@ public class PlayerJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-    	// Get the player
+
         Player p = e.getPlayer();
-        // Get the default particle
         Particle newPlayerParticle = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle").toUpperCase());
 
+
         try {
-            // Try to fetch the player's current trail config setting
+
             newPlayerParticle = Particle.valueOf(CommandUtils.getPlayerConfiguration().getCustomConfig().getString("player." + p.getUniqueId().toString() + ".trail"));
+
         } catch (Exception ex) {
-            // If that fails, setup a new config setting for the player
-            CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." + p.getUniqueId().toString() + ".trail", newPlayerParticle.toString());
-            CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." + p.getUniqueId().toString() + ".trails.enabled", false);
+
+            CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." +
+                    p.getUniqueId().toString() + ".trail", newPlayerParticle.toString());
+            CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." +
+                    p.getUniqueId().toString() + ".trails.enabled", false);
             CommandUtils.getPlayerConfiguration().saveCustomConfig();
+
         }
     }
 }

@@ -2,12 +2,8 @@ package me.gt3ch1.betterlife.Main;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
-import me.gt3ch1.betterlife.events.BlockFade;
-import me.gt3ch1.betterlife.events.PlayerJoin;
-import me.gt3ch1.betterlife.events.PlayerMove;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,37 +12,37 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
+/**
+ * Main class for BetterLife. It enables all of the listeners, economy, and tab completion.
+ * @author gt3ch1
+ * @authoer Starmism
+ */
 public class Main extends JavaPlugin {
-    private Listener blockFadeListener,playerMoveListener,playerJoinListener;
-    Listener[] enabledListeners = {blockFadeListener,playerMoveListener,playerJoinListener};
+
+    protected ArrayList<Listener> listeners = new ArrayList<>();
     public static Main m;
     public static Economy economy;
+
+    /**
+     * Prep the plugin for startup
+     */
     @Override
     public void onEnable() {
 
         m = this;
-        // Config setup
+
         CommandUtils.enableConfiguration();
-        // Listener setup
-        blockFadeListener = new BlockFade();
-        playerMoveListener = new PlayerMove();
-        playerJoinListener = new PlayerJoin();
-/*		for (Listener listener : enabledListeners) {
-			Bukkit.getPluginManager().registerEvents(listener, this);
-		}*/
-        // Somehow our for loop to enable the listeners doesn't work.
-        // This will have to suffice.
-        Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
-        Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
-        Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
-        // Tab Completion setup, janky way but it works I guess, might need to refactor.
+        new ListenersSetup(m);
+
         for (String command : CommandUtils.getEnabledTabCommands()) {
             getCommand(command).setTabCompleter(new TabCompleterHelper());
         }
 
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
+
     }
 
     /**
@@ -57,7 +53,7 @@ public class Main extends JavaPlugin {
         // Set the configuration managers to null
         CommandUtils.disableConfiguration();
         // Set all listeners to null
-        for (Listener l : enabledListeners) {
+        for (Listener l : listeners) {
             l = null;
         }
         // Log output
