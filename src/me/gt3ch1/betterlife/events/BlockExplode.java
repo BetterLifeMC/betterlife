@@ -9,6 +9,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
+/**
+ * Contains methods used for when a block or an entity explodes near or within a designated zone.
+ * @author gt3ch1
+ */
 public class BlockExplode implements Listener {
 
     Object[] playerUUIDS;
