@@ -8,12 +8,10 @@ import org.bukkit.command.CommandSender;
 import java.util.LinkedHashMap;
 
 /**
- * @author gcpease
- * This class is what all commands will extend.
- *
- */
-/**
- * @author gcpease
+ * @author gt3ch1
+ * This class is what all commands will extend.  Each command that extends this class must provide all of
+ * the parameters required for the initalizer.  All commands must also call this.onCommand to run the
+ * method.
  *
  */
 public abstract class BetterLifeCommands extends CommandUtils {

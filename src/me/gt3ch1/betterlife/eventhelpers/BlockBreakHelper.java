@@ -7,6 +7,10 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+/**
+ * This class contains methods relating to the BetterLife anti-grief system, which is used to prevent
+ * player modification of player-defined locations.
+ */
 public class BlockBreakHelper {
 
       private static double maxX;

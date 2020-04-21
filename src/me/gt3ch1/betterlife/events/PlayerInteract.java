@@ -12,10 +12,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+/**
+ * Contains listeners that allow a player to claim piece of land to disable outside
+ * modifications from other players.
+ * @author gt3ch1
+ */
 public class PlayerInteract implements Listener {
 
     Location loc1 = null, loc2 = null;

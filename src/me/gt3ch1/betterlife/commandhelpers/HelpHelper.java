@@ -2,6 +2,10 @@ package me.gt3ch1.betterlife.commandhelpers;
 
 import java.util.LinkedHashMap;
 
+/**
+ * Handles all help messages for BetterLife.
+ * @author Starmism
+ */
 public class HelpHelper {
 
     private static LinkedHashMap<String, String> trailHelpHash = new LinkedHashMap<>();

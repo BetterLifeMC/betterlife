@@ -14,6 +14,11 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Handles the ability of tab completion for commands as designated in CommandUtils.
+ * @author gt3ch1
+ * @author Starmism
+ */
 public class TabCompleterHelper implements TabCompleter {
     // Initialize a string of variables
     private List<String> subCommands = new ArrayList<>();
@@ -33,6 +38,7 @@ public class TabCompleterHelper implements TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             switch (cmd) {
+                //TODO:  Why isn't tab completion working?
                 case "trail":
                     switch (args.length) {
                         case 1:
