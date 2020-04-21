@@ -38,7 +38,6 @@ public class TabCompleterHelper implements TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             switch (cmd) {
-                //TODO:  Why isn't tab completion working?
                 case "trail":
                     switch (args.length) {
                         case 1:
@@ -46,6 +45,8 @@ public class TabCompleterHelper implements TabCompleter {
                             // has permissions, add and rm to the tab completion.
                             if (Arrays.stream(args).anyMatch("set"::contains)) {
                                 subCommands.add("set");
+                                System.out.println("Is set?!");
+                                System.out.println(subCommands.toString());
                             }
                             if (Arrays.stream(args).anyMatch("list"::contains)) {
                                 subCommands.add("list");
@@ -56,7 +57,6 @@ public class TabCompleterHelper implements TabCompleter {
                             if (Arrays.stream(args).anyMatch("toggle"::contains)) {
                                 subCommands.add("toggle");
                             }
-                            break;
                         case 2:
                             switch (args[0]) {
                                 // If it is set, return the list of currently enabled particles,
@@ -134,9 +134,8 @@ public class TabCompleterHelper implements TabCompleter {
                         default:
                             break;
                     }
-                    return subCommands;
             }
-
+            return subCommands;
         }
         return null;
 
