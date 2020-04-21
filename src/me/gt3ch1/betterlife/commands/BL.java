@@ -29,42 +29,34 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command cs, String command, String[] args) {
-    	// Test the args length
+
         switch(args.length) {
-        	// If there is nothing, send the version.
             case 0:
                 sendVersion(sender);
                 break;
-            // If the args are 1
             case 1:
-            	// Test the arguments
                 switch(args[0]) {
-                	// If it is reload
                     case "reload":
-                    	// And a player
                         if(sender instanceof Player) {
                             Player p = (Player) sender;
-                            // And has permission, reload the config.
-                            if (p.hasPermission("betterlife.reload")) {
+
+                            if (p.hasPermission("betterlife.reload"))
                                 reloadConfig(p);
-                            } else {
+                            else
                                 sendBannerMessage(p, "&4You don't have permission!");
-                            }
-                        } else {
-                        	// Must be the console...
-                            reloadConfig(sender);
                         }
+                        else
+                            reloadConfig(sender);
                         break;
-                    // If it is version, send the version info.
+
                     case "version":
                         sendVersion(sender);
                         break;
-                    // Do nothing.
+
                     default:
                         return false;
                 }
                 return true;
-            // Do nothing.
             default:
                 return false;
         }

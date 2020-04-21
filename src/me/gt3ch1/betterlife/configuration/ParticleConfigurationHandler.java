@@ -17,9 +17,7 @@ public class ParticleConfigurationHandler {
     public ParticleConfigurationHandler(Main m) {
         this.m = m;
     }
-    // Initiate a file configuration
     private static FileConfiguration particleConfig = null;
-    // Initiate a file
     private static File particleConfigFile = null;
 
     /**
@@ -27,16 +25,13 @@ public class ParticleConfigurationHandler {
      */
     public void reloadParticleConfig() {
 
-        if (particleConfigFile == null) {
-            // Set the file to BetterLife/particles.yml
+        if (particleConfigFile == null)
             particleConfigFile = new File(m.getDataFolder(), "particles.yml");
-        }
-        // Load the configuration inside the file
-        particleConfig = YamlConfiguration.loadConfiguration(particleConfigFile);
 
+        particleConfig = YamlConfiguration.loadConfiguration(particleConfigFile);
         Reader defConfigStream = null;
+
         try {
-            // Try to read the file.
             defConfigStream = new InputStreamReader(m.getResource("particles.yml"), "UTF8");
         } catch (UnsupportedEncodingException e) {
             m.getLogger().severe("There is a problem with particles.yml!");
@@ -54,9 +49,9 @@ public class ParticleConfigurationHandler {
      * @return ParticleConfiguration
      */
     public FileConfiguration getParticleConfig() {
-        if (particleConfig == null) {
+        if (particleConfig == null)
             reloadParticleConfig();
-        }
+
         return particleConfig;
     }
 
@@ -65,9 +60,9 @@ public class ParticleConfigurationHandler {
      * it's file.
      */
     public void saveParticleConfig() {
-        if (particleConfig == null || particleConfigFile == null) {
+        if (particleConfig == null || particleConfigFile == null)
             return;
-        }
+
         try {
             getParticleConfig().save(particleConfigFile);
         } catch (IOException ex) {
@@ -76,9 +71,9 @@ public class ParticleConfigurationHandler {
     }
 
     public void saveDefaultParticleConfig() {
-        if (particleConfigFile == null) {
+        if (particleConfigFile == null)
             particleConfigFile = new File(m.getDataFolder(), "particles.yml");
-        }
+
         if (!particleConfigFile.exists()) {
             m.saveResource("particles.yml", false);
         }
