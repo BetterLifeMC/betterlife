@@ -1,7 +1,7 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
 import org.bukkit.Bukkit;
-aaimport org.bukkit.OfflinePlayer;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
