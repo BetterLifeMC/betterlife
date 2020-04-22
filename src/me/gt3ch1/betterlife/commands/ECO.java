@@ -2,6 +2,7 @@ package me.gt3ch1.betterlife.commands;
 
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,8 +24,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
 
     }
 
-    Player commandReceiver = null;
-
+    Player commandReceiver;
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         if (sender instanceof Player) {
@@ -42,6 +42,8 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                                 sendPermissionErrorMessage(sender);
                             return true;
                         case "give":
+                            sendHelpMessage(sender, "eco", helpHash);
+                            return true;
                         case "set":
                             sendHelpMessage(sender, "eco", helpHash);
                             return true;
@@ -53,8 +55,13 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                     switch (args[0]) {
                         case "bal":
                             if (player.hasPermission(getPermission() + ".bal.others")) {
-                                commandReceiver = Bukkit.getPlayer(args[1]);
-                                double bal = economy.getBalance(args[1]);
+                                try {
+                                    commandReceiver = Bukkit.getPlayer(args[1]).getPlayer();
+                                }catch(Exception e){
+                                    sendMessage(player,"&cThat player is not online!");
+                                    return false;
+                                }
+                                double bal = economy.getBalance(commandReceiver);
                                 // This needs to be redone, but I can't care at the moment.
                                 if (commandReceiver != null || bal > 0)
                                     sendMessage(player, "&aBalance of&7 " + args[1] + "&7:&a " + bal);
@@ -69,13 +76,21 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                 case 3:
                     switch (args[0]) {
                         case "give":
-                            commandReceiver = Bukkit.getPlayer(args[1]);
-                            if (commandReceiver instanceof Player && args.length >= 2 && player.hasPermission(getPermission() + ".give")) {
+                            try {
+                                commandReceiver = Bukkit.getPlayer(args[1]).getPlayer();
+                            }catch(Exception e){
+                                sendMessage(player,"&cThat player is not online!");
+                                return false;
+                            }
+                            if (args.length >= 2 && player.hasPermission(getPermission() + ".give")) {
                                 double playerBalance = Double.valueOf(args[2]);
                                 if ((economy.getBalance(player) - playerBalance) > 0) {
                                     economy.depositPlayer(commandReceiver, playerBalance);
                                     economy.withdrawPlayer(player, playerBalance);
-                                    sendMessage(player, "&aYou sent &6" + playerBalance + "&a to &7" + commandReceiver.getName());
+                                    sendMessage(player, "&aYou sent &6$" + playerBalance + "&a to &7" + commandReceiver.getName());
+                                    try {
+                                        sendMessage(commandReceiver,"&aYou received &6 $" +playerBalance + "&a from &7"+commandReceiver.getName());
+                                    }catch(Exception e){return false;}
                                     return true;
                                 }
                                 return false;
@@ -89,7 +104,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                         case "set":
                             commandReceiver = Bukkit.getPlayer(args[1]);
                             double balance = Double.valueOf(args[2]);
-                            if (commandReceiver instanceof Player && player.hasPermission(getPermission() + ".set")) {
+                            if (player.hasPermission(getPermission() + ".set")) {
                                 economy.withdrawPlayer(commandReceiver, economy.getBalance(commandReceiver));
                                 economy.depositPlayer(commandReceiver, balance);
                                 sendMessage(sender, "&aSetting player &7" + commandReceiver.getName() + "'s&a balance to &6" + balance);
