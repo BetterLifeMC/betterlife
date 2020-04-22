@@ -20,26 +20,17 @@ public class BlockBreak implements Listener {
     private static BlockBreakHelper bbh;
 
     @EventHandler
-    public void betterLifeAntigriefBlockBreakEvent(PlayerInteractEvent e) {
+    public void betterLifeAntiGriefBlockBreakEvent(PlayerInteractEvent e) {
 
         Player player = e.getPlayer();
         Block block = e.getClickedBlock();
         playerUUIDS = playerConfigs.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
-        Location location = null;
-        double locationX = 0.0;
-        double locationZ = 0.0;
-        try {
-            location = block.getLocation();
-            locationX = location.getX();
-            locationZ = location.getZ();
-        } catch (NullPointerException ex) {}
-
             for (int i = 0; i < playerUUIDS.length; i++) {
 
                 String playerUUID = playerUUIDS[i].toString();
                 Location loc1,loc2;
 
-                boolean antiGriefEnabledPerPlayer = false;
+                boolean antiGriefEnabledPerPlayer;
                 try {
                     antiGriefEnabledPerPlayer = playerConfigs.getCustomConfig().isConfigurationSection("player." + playerUUID + ".antigrief");
                     loc1 = (Location) playerConfigs.getCustomConfig().get("player." + playerUUID + ".antigrief.location.a");
@@ -54,7 +45,7 @@ public class BlockBreak implements Listener {
                     try {
                         if (bbh.isWithinClaimedArea(loc1,loc2,block))
                             if (!bbh.playerCanBreakBlock(playerUUID, player)) {
-                                CommandUtils.sendBannerMessage(player,"&bHey! You can't do that here!t");
+                                CommandUtils.sendBannerMessage(player,"&bHey! You can't do that here!");
                                 e.setCancelled(true);
                             }
                     }catch(NullPointerException npe){}
