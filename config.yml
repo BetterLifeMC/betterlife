@@ -1,5 +1,13 @@
 # Main BetterLife Configuration File
 
+# SQL settings
+sql:
+  enabled: false
+  username: betterlife
+  password: betterlife123
+  database: minecraft
+  prefix: betterlife_
+
 events:
   # Is crop trample enabled globally?
   croptrample: true
