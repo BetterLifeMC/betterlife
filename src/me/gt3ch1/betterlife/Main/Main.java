@@ -42,9 +42,14 @@ public class Main extends JavaPlugin {
         for (String command : CommandUtils.getEnabledTabCommands()) {
             getCommand(command).setTabCompleter(new TabCompleterHelper());
         }
-        sql = new Sql("Minecraft","betterlife","uwA9eiWVnBg8gEBC","web.pease.net");
-        //isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("")
-        isUsingSql = true;
+        isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("sql.enabled");
+        if(isUsingSql) {
+            String username = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.username");
+            String password = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.password");
+            String database = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.database");
+            String server = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.server");
+            sql = new Sql(database,username,password,server);
+        }
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
 

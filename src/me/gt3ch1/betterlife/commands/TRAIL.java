@@ -2,6 +2,7 @@ package me.gt3ch1.betterlife.commands;
 
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,6 +18,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 		this.onCommand(cs, c, label, args);
 
 	}
+	private PlayerConfigurationHandler playerConfig = CommandUtils.getPlayerConfiguration();
 	private List<String> allowedParticles;
 	@SuppressWarnings("unchecked")
 	@Override
@@ -46,10 +48,10 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
 					if (player.hasPermission("betterlife.trail.toggle")) {
-						boolean trailsEnabled = CommandUtils.getPlayerConfiguration().getCustomConfig().getBoolean("player." + player.getUniqueId().toString() + ".trails.enabled");
-						CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." + player.getUniqueId().toString() + ".trails.enabled", !trailsEnabled);
+						boolean trailsEnabled = playerConfig.trailEnabledPerPlayer.get(player.getUniqueId());
+						playerConfig.setValue("trails.enabled", !trailsEnabled,player.getUniqueId());
+						playerConfig.trailEnabledPerPlayer.replace(player.getUniqueId(),!trailsEnabled);
 						String toggleState = trailsEnabled ? "&cdisabled" : "&aenabled";
-						CommandUtils.getPlayerConfiguration().saveCustomConfig();
 						sendBannerMessage(player, "&7Trail " + toggleState + "&7!");
 						return true;
 					}
@@ -63,9 +65,10 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
 					if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()) || player.hasPermission("betterlife.trail.particle.*"))) {
-						CommandUtils.getPlayerConfiguration().getCustomConfig().set("player." + player.getUniqueId().toString() + ".trail", args[1].toUpperCase());
-						CommandUtils.getPlayerConfiguration().saveCustomConfig();
+						playerConfig.setValue("trails.trail", args[1].toUpperCase(),player.getUniqueId());
 						sendBannerMessage(player, "&7Your trail is now set to: &6" + args[1].toUpperCase());
+						playerConfig.trailPerPlayer.replace(player.getUniqueId(),args[1].toUpperCase());
+
 					} else if (!player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()))
 						sendBannerMessage(player, "&4You need permission to use that trail!");
 					 else if (!allowedParticles.contains(args[1].toUpperCase()))
