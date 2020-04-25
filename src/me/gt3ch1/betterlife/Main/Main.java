@@ -3,6 +3,7 @@ package me.gt3ch1.betterlife.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
+import me.gt3ch1.betterlife.sql.Sql;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,6 +25,8 @@ public class Main extends JavaPlugin {
     protected ArrayList<Listener> listeners = new ArrayList<>();
     public static Main m;
     public static Economy economy;
+    public static boolean isUsingSql;
+    public static Sql sql;
 
     /**
      * Prep the plugin for startup
@@ -39,7 +42,9 @@ public class Main extends JavaPlugin {
         for (String command : CommandUtils.getEnabledTabCommands()) {
             getCommand(command).setTabCompleter(new TabCompleterHelper());
         }
-
+        sql = new Sql("Minecraft","betterlife","uwA9eiWVnBg8gEBC","web.pease.net");
+        //isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("")
+        isUsingSql = true;
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
 
