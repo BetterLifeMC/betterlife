@@ -85,9 +85,9 @@ public class PlayerInteract implements Listener {
                 if (Main.getEconomy().getBalance(player) >= landCost) {
 
                     if (Main.isUsingSql) {
-                        playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId().toString());
-                        playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId().toString());
-                        playerConfig.setValue("antigrief.enabled",1,player.getUniqueId().toString());
+                        playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId());
+                        playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId());
+                        playerConfig.setValue("antigrief.enabled",1,player.getUniqueId());
                     }
                     Main.getEconomy().withdrawPlayer(player, landCost);
                     CommandUtils.sendBannerMessage(player, "&eYou have successfully claimed your plot! Enjoy!");

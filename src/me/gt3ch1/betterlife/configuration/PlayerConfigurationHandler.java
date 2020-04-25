@@ -1,19 +1,28 @@
 package me.gt3ch1.betterlife.configuration;
 
 import me.gt3ch1.betterlife.Main.Main;
+import org.bukkit.Particle;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerConfigurationHandler {
     private static FileConfiguration customConfig = null;
     private static File customConfigFile = null;
     // Declare m
     private final Main m;
+    public HashMap<UUID, Boolean> trailEnabledPerPlayer = new HashMap<>();
+    public HashMap<UUID, String> trailPerPlayer = new HashMap<>();
+
     /**
      * Creates a new configuration handler for players (player_config.yml)
      *
@@ -74,48 +83,81 @@ public class PlayerConfigurationHandler {
         }
     }
 
-    public void setValue(String path, Object value, String playerUUID) {
+    /** Sets the value of path to value for playerUUID
+     * @param path
+     * @param value
+     * @param playerUUID
+     */
+    public void setValue(String path, Object value, UUID playerUUID) {
         if (!Main.isUsingSql) {
-            this.getCustomConfig().set("player." + playerUUID + "." + path, value);
+            this.getCustomConfig().set("player." + playerUUID.toString() + "." + path, value);
             this.saveCustomConfig();
         } else {
             try {
-                Main.sql.setValue(path, value, playerUUID);
+                Main.sql.setValue(path, value, playerUUID.toString());
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
         }
     }
 
-    public boolean getBooleanValue(String path, String playerUUID) {
+    /** Gets the boolean value of path from config for playerUUID
+     * @param path
+     * @param playerUUID
+     * @return
+     */
+    public boolean getBooleanValue(String path, UUID playerUUID) {
         if (!Main.isUsingSql)
-            return this.getCustomConfig().getBoolean("player." + playerUUID + "." + path);
+            return this.getCustomConfig().getBoolean("player." + playerUUID.toString() + "." + path);
         else
-            return Boolean.valueOf(Main.sql.getValue(path, playerUUID).toString());
+            return Boolean.valueOf(Main.sql.getValue(path, playerUUID.toString()).toString());
     }
 
-    public String getStringValue(String path, String playerUUID) {
+    /**
+     * Gets a string value from the config. for playerUUID.
+     * @param path
+     * @param playerUUID
+     * @return value
+     */
+    public String getStringValue(String path, UUID playerUUID) {
         if (!Main.isUsingSql)
-            return this.getCustomConfig().getString("player." + playerUUID + "." + path);
+            return this.getCustomConfig().getString("player." + playerUUID.toString() + "." + path);
         else
-            return Main.sql.getValue(path, playerUUID).toString();
+            return Main.sql.getValue(path, playerUUID.toString()).toString();
     }
 
-    public List<String> getList(String path, String playerUUID) {
-        return this.getCustomConfig().getStringList("player." + playerUUID + "." + path);
+    /**
+     * Returns a list from the player config for playerUUID.
+     * @param path
+     * @param playerUUID
+     * @return value list
+     */
+    public List<String> getList(String path, UUID playerUUID) {
+        return this.getCustomConfig().getStringList("player." + playerUUID.toString() + "." + path);
     }
 
+    /**
+     * Get's the row of data from SQL
+     * @param path
+     * @return List
+     */
     public List<String> getSqlRow(String path) {
         path = path.replace(".", "_");
         return Main.sql.getRows(path);
     }
+    //TODO: Merge getSqlRow and getList together.
 
-    public Object get(String path, String playerUUID) {
+    /** Get's the value of path from the player UUID from the config.
+     * @param path
+     * @param playerUUID
+     * @return
+     */
+    public Object get(String path, UUID playerUUID) {
         if (!Main.isUsingSql)
-            return this.getCustomConfig().get("player." + playerUUID + "." + path);
+            return this.getCustomConfig().get("player." + playerUUID.toString() + "." + path);
         else {
             path = path.replace(".", "_");
-            return Main.sql.getValue(path, playerUUID);
+            return Main.sql.getValue(path, playerUUID.toString());
         }
 
     }
