@@ -42,8 +42,6 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                                 sendPermissionErrorMessage(sender);
                             return true;
                         case "give":
-                            sendHelpMessage(sender, "eco", helpHash);
-                            return true;
                         case "set":
                             sendHelpMessage(sender, "eco", helpHash);
                             return true;
