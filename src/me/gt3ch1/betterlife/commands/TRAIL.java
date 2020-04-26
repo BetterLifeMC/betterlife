@@ -2,7 +2,6 @@ package me.gt3ch1.betterlife.commands;
 
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,8 +11,17 @@ import java.util.List;
 
 public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 
-    private PlayerConfigurationHandler playerConfig = CommandUtils.getPlayerConfiguration();
     private List<String> allowedParticles;
+
+    /**
+     * Handles the command /trail
+     *
+     * @param permission
+     * @param cs
+     * @param c
+     * @param label
+     * @param args
+     */
     public TRAIL(String permission, CommandSender cs, Command c, String label, String[] args) {
 
         super(permission, cs, c, label, args);

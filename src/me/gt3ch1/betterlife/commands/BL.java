@@ -9,10 +9,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class BL extends BetterLifeCommands implements CommandExecutor {
-	// Get the plugin from Main 
+    // Get the plugin from Main
     private static Main m = Main.m;
+
     /**
      * Handles the /bl command
+     *
      * @param permission
      * @param cs
      * @param c
@@ -25,27 +27,46 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
     }
 
     /**
+     * Sends the current version of the plugin to the sender.
+     *
+     * @param sender
+     */
+    private static void sendVersion(CommandSender sender) {
+        sendBannerMessage(sender, "&7Version &6" + m.getDescription().getVersion() + " &7of BetterLife installed.");
+    }
+
+    /**
+     * Reloads the configuration and sends messages to the sender.
+     *
+     * @param sender
+     */
+    private static void reloadConfig(CommandSender sender) {
+        sendBannerMessage(sender, "&eConfiguration file reloading...");
+        CommandUtils.reloadConfiguration();
+        sendBannerMessage(sender, "&aConfiguration file reloaded!");
+    }
+
+    /**
      * When /bl is sent
      */
     @Override
     public boolean onCommand(CommandSender sender, Command cs, String command, String[] args) {
 
-        switch(args.length) {
+        switch (args.length) {
             case 0:
                 sendVersion(sender);
                 break;
             case 1:
-                switch(args[0]) {
+                switch (args[0]) {
                     case "reload":
-                        if(sender instanceof Player) {
+                        if (sender instanceof Player) {
                             Player p = (Player) sender;
 
                             if (p.hasPermission("betterlife.reload"))
                                 reloadConfig(p);
                             else
                                 sendBannerMessage(p, "&4You don't have permission!");
-                        }
-                        else
+                        } else
                             reloadConfig(sender);
                         break;
 
@@ -61,23 +82,5 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
                 return false;
         }
         return true;
-    }
-
-    /**
-     * Sends the current version of the plugin to the sender.
-     * @param sender
-     */
-    private static void sendVersion(CommandSender sender) {
-        sendBannerMessage(sender, "&7Version &6" + m.getDescription().getVersion() + " &7of BetterLife installed.");
-    }
-
-    /**
-     * Reloads the configuration and sends messages to the sender.
-     * @param sender
-     */
-    private static void reloadConfig(CommandSender sender) {
-        sendBannerMessage(sender, "&eConfiguration file reloading...");
-        CommandUtils.reloadConfiguration();
-        sendBannerMessage(sender, "&aConfiguration file reloaded!");
     }
 }
