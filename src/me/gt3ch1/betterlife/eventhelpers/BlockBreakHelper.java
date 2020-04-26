@@ -12,7 +12,7 @@ import java.util.UUID;
  * This class contains methods relating to the BetterLife anti-grief system, which is used to prevent
  * player modification of player-defined locations.
  */
-public class BlockBreakHelper {
+public class BlockBreakHelper extends CommandUtils {
 
     private static double maxX;
     private static double maxY;
@@ -66,7 +66,9 @@ public class BlockBreakHelper {
 
     }
 
-    /** Converts a String into a location.
+    /**
+     * Converts a String into a location.
+     *
      * @param antigriefLocation
      * @param playerUUID
      * @return
