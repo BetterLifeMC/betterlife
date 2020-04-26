@@ -11,7 +11,7 @@ import java.util.UUID;
 public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
 
     /**
-     * Runs the command /roadboost
+     * Handles the command /roadboost
      *
      * @param permission
      * @param cs

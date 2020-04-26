@@ -15,6 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * This class handles all of the player related configuration settings.  It contains the hashmaps and other
+ * related functions to provide configuration support.
+ */
 public class PlayerConfigurationHandler {
     private static FileConfiguration customConfig = null;
     private static File customConfigFile = null;

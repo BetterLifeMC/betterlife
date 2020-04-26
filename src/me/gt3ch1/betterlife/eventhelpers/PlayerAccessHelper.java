@@ -4,6 +4,11 @@ import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 
 import java.util.UUID;
 
+/**
+ * This class contains some methods to help with the adding, and removing of a players configuration
+ * without the need of querying a database on every event.
+ * @author gt3ch1
+ */
 public class PlayerAccessHelper extends CommandUtils {
 
     public static void setupPlayerConfig(UUID playerUUID) {
