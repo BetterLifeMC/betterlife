@@ -15,8 +15,7 @@ import java.util.UUID;
 /**
  * Handles the events for players joining or quitting the game.
  */
-public class PlayerJoin implements Listener {
-    PlayerConfigurationHandler playerConfig  = CommandUtils.getPlayerConfiguration();
+public class PlayerJoin extends PlayerAccessHelper implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
