@@ -23,7 +23,6 @@ public abstract class BetterLifeCommands extends CommandUtils {
 	private String[] args;
 	protected Economy economy = Main.getEconomy();
 	public LinkedHashMap<String, String> helpHash;
-	public PlayerConfigurationHandler playerConfigs = CommandUtils.getPlayerConfiguration();
 	/**
 	 * @param permission
 	 * @param cs

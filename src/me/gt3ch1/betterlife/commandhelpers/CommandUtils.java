@@ -23,6 +23,7 @@ public class CommandUtils {
     public static ParticleConfigurationHandler partch;
     public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[[&9BetterLife&c]] ") + ChatColor.RESET;
     public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco"};
+    public PlayerConfigurationHandler playerConfig = pch;
 
     /**
      * Send the sender the BetterLife banner.
