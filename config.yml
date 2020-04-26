@@ -1,15 +1,32 @@
 # Main BetterLife Configuration File
-events:
-  # Whether or not crops can be trampled. Default: false
-  croptrample: false
 
-# Set the default particle effect given when players first join the server. Default: NOTE
+sql:
+  enabled: true
+  username: username
+  password: password
+  database: database
+  server: server
+
+events:
+  # Is crop trample enabled globally?
+  croptrample: true
+
+# What is the default particle for new players?
 defaultParticle: NOTE
 
-# The list of particle effects that players are allowed to use
-# Make sure they are in ALL CAPS
-# You can add them in game or here, though be careful of the format
-enabledParticles:
-  - NOTE
-  - CRIT
-  - CLOUD
+# Zone Protection / Anti Grief
+zoneprotection:
+
+  # Is it enabled?
+  enabled: true
+
+  # What is the item to use for claiming/protecting?
+  item: GOLDEN_SHOVEL
+
+  # What world is it enabled in?
+  worlds:
+    - world
+
+>>>>>>> 7ffc53fdc3a828c54fb6a2f18d122fec5d254c9b
+  # What is the cost per block?
+  cost: 25.0
