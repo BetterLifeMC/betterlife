@@ -6,6 +6,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFadeEvent;
 
+/**
+ * This class handles the disabling of farmland trampling.
+ */
 public class BlockFade implements Listener {
 
 	@EventHandler
