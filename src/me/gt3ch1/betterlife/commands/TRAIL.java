@@ -48,7 +48,8 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 				if (sender instanceof Player) {
 					Player player = (Player) sender;
 					if (player.hasPermission("betterlife.trail.toggle")) {
-						boolean trailsEnabled = playerConfig.trailEnabledPerPlayer.get(player.getUniqueId());
+						boolean trailsEnabled = playerConfig.trailEnabledPerPlayer.get(player.getUniqueId()
+						);
 						playerConfig.setValue("trails.enabled", !trailsEnabled,player.getUniqueId());
 						playerConfig.trailEnabledPerPlayer.replace(player.getUniqueId(),!trailsEnabled);
 						String toggleState = trailsEnabled ? "&cdisabled" : "&aenabled";
