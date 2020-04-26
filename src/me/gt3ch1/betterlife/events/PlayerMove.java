@@ -1,6 +1,7 @@
 package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -12,75 +13,78 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class PlayerMove implements Listener {
+    PlayerConfigurationHandler playerConfig = CommandUtils.getPlayerConfiguration();
 
-	@EventHandler
-	public void roadBoostEvents(PlayerMoveEvent e) {
+    @EventHandler
+    public void roadBoostEvents(PlayerMoveEvent e) {
 
-		boolean boostEnabled = CommandUtils.getPlayerConfiguration().getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".pathboost");
+        boolean boostEnabled = playerConfig.getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".pathboost");
 
-		Location loc = e.getPlayer().getLocation();
-		loc.setY(loc.getY() + 0.06250);
-		Material currentBlock = loc.getWorld().getBlockAt(loc).getRelative(BlockFace.DOWN).getType();
+        Location loc = e.getPlayer().getLocation();
+        loc.setY(loc.getY() + 0.06250);
+        Material currentBlock = loc.getWorld().getBlockAt(loc).getRelative(BlockFace.DOWN).getType();
 
-		if (currentBlock == Material.GRASS_PATH && e.getPlayer().isSprinting() && boostEnabled)
-			e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 0));
+        if (currentBlock == Material.GRASS_PATH && e.getPlayer().isSprinting() && boostEnabled)
+            e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 0));
 
-	}
+    }
 
-	@EventHandler
-	public void trailsEvents(PlayerMoveEvent e) {
+    @EventHandler
+    public void trailsEvents(PlayerMoveEvent e) {
+        boolean trailEnabled;
+        Location location = e.getPlayer().getLocation();
+        try {
+            trailEnabled = playerConfig.trailEnabledPerPlayer.get(e.getPlayer().getUniqueId());
+        } catch (NullPointerException npe) {
+            trailEnabled = false;
+        }
+        if (trailEnabled) {
 
-		Location location = e.getPlayer().getLocation();
-		boolean trailEnabled = CommandUtils.getPlayerConfiguration().getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".trails.enabled");
+            int direction = (int) location.getYaw();
 
-		if (trailEnabled) {
+            if (direction < 0) {
 
-			int direction = (int) location.getYaw();
+                direction += 360;
+                direction = (direction + 45) / 90;
 
-			if (direction < 0) {
+            } else {
 
-				direction += 360;
-				direction = (direction + 45) / 90;
+                direction = (direction + 45) / 90;
 
-			} else {
+            }
 
-				direction = (direction + 45) / 90;
+            if (direction == 1) {
 
-			}
+                location.setX(location.getX() + 1);
 
-			if (direction == 1) {
+            } else if (direction == 2) {
 
-				location.setX(location.getX() + 1);
+                location.setZ(location.getZ() + 1);
 
-			} else if (direction == 2) {
+            } else if (direction == 3) {
 
-				location.setZ(location.getZ() + 1);
+                location.setX(location.getX() - 1);
 
-			} else if (direction == 3) {
+            } else {
 
-				location.setX(location.getX() - 1);
+                location.setZ(location.getZ() - 1);
 
-			} else {
+            }
 
-				location.setZ(location.getZ() - 1);
+            Particle p;
+            location.setY(location.getY() + 1);
 
-			}
+            try {
 
-			Particle p;
-			location.setY(location.getY() + 1);
+                p = Particle.valueOf(playerConfig.trailPerPlayer.get(e.getPlayer().getUniqueId()));
+                e.getPlayer().getWorld().spawnParticle(p, location, 1);
 
-			try {
+            } catch (Exception ex) {
 
-				p = Particle.valueOf(CommandUtils.getPlayerConfiguration().getCustomConfig()
-						.getString("player." + e.getPlayer().getUniqueId() + ".trail"));
-				e.getPlayer().getWorld().spawnParticle(p, location, 1);
+                p = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle"));
+                e.getPlayer().getWorld().spawnParticle(p, location, 1);
 
-			} catch (Exception ex) {
-
-				p = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultparticle"));
-				e.getPlayer().getWorld().spawnParticle(p, location, 1);
-
-			}
-		}
-	}
+            }
+        }
+    }
 }
