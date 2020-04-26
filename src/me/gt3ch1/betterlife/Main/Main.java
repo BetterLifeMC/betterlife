@@ -1,76 +1,119 @@
 package me.gt3ch1.betterlife.Main;
 
-import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
-import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
-import me.gt3ch1.betterlife.events.BlockFade;
-import me.gt3ch1.betterlife.events.PlayerJoin;
-import me.gt3ch1.betterlife.events.PlayerWalk;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
+import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
+import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
+import me.gt3ch1.betterlife.sql.Sql;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
+/**
+ * Main class for BetterLife. It enables all of the listeners, economy, and tab completion.
+ * @author gt3ch1
+ * @authoer Starmism
+ */
 public class Main extends JavaPlugin {
-	MainConfigurationHandler ch;
-	PlayerConfigurationHandler pch;
-	Listener blockFadeListener,playerMoveListener,playerJoinListener;
-	@Override
-	public void onEnable() {
-		// Config setup
-		ch = new MainConfigurationHandler(this);
-		pch = new PlayerConfigurationHandler(this);
-		saveDefaultConfig();
-		pch.getCustomConfig();
-		pch.saveCustomConfig();
 
-		// Listener setup
-		blockFadeListener = new BlockFade(this);
-	 	playerMoveListener = new PlayerWalk(this);
-	 	playerJoinListener = new PlayerJoin(this);
-		Bukkit.getPluginManager().registerEvents(blockFadeListener, this);
-		Bukkit.getPluginManager().registerEvents(playerMoveListener, this);
-		Bukkit.getPluginManager().registerEvents(playerJoinListener, this);
+    protected ArrayList<Listener> listeners = new ArrayList<>();
+    public static Main m;
+    public static Economy economy;
+    public static boolean isUsingSql;
+    public static Sql sql;
 
-		getLogger().info(ChatColor.GREEN + "Enabled!");
-	}
+    /**
+     * Prep the plugin for startup
+     */
+    @Override
+    public void onEnable() {
 
-	@Override
-	public void onDisable() {
-		ch = null;
-		pch = null;
+        m = this;
 
-		blockFadeListener = null;
-		playerMoveListener = null;
-		playerMoveListener = null;
+        CommandUtils.enableConfiguration();
+        new ListenersSetup(m);
 
-		getLogger().info(ChatColor.RED + "Disabled!");
-	}
+        for (String command : CommandUtils.getEnabledTabCommands()) {
+            getCommand(command).setTabCompleter(new TabCompleterHelper());
+        }
+        for(Player p : this.getServer().getOnlinePlayers())
+            PlayerAccessHelper.setupPlayerConfig(p.getUniqueId());
+        isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("sql.enabled");
+        if(isUsingSql) {
+            String username = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.username");
+            String password = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.password");
+            String database = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.database");
+            String server = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.server");
+            sql = new Sql(database,username,password,server);
+        }
+        HelpHelper.setupAllHelpHashes();
+        setupEconomy();
 
-	@Override
-	public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
-		try {
-			this.getCommand(label).setExecutor((CommandExecutor) Class
-					.forName("me.gt3ch1.betterlife.commands." + label.toUpperCase())
-					.getConstructor(Main.class, String.class, CommandSender.class, Command.class, String.class, String[].class)
-					.newInstance(this, label.toLowerCase(), cs, cmd, label, args));
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-			e.printStackTrace();
-		}
-		return true;
-	}
+    }
 
-	public MainConfigurationHandler getMainConfiguration() {
-		return ch;
-	}
+    /**
+     * Prep the plugin for shutdown.
+     */
+    @Override
+    public void onDisable() {
+        // Set the configuration managers to null
+        CommandUtils.disableConfiguration();
+        // Set all listeners to null
+        for (Listener l : listeners) {
+            l = null;
+        }
+        // Log output
+        getLogger().info("Goodbye!");
+        PlayerAccessHelper.clearPlayerConfigs();
+    }
 
-	public PlayerConfigurationHandler getPlayerConfiguration() {
-		return pch;
-	}
+    /**
+     * Runs a command designated for the plugin
+     */
+    @Override
+    public boolean onCommand(CommandSender cs, Command cmd, String label, String[] args) {
+        try {
+            /*
+             * This will set the command executor for the command passed in.
+             * Once it is set, this does nothing.  The commands class file
+             * is located in package me.gt3ch1.betterlife.commands.LABEL
+             * where label is the name of the command in caps.
+             */
+            this.getCommand(label).setExecutor((CommandExecutor) Class
+                    .forName("me.gt3ch1.betterlife.commands." + label.toUpperCase())
+                    .getConstructor(String.class, CommandSender.class, Command.class, String.class, String[].class)
+                    .newInstance(label.toLowerCase(), cs, cmd, label, args));
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
+                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
+    /**
+     * Set's up the economy from vault.
+     * @return
+     */
+    private boolean setupEconomy()
+    {
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        if (economyProvider != null) {
+            economy = economyProvider.getProvider();
+            getLogger().info("Using economy provider: " + economy.toString());
+        }
+
+        return (economy != null);
+    }
+
+    public static Economy getEconomy() {
+        return economy;
+    }
 }

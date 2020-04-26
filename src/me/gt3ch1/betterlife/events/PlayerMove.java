@@ -1,0 +1,90 @@
+package me.gt3ch1.betterlife.events;
+
+import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.block.BlockFace;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+public class PlayerMove extends PlayerAccessHelper implements Listener {
+
+    @EventHandler
+    public void roadBoostEvents(PlayerMoveEvent e) {
+
+        boolean boostEnabled = playerConfig.roadboostPerPlayer.get(e.getPlayer().getUniqueId());
+
+        Location loc = e.getPlayer().getLocation();
+        loc.setY(loc.getY() + 0.06250);
+        Material currentBlock = loc.getWorld().getBlockAt(loc).getRelative(BlockFace.DOWN).getType();
+
+        if (currentBlock == Material.GRASS_PATH && e.getPlayer().isSprinting() && boostEnabled)
+            e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 0));
+
+    }
+
+    @EventHandler
+    public void trailsEvents(PlayerMoveEvent e) {
+        boolean trailEnabled;
+        Location location = e.getPlayer().getLocation();
+        try {
+            trailEnabled = playerConfig.trailEnabledPerPlayer.get(e.getPlayer().getUniqueId());
+        } catch (NullPointerException npe) {
+            trailEnabled = false;
+        }
+        if (trailEnabled) {
+
+            int direction = (int) location.getYaw();
+
+            if (direction < 0) {
+
+                direction += 360;
+                direction = (direction + 45) / 90;
+
+            } else {
+
+                direction = (direction + 45) / 90;
+
+            }
+
+            if (direction == 1) {
+
+                location.setX(location.getX() + 1);
+
+            } else if (direction == 2) {
+
+                location.setZ(location.getZ() + 1);
+
+            } else if (direction == 3) {
+
+                location.setX(location.getX() - 1);
+
+            } else {
+
+                location.setZ(location.getZ() - 1);
+
+            }
+
+            Particle p;
+            location.setY(location.getY() + 1);
+
+            try {
+
+                p = Particle.valueOf(playerConfig.trailPerPlayer.get(e.getPlayer().getUniqueId()));
+                e.getPlayer().getWorld().spawnParticle(p, location, 1);
+
+            } catch (Exception ex) {
+
+                p = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle"));
+                e.getPlayer().getWorld().spawnParticle(p, location, 1);
+
+            }
+        }
+    }
+}

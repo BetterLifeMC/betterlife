@@ -1,36 +1,40 @@
 package me.gt3ch1.betterlife.events;
 
-import me.gt3ch1.betterlife.Main.Main;
-import org.bukkit.ChatColor;
+import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
-import static me.gt3ch1.betterlife.commands.CommandUtils.*;
+import java.util.UUID;
 
-public class PlayerJoin implements Listener {
-    Main m;
-
-    public PlayerJoin(Main m) {
-        this.m = m;
-    }
+/**
+ * Handles the events for players joining or quitting the game.
+ */
+public class PlayerJoin extends PlayerAccessHelper implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        Player p = e.getPlayer();
-        Particle newPlayerParticle = Particle.valueOf(m.getMainConfiguration().getCustomConfig().getString("defaultParticle").toUpperCase());
 
-        try {
-            // Try to fetch the player's current trail config setting
-            newPlayerParticle = Particle.valueOf(m.getPlayerConfiguration().getCustomConfig().getString("player." + p.getUniqueId().toString() + ".trail"));
-        } catch (Exception ex) {
-            // If that fails, setup a new config setting for the player
-            m.getPlayerConfiguration().getCustomConfig().set("player." + p.getUniqueId().toString() + ".trail", newPlayerParticle.toString());
-            m.getPlayerConfiguration().getCustomConfig().set("player." + p.getUniqueId().toString() + ".trails.enabled", false);
-            m.getPlayerConfiguration().saveCustomConfig();
-            sendBannerMessage(p, ChatColor.AQUA + "Want to enable trail particles? Try /trail help!");
+        Player p = e.getPlayer();
+        Particle newPlayerParticle = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle").toUpperCase());
+        UUID playerUUID = p.getUniqueId();
+        try{
+            playerConfig.getStringValue("trails.enabled", playerUUID);
+        }catch (Exception ex){
+            playerConfig.setValue("trails.trail", newPlayerParticle.toString(), playerUUID);
+            playerConfig.setValue("trails.enabled", false, playerUUID);
         }
+        PlayerAccessHelper.setupPlayerConfig(playerUUID);
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent e){
+        UUID uuid = e.getPlayer().getUniqueId();
+        PlayerAccessHelper.clearPlayerConfigs(uuid);
     }
 }
