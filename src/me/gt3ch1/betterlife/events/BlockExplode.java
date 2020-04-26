@@ -1,10 +1,7 @@
 package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.Main.Main;
-import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import me.gt3ch1.betterlife.eventhelpers.BlockBreakHelper;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -18,7 +15,7 @@ import java.util.UUID;
  *
  * @author gt3ch1
  */
-public class BlockExplode implements Listener {
+public class BlockExplode extends BlockBreakHelper implements Listener {
 
     private static BlockBreakHelper bbh = new BlockBreakHelper();
     Object[] playerUUIDS;
@@ -28,29 +25,28 @@ public class BlockExplode implements Listener {
     @EventHandler
     public void antiGriefBlockExplode(EntityExplodeEvent e) {
 
-        PlayerConfigurationHandler playerConfigs = CommandUtils.getPlayerConfiguration();
         try {
-            playerUUIDS = playerConfigs.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
-        }catch(Exception ex){
-            playerUUIDS = playerConfigs.getSqlRow("uuid").toArray();
+            playerUUIDS = playerConfig.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
+        } catch (Exception ex) {
+            playerUUIDS = playerConfig.getSqlRow("uuid").toArray();
         }
         if (Main.isUsingSql)
-            playerUUIDS = playerConfigs.getSqlRow("uuid").toArray();
+            playerUUIDS = playerConfig.getSqlRow("uuid").toArray();
         try {
             for (Block b : e.blockList().toArray(new Block[e.blockList().size()])) {
 
                 for (int i = 0; i < playerUUIDS.length; i++) {
 
                     UUID playerUUID = UUID.fromString(playerUUIDS[i].toString());
-                    antiGriefEnabledPerPlayer = playerConfigs.getBooleanValue("antigrief.enabled", playerUUID);
+                    antiGriefEnabledPerPlayer = playerConfig.getBooleanValue("antigrief.enabled", playerUUID);
 
                     if (antiGriefEnabledPerPlayer) {
                         if (Main.isUsingSql) {
-                            loc1 = bbh.parseLocation("a",playerUUID);
-                            loc2 = bbh.parseLocation("b",playerUUID);
+                            loc1 = bbh.parseLocation("a", playerUUID);
+                            loc2 = bbh.parseLocation("b", playerUUID);
                         } else {
-                            loc1 = (Location) playerConfigs.get("antigrief.location.a", playerUUID);
-                            loc2 = (Location) playerConfigs.get("antigrief.location.b", playerUUID);
+                            loc1 = (Location) playerConfig.get("antigrief.location.a", playerUUID);
+                            loc2 = (Location) playerConfig.get("antigrief.location.b", playerUUID);
 
                         }
 
