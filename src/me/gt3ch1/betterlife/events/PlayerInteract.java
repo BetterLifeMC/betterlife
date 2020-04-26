@@ -3,6 +3,7 @@ package me.gt3ch1.betterlife.events;
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,12 +20,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
  *
  * @author gt3ch1
  */
-public class PlayerInteract implements Listener {
+public class PlayerInteract extends PlayerAccessHelper implements Listener {
 
     Location loc1 = null, loc2 = null;
 
     FileConfiguration mainConfig = CommandUtils.getMainConfiguration().getCustomConfig();
-    PlayerConfigurationHandler playerConfig = CommandUtils.getPlayerConfiguration();
 
     boolean loc1Found = false;
     boolean isEnabled = mainConfig.getBoolean("zoneprotection.enabled");
