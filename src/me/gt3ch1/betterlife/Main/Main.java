@@ -3,6 +3,7 @@ package me.gt3ch1.betterlife.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
+import me.gt3ch1.betterlife.sql.Sql;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,6 +25,8 @@ public class Main extends JavaPlugin {
     protected ArrayList<Listener> listeners = new ArrayList<>();
     public static Main m;
     public static Economy economy;
+    public static boolean isUsingSql;
+    public static Sql sql;
 
     /**
      * Prep the plugin for startup
@@ -39,7 +42,14 @@ public class Main extends JavaPlugin {
         for (String command : CommandUtils.getEnabledTabCommands()) {
             getCommand(command).setTabCompleter(new TabCompleterHelper());
         }
-
+        isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("sql.enabled");
+        if(isUsingSql) {
+            String username = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.username");
+            String password = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.password");
+            String database = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.database");
+            String server = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.server");
+            sql = new Sql(database,username,password,server);
+        }
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
 
