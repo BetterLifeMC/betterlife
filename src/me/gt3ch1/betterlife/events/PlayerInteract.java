@@ -3,6 +3,7 @@ package me.gt3ch1.betterlife.events;
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,20 +14,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.sql.SQLException;
-
 /**
  * Contains listeners that allow a player to claim piece of land to disable outside
  * modifications from other players.
  *
  * @author gt3ch1
  */
-public class PlayerInteract implements Listener {
+public class PlayerInteract extends PlayerAccessHelper implements Listener {
 
     Location loc1 = null, loc2 = null;
 
     FileConfiguration mainConfig = CommandUtils.getMainConfiguration().getCustomConfig();
-    PlayerConfigurationHandler playerConfig = CommandUtils.getPlayerConfiguration();
 
     boolean loc1Found = false;
     boolean isEnabled = mainConfig.getBoolean("zoneprotection.enabled");
@@ -83,12 +81,9 @@ public class PlayerInteract implements Listener {
             if (playerCanClaim && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && itemInHand == claimItem) {
 
                 if (Main.getEconomy().getBalance(player) >= landCost) {
-
-                    if (Main.isUsingSql) {
-                        playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId());
-                        playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId());
-                        playerConfig.setValue("antigrief.enabled",true,player.getUniqueId());
-                    }
+                    playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId());
+                    playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId());
+                    playerConfig.setValue("antigrief.enabled", true, player.getUniqueId());
                     Main.getEconomy().withdrawPlayer(player, landCost);
                     CommandUtils.sendBannerMessage(player, "&eYou have successfully claimed your plot! Enjoy!");
 
