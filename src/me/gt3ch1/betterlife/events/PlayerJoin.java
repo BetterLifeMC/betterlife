@@ -2,6 +2,7 @@ package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,8 +15,7 @@ import java.util.UUID;
 /**
  * Handles the events for players joining or quitting the game.
  */
-public class PlayerJoin implements Listener {
-    PlayerConfigurationHandler playerConfig  = CommandUtils.getPlayerConfiguration();
+public class PlayerJoin extends PlayerAccessHelper implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
@@ -24,21 +24,17 @@ public class PlayerJoin implements Listener {
         Particle newPlayerParticle = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle").toUpperCase());
         UUID playerUUID = p.getUniqueId();
         try{
-            playerConfig.getStringValue("trails.enabled", p.getUniqueId());
+            playerConfig.getStringValue("trails.enabled", playerUUID);
         }catch (Exception ex){
-            playerConfig.setValue("trails.trail", newPlayerParticle.toString(), p.getUniqueId());
-            playerConfig.setValue("trails.enabled", false, p.getUniqueId());
+            playerConfig.setValue("trails.trail", newPlayerParticle.toString(), playerUUID);
+            playerConfig.setValue("trails.enabled", false, playerUUID);
         }
-        playerConfig.trailEnabledPerPlayer.put(playerUUID,playerConfig.getBooleanValue("trails.enabled",playerUUID));
-        playerConfig.trailPerPlayer.put(playerUUID,playerConfig.getStringValue("trails.trail",playerUUID));
-        playerConfig.roadboostPerPlayer.put(playerUUID,playerConfig.getBooleanValue("roadboost", playerUUID));
+        PlayerAccessHelper.setupPlayerConfig(playerUUID);
     }
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e){
         UUID uuid = e.getPlayer().getUniqueId();
-        playerConfig.trailEnabledPerPlayer.remove(uuid);
-        playerConfig.trailPerPlayer.remove(uuid);
-        playerConfig.roadboostPerPlayer.remove(uuid);
+        PlayerAccessHelper.clearPlayerConfigs(uuid);
     }
 }

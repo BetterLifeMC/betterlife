@@ -1,6 +1,6 @@
 main: me.gt3ch1.betterlife.Main.Main
 name: BetterLife
-version: '0.2'
+version: '0.3'
 description: "Making running a Minecraft server a little more humane."
 author: GT3CH1
 authors: [Starmism]

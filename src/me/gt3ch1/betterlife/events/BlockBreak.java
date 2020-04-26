@@ -20,10 +20,9 @@ import java.util.UUID;
  *
  * @author gt3ch1
  */
-public class BlockBreak implements Listener {
+public class BlockBreak extends BlockBreakHelper implements Listener {
 
     private static BlockBreakHelper bbh;
-    PlayerConfigurationHandler playerConfigs = CommandUtils.getPlayerConfiguration();
     Object[] playerUUIDS;
     boolean antiGriefEnabledPerPlayer = false;
     Location loc1, loc2;
@@ -35,17 +34,17 @@ public class BlockBreak implements Listener {
         Block block = e.getClickedBlock();
 
         if (Main.isUsingSql)
-            playerUUIDS = playerConfigs.getSqlRow("uuid").toArray();
+            playerUUIDS = playerConfig.getSqlRow("uuid").toArray();
         else
-            playerUUIDS = playerConfigs.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
+            playerUUIDS = playerConfig.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
         for (int i = 0; i < playerUUIDS.length; i++) {
 
             UUID playerUUID = UUID.fromString(playerUUIDS[i].toString());
 
             try {
-                antiGriefEnabledPerPlayer = playerConfigs.getBooleanValue("antigrief.enabled", playerUUID);
-                loc1 = (Location) playerConfigs.get("antigrief.location.a", playerUUID);
-                loc2 = (Location) playerConfigs.get("antigrief.location.b", playerUUID);
+                antiGriefEnabledPerPlayer = playerConfig.getBooleanValue("antigrief.enabled", playerUUID);
+                loc1 = (Location) playerConfig.get("antigrief.location.a", playerUUID);
+                loc2 = (Location) playerConfig.get("antigrief.location.b", playerUUID);
             } catch (Exception ex) {
 
                 loc1 = bbh.parseLocation("a",playerUUID);
