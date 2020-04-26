@@ -13,8 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.sql.SQLException;
-
 /**
  * Contains listeners that allow a player to claim piece of land to disable outside
  * modifications from other players.
@@ -83,12 +81,9 @@ public class PlayerInteract implements Listener {
             if (playerCanClaim && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && itemInHand == claimItem) {
 
                 if (Main.getEconomy().getBalance(player) >= landCost) {
-
-                    if (Main.isUsingSql) {
-                        playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId());
-                        playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId());
-                        playerConfig.setValue("antigrief.enabled",true,player.getUniqueId());
-                    }
+                    playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId());
+                    playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId());
+                    playerConfig.setValue("antigrief.enabled", true, player.getUniqueId());
                     Main.getEconomy().withdrawPlayer(player, landCost);
                     CommandUtils.sendBannerMessage(player, "&eYou have successfully claimed your plot! Enjoy!");
 
