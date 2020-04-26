@@ -11,7 +11,7 @@ import java.util.UUID;
 public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
 
     /**
-     * Runs the command /roadboost
+     * Handles the command /roadboost
      *
      * @param permission
      * @param cs
@@ -38,9 +38,9 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
             UUID playerUUID = p.getUniqueId();
             if (p.hasPermission(this.getPermission())) {
 
-                boolean hasToggleSprintEnabled = playerConfigs.roadboostPerPlayer.get(playerUUID);
-                playerConfigs.setValue("roadboost", !hasToggleSprintEnabled, playerUUID);
-                playerConfigs.roadboostPerPlayer.replace(playerUUID, !hasToggleSprintEnabled);
+                boolean hasToggleSprintEnabled = playerConfig.roadboostPerPlayer.get(playerUUID);
+                playerConfig.setValue("roadboost", !hasToggleSprintEnabled, playerUUID);
+                playerConfig.roadboostPerPlayer.replace(playerUUID, !hasToggleSprintEnabled);
                 String toggleState = hasToggleSprintEnabled ? "&cdisabled" : "&aenabled";
                 sendBannerMessage(p, "&7Roadboost has been " + toggleState + "&7!");
 

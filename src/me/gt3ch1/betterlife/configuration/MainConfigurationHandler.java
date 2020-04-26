@@ -11,6 +11,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.gt3ch1.betterlife.Main.Main;
 
+/**
+ * This class handles the main configuration of the plugin.
+ */
 public class MainConfigurationHandler {
 
 	private Main m;

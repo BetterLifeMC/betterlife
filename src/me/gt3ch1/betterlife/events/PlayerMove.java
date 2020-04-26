@@ -2,6 +2,7 @@ package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -12,13 +13,12 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class PlayerMove implements Listener {
-    PlayerConfigurationHandler playerConfig = CommandUtils.getPlayerConfiguration();
+public class PlayerMove extends PlayerAccessHelper implements Listener {
 
     @EventHandler
     public void roadBoostEvents(PlayerMoveEvent e) {
 
-        boolean boostEnabled = playerConfig.getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".pathboost");
+        boolean boostEnabled = playerConfig.roadboostPerPlayer.get(e.getPlayer().getUniqueId());
 
         Location loc = e.getPlayer().getLocation();
         loc.setY(loc.getY() + 0.06250);
