@@ -22,7 +22,7 @@ public class PlayerConfigurationHandler {
     private final Main m;
     public HashMap<UUID, Boolean> trailEnabledPerPlayer = new HashMap<>();
     public HashMap<UUID, String> trailPerPlayer = new HashMap<>();
-
+    public HashMap<UUID, Boolean> roadboostPerPlayer = new HashMap<>();
     /**
      * Creates a new configuration handler for players (player_config.yml)
      *
