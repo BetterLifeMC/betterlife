@@ -7,12 +7,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/** This class contains methods needed to provided SQL support for the BetterLife plugin.
+ * @author gt3ch1
+ */
 public class Sql {
     private String database, username, password, server;
     private Connection con;
     private Statement stmt;
     private ResultSet rs;
 
+    /** Initializes support for an SQL database.
+     * @param database
+     * @param username
+     * @param password
+     * @param server
+     */
     public Sql(String database, String username, String password, String server) {
         this.database = database;
         this.username = username;
@@ -21,9 +30,17 @@ public class Sql {
         doBukkitLog(ChatColor.RED + "Running SQL...");
         connect();
     }
+
+    /** Logs to the bukkit console.
+     * @param log
+     */
     public void doBukkitLog(String log){
         Bukkit.getLogger().info(log);
     }
+
+    /**
+     * Connects to the SQL database.
+     */
     private void connect() {
         try {
 
@@ -41,10 +58,18 @@ public class Sql {
         }
     }
 
+    /** gets the statement
+     * @return
+     */
     public Statement getStatement() {
         return stmt;
     }
 
+    /**
+     * Executes a query, returns the results of said query.
+     * @param query
+     * @return
+     */
     public ResultSet executeQuery(String query) {
         try {
             doBukkitLog(ChatColor.LIGHT_PURPLE + query);
@@ -55,6 +80,10 @@ public class Sql {
         return null;
     }
 
+    /** Executes the update query provided.
+     * @param query
+     * @return -1 on failure
+     */
     public int executeUpdate(String query) {
         try {
             doBukkitLog(ChatColor.LIGHT_PURPLE + query);
@@ -65,6 +94,12 @@ public class Sql {
         return -1;
     }
 
+    /**
+     * Gets the value of row from playerUUID
+     * @param row
+     * @param playerUUID
+     * @return
+     */
     public Object getValue(String row, String playerUUID) {
 
         row = row.replace(".", "_");
@@ -83,6 +118,11 @@ public class Sql {
         return null;
     }
 
+    /**
+     * Gets the list of player UUIDs from the row.
+     * @param row
+     * @return
+     */
     public List<String> getRows(String row) {
 
         List<String> playerUUIDs = new ArrayList<>();
@@ -100,6 +140,13 @@ public class Sql {
         return null;
     }
 
+    /**
+     * Sets the value of the given row based on the playerUUID.
+     * @param row
+     * @param value
+     * @param playerUUID
+     * @throws SQLException
+     */
     public void setValue(String row, Object value, String playerUUID) throws SQLException {
 
         row = row.replace(".", "_");

@@ -6,6 +6,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
 
+/**
+ * This class handles all of the configuration files for the player particles.
+ */
 public class ParticleConfigurationHandler {
     // Declare m
     private Main m;
