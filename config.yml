@@ -1,5 +1,12 @@
 # Main BetterLife Configuration File
 
+sql:
+  enabled: true
+  username: username
+  password: password
+  database: database
+  server: server
+
 events:
   # Is crop trample enabled globally?
   croptrample: true
