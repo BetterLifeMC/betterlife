@@ -18,7 +18,7 @@ public class PlayerMove implements Listener {
     @EventHandler
     public void roadBoostEvents(PlayerMoveEvent e) {
 
-        boolean boostEnabled = playerConfig.getCustomConfig().getBoolean("player." + e.getPlayer().getUniqueId().toString() + ".pathboost");
+        boolean boostEnabled = playerConfig.roadboostPerPlayer.get(e.getPlayer().getUniqueId());
 
         Location loc = e.getPlayer().getLocation();
         loc.setY(loc.getY() + 0.06250);
