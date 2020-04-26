@@ -46,9 +46,9 @@ public class PlayerInteract implements Listener {
         Block block = e.getClickedBlock();
         Material material = e.getMaterial();
         Material itemInHand = player.getInventory().getItemInMainHand().getType();
+        boolean isInWorld = CommandUtils.getMainConfiguration().getCustomConfig().getStringList("zoneprotection.worlds").contains(player.getWorld().getName());
 
-
-        if (block != null && material != null && isEnabled) {
+        if (block != null && material != null && isEnabled && isInWorld) {
 
             if (itemInHand == claimItem && e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
 
@@ -87,7 +87,7 @@ public class PlayerInteract implements Listener {
                     if (Main.isUsingSql) {
                         playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId());
                         playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId());
-                        playerConfig.setValue("antigrief.enabled",1,player.getUniqueId());
+                        playerConfig.setValue("antigrief.enabled",true,player.getUniqueId());
                     }
                     Main.getEconomy().withdrawPlayer(player, landCost);
                     CommandUtils.sendBannerMessage(player, "&eYou have successfully claimed your plot! Enjoy!");
