@@ -3,11 +3,13 @@ package me.gt3ch1.betterlife.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
+import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import me.gt3ch1.betterlife.sql.Sql;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,6 +44,8 @@ public class Main extends JavaPlugin {
         for (String command : CommandUtils.getEnabledTabCommands()) {
             getCommand(command).setTabCompleter(new TabCompleterHelper());
         }
+        for(Player p : this.getServer().getOnlinePlayers())
+            PlayerAccessHelper.setupPlayerConfig(p.getUniqueId());
         isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("sql.enabled");
         if(isUsingSql) {
             String username = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.username");
@@ -68,6 +72,7 @@ public class Main extends JavaPlugin {
         }
         // Log output
         getLogger().info("Goodbye!");
+        PlayerAccessHelper.clearPlayerConfigs();
     }
 
     /**
