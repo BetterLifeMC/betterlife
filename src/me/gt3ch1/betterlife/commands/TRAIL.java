@@ -33,7 +33,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
 
-        allowedParticles = (List<String>) CommandUtils.getParticleConfiguration().getParticleConfig().getList("enabledParticles");
+        allowedParticles = CommandUtils.partch.getRow("particle");
 
         if (args.length == 0) {
             sendHelpMessage(sender, "trail", helpHash);
