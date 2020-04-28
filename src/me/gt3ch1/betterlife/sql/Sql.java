@@ -1,13 +1,15 @@
 package me.gt3ch1.betterlife.sql;
 
-import org.bukkit.Bukkit;
+import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.ChatColor;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/** This class contains methods needed to provided SQL support for the BetterLife plugin.
+/**
+ * This class contains methods needed to provided SQL support for the BetterLife plugin.
+ *
  * @author gt3ch1
  */
 public class Sql {
@@ -16,7 +18,9 @@ public class Sql {
     private Statement stmt;
     private ResultSet rs;
 
-    /** Initializes support for an SQL database.
+    /**
+     * Initializes support for an SQL database.
+     *
      * @param database
      * @param username
      * @param password
@@ -27,16 +31,11 @@ public class Sql {
         this.username = username;
         this.password = password;
         this.server = server;
-        doBukkitLog(ChatColor.RED + "Running SQL...");
+        Main.doBukkitLog(ChatColor.YELLOW + "Connecting to SQL database...");
         connect();
+        setup();
     }
 
-    /** Logs to the bukkit console.
-     * @param log
-     */
-    public void doBukkitLog(String log){
-        Bukkit.getLogger().info(log);
-    }
 
     /**
      * Connects to the SQL database.
@@ -48,17 +47,69 @@ public class Sql {
                     username, password);
             stmt = con.createStatement();
             rs = stmt.executeQuery("SELECT * FROM betterlife_players");
-            doBukkitLog(ChatColor.BLUE + "SQL Succeeded...");
+            Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
 
         } catch (SQLException throwables) {
 
             throwables.printStackTrace();
-            doBukkitLog(ChatColor.RED + "SQL Failed!...");
+            Main.doBukkitLog(ChatColor.RED + "SQL Failed!...");
 
         }
     }
 
-    /** gets the statement
+    public void setup() {
+        Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Setting up databases...");
+        String query;
+        query = "SELECT `uuid` FROM `betterlife_players` LIMIT 1";
+
+        try {
+            getStatement().executeQuery(query);
+        } catch (SQLException throwables) {
+            query = "CREATE TABLE `betterlife_players` (" +
+                    "  `uuid` text COLLATE utf8mb4_unicode_ci NOT NULL," +
+                    "  `trails_enabled` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false'," +
+                    "  `trails_trail` text COLLATE utf8mb4_unicode_ci DEFAULT NULL," +
+                    "  `roadboost` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false'," +
+                    "  `antigrief_location_a` text COLLATE utf8mb4_unicode_ci DEFAULT NULL," +
+                    "  `antigrief_location_b` text COLLATE utf8mb4_unicode_ci DEFAULT NULL," +
+                    "  `antigrief_enabled` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'false'," +
+                    "  `id` int(11) NOT NULL AUTO_INCREMENT" +
+                    ")";
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + " Creating Sql database for players");
+            executeUpdate(query);
+        }
+
+        query = "SELECT `uuid` FROM `betterlife_homes` LIMIT 1";
+
+        try {
+            getStatement().executeQuery(query);
+        } catch (SQLException throwables) {
+            query = "CREATE TABLE `betterlife_homes` (" +
+                    "  `uuid` text COLLATE utf8mb4_unicode_ci NOT NULL," +
+                    "  `home` text COLLATE utf8mb4_unicode_ci DEFAULT NULL," +
+                    "  `id` int(11) NOT NULL AUTO_INCREMENT" +
+                    ")";
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + " Creating Sql database for homes");
+            executeUpdate(query);
+        }
+        query = "SELECT `particle` FROM `betterlife_particles` LIMIT 1";
+
+        try {
+            getStatement().executeQuery(query);
+        } catch (SQLException throwables) {
+            query = "CREATE TABLE `betterlife_particles` (" +
+                    "  `particles` text COLLATE utf8mb4_unicode_ci DEFAULT NULL," +
+                    "  `id` int(11) NOT NULL AUTO_INCREMENT" +
+                    ")";
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + " Creating Sql database for particles");
+            executeUpdate(query);
+        }
+
+    }
+
+    /**
+     * gets the statement
+     *
      * @return
      */
     public Statement getStatement() {
@@ -67,12 +118,13 @@ public class Sql {
 
     /**
      * Executes a query, returns the results of said query.
+     *
      * @param query
      * @return
      */
     public ResultSet executeQuery(String query) {
         try {
-            doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             return getStatement().executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,13 +132,15 @@ public class Sql {
         return null;
     }
 
-    /** Executes the update query provided.
+    /**
+     * Executes the update query provided.
+     *
      * @param query
      * @return -1 on failure
      */
     public int executeUpdate(String query) {
         try {
-            doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             return getStatement().executeUpdate(query);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -96,15 +150,17 @@ public class Sql {
 
     /**
      * Gets the value of row from playerUUID
+     *
      * @param row
      * @param playerUUID
+     * @param table
      * @return
      */
-    public Object getValue(String row, String playerUUID) {
+    public Object getValue(String row, String playerUUID, String table) {
 
         row = row.replace(".", "_");
         playerUUID = playerUUID.replace("-", "_");
-        String query = "SELECT `" + row + "` FROM `betterlife_players` WHERE `uuid` = '" + playerUUID + "'";
+        String query = "SELECT `" + row + "` FROM `betterlife_" + table + "` WHERE `uuid` = '" + playerUUID + "'";
 
         try {
             rs = executeQuery(query);
@@ -120,14 +176,16 @@ public class Sql {
 
     /**
      * Gets the list of player UUIDs from the row.
+     *
      * @param row
+     * @param table
      * @return
      */
-    public List<String> getRows(String row) {
+    public List<String> getRows(String row, String table) {
 
         List<String> playerUUIDs = new ArrayList<>();
         try {
-            rs = executeQuery("SELECT `" + row + "` FROM `betterlife_players");
+            rs = executeQuery("SELECT `" + row + "` FROM `betterlife_" + table+"`");
             while (rs.next()) {
                 playerUUIDs.add(rs.getString(row).replace("_", "-"));
             }
@@ -142,31 +200,33 @@ public class Sql {
 
     /**
      * Sets the value of the given row based on the playerUUID.
+     *
      * @param row
      * @param value
      * @param playerUUID
+     * @param table
      * @throws SQLException
      */
-    public void setValue(String row, Object value, String playerUUID) throws SQLException {
+    public void setValue(String row, Object value, String playerUUID, String table) throws SQLException {
 
         row = row.replace(".", "_");
         playerUUID = playerUUID.replace("-", "_");
-        rs = executeQuery("SELECT * FROM `betterlife_players` WHERE `uuid`= '" + playerUUID + "'");
+        rs = executeQuery("SELECT * FROM `betterlife_" + table + "` WHERE `uuid`= '" + playerUUID + "'");
         String statement = "";
 
         if (rs.next()) {
-            String sql = "UPDATE `Minecraft`.`betterlife_players` SET `" + row + "` = '"
+            String sql = "UPDATE `Minecraft`.`betterlife_" + table + "` SET `" + row + "` = '"
                     + value + "' WHERE `uuid` = '" + playerUUID + "'";
-            doBukkitLog(ChatColor.LIGHT_PURPLE + sql);
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + sql);
 
             getStatement().executeUpdate(sql);
 
         } else {
 
-            statement = "INSERT INTO `Minecraft`.`betterlife_players` (`uuid`) VALUES ('"
+            statement = "INSERT INTO `Minecraft`.`betterlife_" + table + "` (`uuid`) VALUES ('"
                     + playerUUID + "')";
             executeUpdate(statement);
-            setValue(row, value, playerUUID);
+            setValue(row, value, playerUUID, table);
 
         }
 

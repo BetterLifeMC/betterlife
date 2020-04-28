@@ -6,6 +6,8 @@ import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
 import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import me.gt3ch1.betterlife.sql.Sql;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,9 +43,7 @@ public class Main extends JavaPlugin {
         CommandUtils.enableConfiguration();
         new ListenersSetup(m);
 
-        for (String command : CommandUtils.getEnabledTabCommands()) {
-            getCommand(command).setTabCompleter(new TabCompleterHelper());
-        }
+
         for(Player p : this.getServer().getOnlinePlayers())
             PlayerAccessHelper.setupPlayerConfig(p.getUniqueId());
         isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("sql.enabled");
@@ -54,8 +54,12 @@ public class Main extends JavaPlugin {
             String server = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.server");
             sql = new Sql(database,username,password,server);
         }
+        for (String command : CommandUtils.getEnabledTabCommands()) {
+            getCommand(command).setTabCompleter(new TabCompleterHelper());
+        }
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
+        doBukkitLog(ChatColor.DARK_GREEN + "Enabled!");
 
     }
 
@@ -71,8 +75,9 @@ public class Main extends JavaPlugin {
             l = null;
         }
         // Log output
-        getLogger().info("Goodbye!");
+        doBukkitLog(ChatColor.DARK_PURPLE + "Goodbye!");
         PlayerAccessHelper.clearPlayerConfigs();
+        sql = null;
     }
 
     /**
@@ -107,10 +112,19 @@ public class Main extends JavaPlugin {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
-            getLogger().info("Using economy provider: " + economy.toString());
+            doBukkitLog("Using economy provider: " + economy.toString());
         }
 
         return (economy != null);
+    }
+
+    /**
+     * Logs to the bukkit console.
+     *
+     * @param log
+     */
+    public static void doBukkitLog(String log) {
+        Bukkit.getLogger().info(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
     }
 
     public static Economy getEconomy() {

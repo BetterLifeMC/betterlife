@@ -23,7 +23,7 @@ public class TabCompleterHelper implements TabCompleter {
     private List<String> subCommands = new ArrayList<>();
     private List<String> newList = new ArrayList<>();
     private final Particle[] particles = Particle.values();
-    private final List<String> enabledParticles = CommandUtils.getParticleConfiguration().getParticleConfig().getStringList("enabledParticles");
+    private final List<String> enabledParticles = CommandUtils.partch.getRow("particle");
 
     /**
      * When we can tab complete commands.

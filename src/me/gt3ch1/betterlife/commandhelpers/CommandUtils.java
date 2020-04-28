@@ -80,14 +80,14 @@ public class CommandUtils {
     public static void enableConfiguration() {
         // TODO: Setup a scheme to recognize out-of-date config files,
         // move them to old files, and generate current versions
-        ch = new MainConfigurationHandler(m);
-        pch = new PlayerConfigurationHandler(m);
-        partch = new ParticleConfigurationHandler(m);
+        ch = new MainConfigurationHandler();
+        pch = new PlayerConfigurationHandler();
+        partch = new ParticleConfigurationHandler();
         m.saveDefaultConfig();
         pch.getCustomConfig();
         pch.saveCustomConfig();
-        partch.getParticleConfig();
-        partch.saveDefaultParticleConfig();
+        partch.getCustomConfig();
+        partch.saveCustomConfig();
     }
 
     /**
@@ -125,8 +125,9 @@ public class CommandUtils {
      */
     public static void reloadConfiguration() {
         m.reloadConfig();
+        ch.reloadCustomConfig();
         pch.reloadCustomConfig();
-        partch.reloadParticleConfig();
+        partch.reloadCustomConfig();
     }
 
     /**
