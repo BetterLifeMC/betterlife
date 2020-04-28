@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TRAIL extends BetterLifeCommands implements CommandExecutor {
@@ -34,7 +35,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
 
         allowedParticles = CommandUtils.partch.getRow("particle");
-
+        System.out.println(Arrays.toString(allowedParticles.toArray()));
         if (args.length == 0) {
             sendHelpMessage(sender, "trail", helpHash);
             return true;
