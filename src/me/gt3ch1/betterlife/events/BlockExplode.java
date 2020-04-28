@@ -28,10 +28,10 @@ public class BlockExplode extends BlockBreakHelper implements Listener {
         try {
             playerUUIDS = playerConfig.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
         } catch (Exception ex) {
-            playerUUIDS = playerConfig.getSqlRow("uuid").toArray();
+            playerUUIDS = playerConfig.getRow("uuid").toArray();
         }
         if (Main.isUsingSql)
-            playerUUIDS = playerConfig.getSqlRow("uuid").toArray();
+            playerUUIDS = playerConfig.getRow("uuid").toArray();
         try {
             for (Block b : e.blockList().toArray(new Block[e.blockList().size()])) {
 
