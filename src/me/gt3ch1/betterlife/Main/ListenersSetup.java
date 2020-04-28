@@ -2,6 +2,7 @@ package me.gt3ch1.betterlife.Main;
 
 import me.gt3ch1.betterlife.events.*;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 
 /**
@@ -27,7 +28,7 @@ public class ListenersSetup {
 
 		for (Listener listener : plugin.listeners) {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
-            plugin.getLogger().info("Enabling listener: " + listener.toString());
+            plugin.doBukkitLog("Enabling listener: " + ChatColor.GOLD + listener.toString());
         }
     }
 }

@@ -16,15 +16,11 @@ import me.gt3ch1.betterlife.Main.Main;
  */
 public class MainConfigurationHandler {
 
-	private Main m;
+	private Main m = Main.m;
 
 	/**
 	 * Plug-in wide configuration handler
-	 * @param m
-	 */
-	public MainConfigurationHandler(Main m) {
-		this.m = m;
-	}
+     */
 
 	private static FileConfiguration customConfig = null;
 	private static File customConfigFile = null;
