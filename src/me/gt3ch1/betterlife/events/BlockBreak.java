@@ -34,7 +34,7 @@ public class BlockBreak extends BlockBreakHelper implements Listener {
         Block block = e.getClickedBlock();
 
         if (Main.isUsingSql)
-            playerUUIDS = playerConfig.getSqlRow("uuid").toArray();
+            playerUUIDS = playerConfig.getRow("uuid").toArray();
         else
             playerUUIDS = playerConfig.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
         for (int i = 0; i < playerUUIDS.length; i++) {
