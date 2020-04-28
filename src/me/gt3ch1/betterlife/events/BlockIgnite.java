@@ -28,10 +28,10 @@ public class BlockIgnite extends BlockBreakHelper implements Listener {
         try {
             playerUUIDS = playerConfig.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
         } catch (Exception ex) {
-            playerUUIDS = playerConfig.getSqlRow("uuid").toArray();
+            playerUUIDS = playerConfig.getRow("uuid").toArray();
         }
         if (Main.isUsingSql)
-            playerUUIDS = playerConfig.getSqlRow("uuid").toArray();
+            playerUUIDS = playerConfig.getRow("uuid").toArray();
         Block b = e.getBlock();
 
         try {
