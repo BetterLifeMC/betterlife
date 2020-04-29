@@ -198,7 +198,7 @@ public class Sql {
 
         row = row.replace(".", "_");
         playerUUID = playerUUID.replace("-", "_");
-        rs = executeQuery("SELECT * FROM `betterlife_" + table + "` WHERE `uuid`= '" + playerUUID + "'");
+        rs = getStatement().executeQuery("SELECT * FROM `betterlife_" + table + "` WHERE `uuid`= '" + playerUUID + "'");
         String statement = "";
 
         if (rs.next()) {
