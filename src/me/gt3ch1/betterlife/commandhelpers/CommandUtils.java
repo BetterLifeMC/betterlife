@@ -80,12 +80,21 @@ public class CommandUtils {
     public static void enableConfiguration() {
         // TODO: Setup a scheme to recognize out-of-date config files,
         // move them to old files, and generate current versions
-        ch = new MainConfigurationHandler();
         pch = new PlayerConfigurationHandler();
         partch = new ParticleConfigurationHandler();
         m.saveDefaultConfig();
         pch.saveCustomConfig();
         partch.saveDefaultConfig();
+    }
+
+    /**
+     * Enables the main configuration.
+     */
+    // Please do not touch this.  I need to load the main
+    // config before everything else.
+    public static void enabledMainConfiguration(){
+        ch = null;
+        ch = new MainConfigurationHandler();
     }
 
     /**
