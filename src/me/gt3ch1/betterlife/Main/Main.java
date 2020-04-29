@@ -56,12 +56,12 @@ public class Main extends JavaPlugin {
         m = this;
         CommandUtils.enableMainConfiguration();
 
-        isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("sql.enabled");
+        isUsingSql = CommandUtils.ch.getCustomConfig().getBoolean("sql.enabled");
         if (isUsingSql) {
-            String username = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.username");
-            String password = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.password");
-            String database = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.database");
-            String server = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.server");
+            String username = CommandUtils.ch.getCustomConfig().getString("sql.username");
+            String password = CommandUtils.ch.getCustomConfig().getString("sql.password");
+            String database = CommandUtils.ch.getCustomConfig().getString("sql.database");
+            String server = CommandUtils.ch.getCustomConfig().getString("sql.server");
             sql = new Sql(database, username, password, server);
         }
 
