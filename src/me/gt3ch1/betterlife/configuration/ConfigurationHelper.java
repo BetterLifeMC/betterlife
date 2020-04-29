@@ -21,11 +21,11 @@ import java.util.UUID;
  */
 public class ConfigurationHelper {
 
-    private static FileConfiguration customConfig = null;
-    private static File customConfigFile = null;
-    private final String table;
-    private final String filename;
-    private final Main m = Main.m;
+    private FileConfiguration customConfig = null;
+    private File customConfigFile = null;
+    private String table;
+    private String filename;
+    private Main m = Main.m;
 
     /**
      * Creates a new configuration helper
@@ -33,6 +33,7 @@ public class ConfigurationHelper {
     public ConfigurationHelper(String table, String filename) {
         this.table = table;
         this.filename = filename;
+        reloadCustomConfig();
     }
 
     /**
@@ -40,9 +41,9 @@ public class ConfigurationHelper {
      */
     public void reloadCustomConfig() {
 
-        if (customConfigFile == null)
+        if (customConfigFile == null) {
             customConfigFile = new File(m.getDataFolder(), filename + ".yml");
-
+        }
         customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
         Reader defConfigStream = null;
 
@@ -155,9 +156,7 @@ public class ConfigurationHelper {
         if (Main.isUsingSql) {
             path = path.replace(".", "_");
             return Main.sql.getRows(path, table);
-        }else{
-            System.out.println("no SQL for : " + path + " on file: " + filename + ".yml");
-            System.out.println(Arrays.toString(this.getCustomConfig().getStringList(path).toArray()));
+        } else {
             return this.getCustomConfig().getStringList(path);
         }
 
