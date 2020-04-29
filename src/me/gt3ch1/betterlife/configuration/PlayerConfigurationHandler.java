@@ -1,7 +1,5 @@
 package me.gt3ch1.betterlife.configuration;
 
-import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.eventhelpers.BlockBreakHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -35,7 +33,7 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
                 loc2 = parseLocation("b", playerUUID);
                 antiGriefLocation1PerPlayer.put(playerUUID, loc1);
                 antiGriefLocation2PerPlayer.put(playerUUID, loc2);
-            }catch(Exception e){
+            } catch (Exception e) {
 
             }
 
