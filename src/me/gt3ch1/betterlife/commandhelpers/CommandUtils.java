@@ -24,6 +24,7 @@ public class CommandUtils {
     public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[[&9BetterLife&c]] ") + ChatColor.RESET;
     public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco"};
     public static PlayerConfigurationHandler playerConfig = pch;
+    public static Object[] playerUUIDs;
 
     /**
      * Send the sender the BetterLife banner.
@@ -85,6 +86,7 @@ public class CommandUtils {
         m.saveDefaultConfig();
         pch.saveCustomConfig();
         partch.saveDefaultConfig();
+        playerUUIDs = pch.antiGriefLocation1PerPlayer.keySet().toArray();
     }
 
     /**
@@ -111,8 +113,8 @@ public class CommandUtils {
      */
     public static void reloadConfiguration() {
         m.reloadConfig();
-        disableConfiguration();
-        enableConfiguration();
+        pch.reloadCustomConfig();
+        partch.reloadCustomConfig();
     }
 
     /**

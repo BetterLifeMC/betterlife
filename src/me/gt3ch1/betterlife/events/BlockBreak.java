@@ -1,5 +1,6 @@
 package me.gt3ch1.betterlife.events;
 
+import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.eventhelpers.BlockBreakHelper;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -20,10 +21,13 @@ public class BlockBreak extends BlockBreakHelper implements Listener {
     public void betterLifeAntiGriefBlockBreakEvent(PlayerInteractEvent e) {
 
         Player player = e.getPlayer();
-        Block block = e.getClickedBlock();
+        Block block = null;
+        try {
+            block = e.getClickedBlock();
+            bbh.checkPlayersBreakBlock(CommandUtils.playerUUIDs, block, player, e);
+        }catch(Exception ignored){}
 
-        playerUUIDS = bbh.setUpAntiGrief();
-        bbh.checkPlayersBreakBlock(playerUUIDS, block, player, e);
+
 
 
     }
