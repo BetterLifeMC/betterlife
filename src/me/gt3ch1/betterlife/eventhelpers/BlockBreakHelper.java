@@ -62,7 +62,7 @@ public class BlockBreakHelper extends CommandUtils {
 
         return (playerInteracting.getUniqueId().toString().equalsIgnoreCase(ownerUUID.toString()))
                 || (playerInteracting.isOp() || playerInteracting.hasPermission("betterlife.antigrief.bypass")) &&
-                CommandUtils.getMainConfiguration().getCustomConfig().getStringList("zoneprotection.worlds")
+                CommandUtils.ch.getCustomConfig().getStringList("zoneprotection.worlds")
                         .contains(playerInteracting.getWorld().getName());
 
     }
@@ -76,7 +76,7 @@ public class BlockBreakHelper extends CommandUtils {
      */
     public static Location parseLocation(String antigriefLocation, UUID playerUUID) {
         // God help me.
-        String locationString1 = CommandUtils.getPlayerConfiguration().get("antigrief.location." + antigriefLocation, playerUUID).toString()
+        String locationString1 = CommandUtils.ch.get("antigrief.location." + antigriefLocation, playerUUID).toString()
                 .replace("Location{world=CraftWorld{name", "").replace("}", "");
         String[] splitLocString1 = locationString1.split(",");
         String[] newLoc1 = new String[splitLocString1.length];
