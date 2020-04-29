@@ -14,7 +14,7 @@ public class ParticleConfigurationHandler extends ConfigurationHelper {
      * Creates a new configuration handler for particles (particles.yml)
      */
     public ParticleConfigurationHandler() {
-        super("particles","particles");
+        super("particles","particles",false);
         this.saveCustomConfig();
     }
 }
