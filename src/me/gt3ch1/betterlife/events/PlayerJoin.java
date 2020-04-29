@@ -1,7 +1,6 @@
 package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -23,9 +22,9 @@ public class PlayerJoin extends PlayerAccessHelper implements Listener {
         Player p = e.getPlayer();
         Particle newPlayerParticle = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle").toUpperCase());
         UUID playerUUID = p.getUniqueId();
-        try{
+        try {
             playerConfig.getStringValue("trails.enabled", playerUUID);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             playerConfig.setValue("trails.trail", newPlayerParticle.toString(), playerUUID);
             playerConfig.setValue("trails.enabled", false, playerUUID);
         }
@@ -33,7 +32,7 @@ public class PlayerJoin extends PlayerAccessHelper implements Listener {
     }
 
     @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent e){
+    public void onPlayerLeave(PlayerQuitEvent e) {
         UUID uuid = e.getPlayer().getUniqueId();
         PlayerAccessHelper.clearPlayerConfigs(uuid);
     }

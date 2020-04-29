@@ -1,6 +1,7 @@
 package me.gt3ch1.betterlife.eventhelpers;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import org.bukkit.Location;
 
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
  *
  * @author gt3ch1
  */
+
 public class PlayerAccessHelper extends CommandUtils {
 
     public static void setupPlayerConfig(UUID playerUUID) {

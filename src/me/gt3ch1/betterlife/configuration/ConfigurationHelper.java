@@ -28,18 +28,16 @@ public class ConfigurationHelper {
     private String table;
     private String filename;
     private Main m = Main.m;
-    private boolean isUsingSql = Main.isUsingSql;
+    public boolean isUsingSql = Main.isUsingSql;
     /**
      * Creates a new configuration helper
      */
-    public ConfigurationHelper(String table, String filename) {
-        this.table = table;
-        this.filename = filename;
-    }
     public ConfigurationHelper(String table,String filename,boolean isUsingSQL){
         this.table = table;
         this.filename = filename;
         this.isUsingSql=isUsingSQL;
+        if(isUsingSQL)
+            Bukkit.getLogger().info(ChatColor.DARK_PURPLE+"Using SQL for configuration » " + filename);
     }
 
     /**

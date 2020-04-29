@@ -2,7 +2,6 @@ package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -84,6 +83,8 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
                     playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId());
                     playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId());
                     playerConfig.setValue("antigrief.enabled", true, player.getUniqueId());
+                    playerConfig.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc1);
+                    playerConfig.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc2);
                     Main.getEconomy().withdrawPlayer(player, landCost);
                     CommandUtils.sendBannerMessage(player, "&eYou have successfully claimed your plot! Enjoy!");
 
