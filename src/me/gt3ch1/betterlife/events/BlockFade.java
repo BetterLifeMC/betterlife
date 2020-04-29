@@ -11,14 +11,14 @@ import org.bukkit.event.block.BlockFadeEvent;
  */
 public class BlockFade implements Listener {
 
-	@EventHandler
-	public void onCropTrample(BlockFadeEvent e) {
+    @EventHandler
+    public void onCropTrample(BlockFadeEvent e) {
 
-		Material currentBlock = e.getBlock().getType();
-		boolean cropTrampleEnabled = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("events.croptrample");
+        Material currentBlock = e.getBlock().getType();
+        boolean cropTrampleEnabled = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("events.croptrample");
 
-		if (currentBlock.equals(Material.FARMLAND) && cropTrampleEnabled)
-			e.setCancelled(true);
+        if (currentBlock.equals(Material.FARMLAND) && cropTrampleEnabled)
+            e.setCancelled(true);
 
-	}
+    }
 }

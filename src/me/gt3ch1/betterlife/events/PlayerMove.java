@@ -1,7 +1,6 @@
 package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
