@@ -28,13 +28,18 @@ public class ConfigurationHelper {
     private String table;
     private String filename;
     private Main m = Main.m;
-
+    private boolean isUsingSql = Main.isUsingSql;
     /**
      * Creates a new configuration helper
      */
     public ConfigurationHelper(String table, String filename) {
         this.table = table;
         this.filename = filename;
+    }
+    public ConfigurationHelper(String table,String filename,boolean isUsingSQL){
+        this.table = table;
+        this.filename = filename;
+        this.isUsingSql=isUsingSQL;
     }
 
     /**
@@ -107,7 +112,7 @@ public class ConfigurationHelper {
      * @param playerUUID
      */
     public void setValue(String path, Object value, UUID playerUUID) {
-        if (!Main.isUsingSql) {
+        if (!isUsingSql) {
             this.getCustomConfig().set("player." + playerUUID.toString() + "." + path, value);
             this.saveCustomConfig();
         } else {
@@ -127,7 +132,7 @@ public class ConfigurationHelper {
      * @return
      */
     public boolean getBooleanValue(String path, UUID playerUUID) {
-        if (!Main.isUsingSql)
+        if (!isUsingSql)
             return this.getCustomConfig().getBoolean("player." + playerUUID.toString() + "." + path);
         else
             return Boolean.valueOf(Main.sql.getValue(path, playerUUID.toString(), table).toString());
@@ -141,7 +146,7 @@ public class ConfigurationHelper {
      * @return value
      */
     public String getStringValue(String path, UUID playerUUID) {
-        if (!Main.isUsingSql)
+        if (!isUsingSql)
             return this.getCustomConfig().getString("player." + playerUUID.toString() + "." + path);
         else
             return Main.sql.getValue(path, playerUUID.toString(), table).toString();
@@ -165,7 +170,7 @@ public class ConfigurationHelper {
      * @return List
      */
     public List<String> getRow(String path) {
-        if (Main.isUsingSql) {
+        if (isUsingSql) {
             path = path.replace(".", "_");
             return Main.sql.getRows(path, table);
         } else {
@@ -183,7 +188,7 @@ public class ConfigurationHelper {
      * @return
      */
     public Object get(String path, UUID playerUUID) {
-        if (!Main.isUsingSql)
+        if (!isUsingSql)
             return this.getCustomConfig().get("player." + playerUUID.toString() + "." + path);
         else {
             path = path.replace(".", "_");
