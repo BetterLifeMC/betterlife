@@ -155,6 +155,7 @@ public class ConfigurationHelper {
             path = path.replace(".", "_");
             return Main.sql.getRows(path, table);
         }else{
+            System.out.println("no SQL for : " + path + " on file: " + filename + ".yml");
             return this.getCustomConfig().getStringList(path);
         }
 
