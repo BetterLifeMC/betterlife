@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main class for BetterLife. It enables all of the listeners, economy, and tab completion.
@@ -31,6 +32,7 @@ public class Main extends JavaPlugin {
     public static Economy economy;
     public static boolean isUsingSql;
     public static Sql sql;
+    public static List<String> enabledParticles;
 
     /**
      * Prep the plugin for startup
@@ -59,6 +61,7 @@ public class Main extends JavaPlugin {
         }
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
+        enabledParticles = CommandUtils.partch.getRow("particle");
         doBukkitLog(ChatColor.DARK_GREEN + "Enabled!");
 
     }
