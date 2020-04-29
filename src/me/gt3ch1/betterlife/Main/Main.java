@@ -22,46 +22,62 @@ import java.util.List;
 
 /**
  * Main class for BetterLife. It enables all of the listeners, economy, and tab completion.
+ *
  * @author gt3ch1
  * @authoer Starmism
  */
 public class Main extends JavaPlugin {
 
-    protected ArrayList<Listener> listeners = new ArrayList<>();
     public static Main m;
     public static Economy economy;
     public static boolean isUsingSql;
     public static Sql sql;
     public static List<String> enabledParticles;
+    protected ArrayList<Listener> listeners = new ArrayList<>();
+
+    /**
+     * Logs to the bukkit console.
+     *
+     * @param log
+     */
+    public static void doBukkitLog(String log) {
+        Bukkit.getLogger().info(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
+    }
+
+    public static Economy getEconomy() {
+        return economy;
+    }
 
     /**
      * Prep the plugin for startup
      */
     @Override
     public void onEnable() {
-
         m = this;
+        CommandUtils.enabledMainConfiguration();
 
-        CommandUtils.enableConfiguration();
-        new ListenersSetup(m);
-
-
-        for(Player p : this.getServer().getOnlinePlayers())
-            PlayerAccessHelper.setupPlayerConfig(p.getUniqueId());
         isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("sql.enabled");
-        if(isUsingSql) {
+        if (isUsingSql) {
             String username = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.username");
             String password = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.password");
             String database = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.database");
             String server = CommandUtils.getMainConfiguration().getCustomConfig().getString("sql.server");
-            sql = new Sql(database,username,password,server);
+            sql = new Sql(database, username, password, server);
         }
+
+        CommandUtils.enableConfiguration();
+        new ListenersSetup(m);
+
         for (String command : CommandUtils.getEnabledTabCommands()) {
             getCommand(command).setTabCompleter(new TabCompleterHelper());
         }
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
         enabledParticles = CommandUtils.partch.getRow("particle");
+
+        for (Player p : this.getServer().getOnlinePlayers())
+            PlayerAccessHelper.setupPlayerConfig(p.getUniqueId());
+
         doBukkitLog(ChatColor.DARK_GREEN + "Enabled!");
 
     }
@@ -71,13 +87,10 @@ public class Main extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        // Set the configuration managers to null
         CommandUtils.disableConfiguration();
-        // Set all listeners to null
         for (Listener l : listeners) {
             l = null;
         }
-        // Log output
         doBukkitLog(ChatColor.DARK_PURPLE + "Goodbye!");
         PlayerAccessHelper.clearPlayerConfigs();
         sql = null;
@@ -108,10 +121,10 @@ public class Main extends JavaPlugin {
 
     /**
      * Set's up the economy from vault.
+     *
      * @return
      */
-    private boolean setupEconomy()
-    {
+    private boolean setupEconomy() {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
         if (economyProvider != null) {
             economy = economyProvider.getProvider();
@@ -119,18 +132,5 @@ public class Main extends JavaPlugin {
         }
 
         return (economy != null);
-    }
-
-    /**
-     * Logs to the bukkit console.
-     *
-     * @param log
-     */
-    public static void doBukkitLog(String log) {
-        Bukkit.getLogger().info(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
-    }
-
-    public static Economy getEconomy() {
-        return economy;
     }
 }
