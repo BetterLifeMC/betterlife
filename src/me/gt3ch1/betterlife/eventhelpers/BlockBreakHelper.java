@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.UUID;
 
@@ -21,9 +22,9 @@ public class BlockBreakHelper extends CommandUtils {
     private static double minX;
     private static double minY;
     private static double minZ;
-
     private static UUID worldUniqueId;
 
+    protected Object[] playerUUIDS = pch.antiGriefLocation1PerPlayer.keySet().toArray();
 
     /**
      * Returns whether or not the Block b resides within the two points given.
@@ -83,6 +84,42 @@ public class BlockBreakHelper extends CommandUtils {
         for (int x = 0; x < splitLocString1.length; x++)
             newLoc1[x] = splitLocString1[x].split("=")[1];
         return new Location(Bukkit.getWorld(newLoc1[0]), Double.valueOf(newLoc1[1]), Double.valueOf(newLoc1[2]), Double.valueOf(newLoc1[3]), Float.valueOf(newLoc1[4]), Float.valueOf(newLoc1[5]));
+    }
+
+    /**
+     * Sets up the antigrief feature
+     *
+     * @return
+     */
+    public static Object[] setUpAntiGrief() {
+        return CommandUtils.pch.antiGriefLocation1PerPlayer.keySet().toArray();
+    }
+
+    /**
+     * Checks if the player can break a block.
+     *
+     * @param playerUUIDS
+     * @param block
+     * @param player
+     * @param e
+     */
+    public static void checkPlayersBreakBlock(Object[] playerUUIDS, Block block, Player player, PlayerInteractEvent e) {
+        Location loc1, loc2;
+        for (int i = 0; i < playerUUIDS.length; i++) {
+
+            UUID playerUUID = UUID.fromString(playerUUIDS[i].toString());
+
+            loc1 = pch.antiGriefLocation1PerPlayer.get(playerUUID);
+            loc2 = pch.antiGriefLocation2PerPlayer.get(playerUUID);
+
+            if (isWithinClaimedArea(loc1, loc2, block))
+                if (!playerCanBreakBlock(playerUUID, player)) {
+                    CommandUtils.sendBannerMessage(player, "&bHey! You can't do that here!");
+                    e.setCancelled(true);
+                }
+
+
+        }
     }
 
 }
