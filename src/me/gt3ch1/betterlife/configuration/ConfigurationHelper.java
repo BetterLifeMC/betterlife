@@ -35,8 +35,6 @@ public class ConfigurationHelper {
     public ConfigurationHelper(String table, String filename) {
         this.table = table;
         this.filename = filename;
-        Bukkit.getLogger().info(ChatColor.RED + "File handler for " + filename + " enabled.");
-        reloadCustomConfig();
     }
 
     /**
