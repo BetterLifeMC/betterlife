@@ -1,10 +1,12 @@
 package me.gt3ch1.betterlife.configuration;
 
+import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -23,17 +25,21 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
      * Creates a new configuration handler for players (player_config.yml)
      */
     public PlayerConfigurationHandler() {
-        super("players", "player_config", true);
-        List<String> playerUUUIDs = this.getRow("uuid");
+        super("players", "player_config", Main.isUsingSql);
+        Object[] playerUUIDs;
+        if(isUsingSql)
+            playerUUIDs = this.getRow("uuid").toArray();
+        else
+            playerUUIDs = this.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
         Location loc1, loc2;
-        for (String playerUUIDString : playerUUUIDs) {
-            UUID playerUUID = UUID.fromString(playerUUIDString);
+        for (int i=0; i<playerUUIDs.length; i++) {
+            UUID playerUUID = UUID.fromString(playerUUIDs[i].toString());
             try {
                 loc1 = parseLocation("a", playerUUID);
                 loc2 = parseLocation("b", playerUUID);
                 antiGriefLocation1PerPlayer.put(playerUUID, loc1);
                 antiGriefLocation2PerPlayer.put(playerUUID, loc2);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
 
@@ -43,10 +49,9 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
 
     /**
      * Converts a String into a location.
-     *
-     * @param antigriefLocation
-     * @param playerUUID
-     * @return
+     * @param antigriefLocation Location as string
+     * @param playerUUID Player UUID
+     * @return parsed location
      */
     public Location parseLocation(String antigriefLocation, UUID playerUUID) {
         String locationString1 = get("antigrief.location." + antigriefLocation, playerUUID).toString()
@@ -56,7 +61,7 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
 
         for (int x = 0; x < splitLocString1.length; x++)
             newLoc1[x] = splitLocString1[x].split("=")[1];
-        return new Location(Bukkit.getWorld(newLoc1[0]), Double.valueOf(newLoc1[1]), Double.valueOf(newLoc1[2]), Double.valueOf(newLoc1[3]), Float.valueOf(newLoc1[4]), Float.valueOf(newLoc1[5]));
+        return new Location(Bukkit.getWorld(newLoc1[0]), Double.parseDouble(newLoc1[1]), Double.parseDouble(newLoc1[2]), Double.parseDouble(newLoc1[3]), Float.parseFloat(newLoc1[4]), Float.parseFloat(newLoc1[5]));
     }
 
 }
