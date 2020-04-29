@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         m = this;
-        CommandUtils.enabledMainConfiguration();
+        CommandUtils.enableMainConfiguration();
 
         isUsingSql = CommandUtils.getMainConfiguration().getCustomConfig().getBoolean("sql.enabled");
         if (isUsingSql) {
