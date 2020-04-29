@@ -37,7 +37,7 @@ public class ConfigurationHelper {
         this.filename = filename;
         this.isUsingSql=isUsingSQL;
         if(isUsingSQL)
-            Bukkit.getLogger().info(ChatColor.DARK_PURPLE+"Using SQL for configuration » " + filename);
+            Main.doBukkitLog(ChatColor.DARK_PURPLE+"Using SQL for configuration » " + filename);
     }
 
     /**
@@ -151,17 +151,6 @@ public class ConfigurationHelper {
     }
 
     /**
-     * Returns a list from the player config for playerUUID.
-     *
-     * @param path
-     * @param playerUUID
-     * @return value list
-     */
-    public List<String> getList(String path, UUID playerUUID) {
-        return this.getCustomConfig().getStringList("player." + playerUUID.toString() + "." + path);
-    }
-
-    /**
      * Get's the row of data from SQL
      *
      * @param path
@@ -176,7 +165,6 @@ public class ConfigurationHelper {
         }
 
     }
-    //TODO: Merge getSqlRow and getList together.
 
     /**
      * Get's the value of path from the player UUID from the config.
