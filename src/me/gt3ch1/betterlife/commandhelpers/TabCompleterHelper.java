@@ -1,5 +1,6 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
+import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Particle;
@@ -23,7 +24,6 @@ public class TabCompleterHelper implements TabCompleter {
     private List<String> subCommands = new ArrayList<>();
     private List<String> newList = new ArrayList<>();
     private final Particle[] particles = Particle.values();
-    private final List<String> enabledParticles = CommandUtils.partch.getRow("particle");
 
     /**
      * When we can tab complete commands.
@@ -59,7 +59,7 @@ public class TabCompleterHelper implements TabCompleter {
                             // If it is set, return the list of currently enabled particles,
                             // and append them to the tablist list.
                             if ("set".equals(args[0])) {
-                                for (String particle : enabledParticles)
+                                for (String particle : Main.enabledParticles)
                                     if (Arrays.stream(args).anyMatch(particle::contains) && player
                                             .hasPermission("betterlife.trail.particle." + particle.toLowerCase()))
                                         newList.add(particle);

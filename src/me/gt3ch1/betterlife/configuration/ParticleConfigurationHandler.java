@@ -9,8 +9,9 @@ import java.io.*;
 /**
  * This class handles all of the configuration files for the player particles.
  */
-public class ParticleConfigurationHandler extends ConfigurationHelper{
-
+public class ParticleConfigurationHandler extends ConfigurationHelper {
+    private static FileConfiguration customConfig = null;
+    private static File customConfigFile = null;
     /**
      * Creates a new configuration handler for particles (particles.yml)
      */

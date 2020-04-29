@@ -14,7 +14,6 @@ public class PlayerAccessHelper extends CommandUtils {
 
     public static void setupPlayerConfig(UUID playerUUID) {
         pch.trailEnabledPerPlayer.put(playerUUID, pch.getBooleanValue("trails.enabled", playerUUID));
-        System.out.println(Boolean.valueOf(pch.getBooleanValue("trails.enabled", playerUUID)));
         pch.trailPerPlayer.put(playerUUID, pch.getStringValue("trails.trail", playerUUID));
         pch.roadboostPerPlayer.put(playerUUID, pch.getBooleanValue("roadboost", playerUUID));
     }

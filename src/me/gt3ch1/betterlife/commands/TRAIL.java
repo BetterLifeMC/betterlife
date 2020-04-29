@@ -34,8 +34,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
 
-        allowedParticles = CommandUtils.partch.getRow("particles");
-        System.out.println(Arrays.toString(allowedParticles.toArray()));
+        allowedParticles = CommandUtils.partch.getRow("particle");
         if (args.length == 0) {
             sendHelpMessage(sender, "trail", helpHash);
             return true;
