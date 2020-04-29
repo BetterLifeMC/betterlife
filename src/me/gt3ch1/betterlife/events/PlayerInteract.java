@@ -83,8 +83,13 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
                     pch.setValue("antigrief.location.a", loc1, player.getUniqueId());
                     pch.setValue("antigrief.location.b", loc2, player.getUniqueId());
                     pch.setValue("antigrief.enabled", true, player.getUniqueId());
-                    pch.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc1);
-                    pch.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc2);
+                    try{
+                        pch.antiGriefLocation1PerPlayer.replace(player.getUniqueId(), loc1);
+                        pch.antiGriefLocation2PerPlayer.replace(player.getUniqueId(), loc2);
+                    }catch(Exception ex) {
+                        pch.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc1);
+                        pch.antiGriefLocation2PerPlayer.put(player.getUniqueId(), loc2);
+                    }
                     Main.getEconomy().withdrawPlayer(player, landCost);
                     CommandUtils.sendBannerMessage(player, "&eYou have successfully claimed your plot! Enjoy!");
 
