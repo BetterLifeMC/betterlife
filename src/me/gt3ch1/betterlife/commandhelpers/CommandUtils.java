@@ -1,14 +1,18 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
 import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.configuration.ConfigurationHelper;
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.ParticleConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.LinkedHashMap;
+import java.util.UUID;
 
 /**
  * Base class for BetterLifeCommands, and various other methods required to send messages to players,
@@ -122,5 +126,26 @@ public class CommandUtils {
      */
     public static String[] getEnabledTabCommands() {
         return enabledTabCommands;
+    }
+
+
+    /**
+     * Converts a String into a location.
+     * @param antigriefLocation Location as string
+     * @param playerUUID Player UUID
+     * @return parsed location
+     */
+    public static Location parseLocation(String antigriefLocation, UUID playerUUID, ConfigurationHelper ch) {
+
+        String locationString1 = ch.get("antigrief.location." + antigriefLocation, playerUUID).toString()
+                .replace("Location{world=CraftWorld{name", "").replace("}", "");
+
+        String[] splitLocString1 = locationString1.split(",");
+        String[] newLoc1 = new String[splitLocString1.length];
+
+        for (int x = 0; x < splitLocString1.length; x++)
+            newLoc1[x] = splitLocString1[x].split("=")[1];
+
+        return new Location(Bukkit.getWorld(newLoc1[0]), Double.parseDouble(newLoc1[1]), Double.parseDouble(newLoc1[2]), Double.parseDouble(newLoc1[3]), Float.parseFloat(newLoc1[4]), Float.parseFloat(newLoc1[5]));
     }
 }

@@ -70,25 +70,6 @@ public class BlockBreakHelper extends CommandUtils {
     }
 
     /**
-     * Converts a String into a location.
-     *
-     * @param antigriefLocation
-     * @param playerUUID
-     * @return
-     */
-    public static Location parseLocation(String antigriefLocation, UUID playerUUID) {
-        // God help me.
-        String locationString1 = CommandUtils.ch.get("antigrief.location." + antigriefLocation, playerUUID).toString()
-                .replace("Location{world=CraftWorld{name", "").replace("}", "");
-        String[] splitLocString1 = locationString1.split(",");
-        String[] newLoc1 = new String[splitLocString1.length];
-
-        for (int x = 0; x < splitLocString1.length; x++)
-            newLoc1[x] = splitLocString1[x].split("=")[1];
-        return new Location(Bukkit.getWorld(newLoc1[0]), Double.valueOf(newLoc1[1]), Double.valueOf(newLoc1[2]), Double.valueOf(newLoc1[3]), Float.valueOf(newLoc1[4]), Float.valueOf(newLoc1[5]));
-    }
-
-    /**
      * Checks if the player can break a block.
      *
      * @param playerUUIDS
