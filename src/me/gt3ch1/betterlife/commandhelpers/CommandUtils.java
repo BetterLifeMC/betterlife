@@ -92,7 +92,7 @@ public class CommandUtils {
      */
     // Please do not touch this.  I need to load the main
     // config before everything else.
-    public static void enabledMainConfiguration(){
+    public static void enableMainConfiguration(){
         ch = null;
         ch = new MainConfigurationHandler();
     }
