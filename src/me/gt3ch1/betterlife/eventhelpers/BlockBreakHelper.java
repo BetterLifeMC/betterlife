@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 /**
@@ -42,6 +43,7 @@ public class BlockBreakHelper extends CommandUtils {
 
         minX = Math.min(firstPoint.getX(), secondPoint.getX());
         minZ = Math.min(firstPoint.getZ(), secondPoint.getZ());
+
         Location loc = b.getLocation();
         return loc.getWorld().getUID().equals(worldUniqueId)
                 && loc.getX() >= minX && loc.getX() <= maxX
@@ -84,15 +86,6 @@ public class BlockBreakHelper extends CommandUtils {
         for (int x = 0; x < splitLocString1.length; x++)
             newLoc1[x] = splitLocString1[x].split("=")[1];
         return new Location(Bukkit.getWorld(newLoc1[0]), Double.valueOf(newLoc1[1]), Double.valueOf(newLoc1[2]), Double.valueOf(newLoc1[3]), Float.valueOf(newLoc1[4]), Float.valueOf(newLoc1[5]));
-    }
-
-    /**
-     * Sets up the antigrief feature
-     *
-     * @return
-     */
-    public static Object[] setUpAntiGrief() {
-        return CommandUtils.pch.antiGriefLocation1PerPlayer.keySet().toArray();
     }
 
     /**
