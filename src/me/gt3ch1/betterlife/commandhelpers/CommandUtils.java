@@ -125,7 +125,7 @@ public class CommandUtils {
         m.reloadConfig();
         ch.reloadCustomConfig();
         pch.reloadCustomConfig();
-        partch.reloadCustomConfig();
+        partch.saveDefaultConfig();
     }
 
     /**
