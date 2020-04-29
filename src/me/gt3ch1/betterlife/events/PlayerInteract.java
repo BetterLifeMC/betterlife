@@ -23,7 +23,7 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
 
     Location loc1 = null, loc2 = null;
 
-    FileConfiguration mainConfig = CommandUtils.getMainConfiguration().getCustomConfig();
+    FileConfiguration mainConfig = CommandUtils.ch.getCustomConfig();
 
     boolean loc1Found = false;
     boolean isEnabled = mainConfig.getBoolean("zoneprotection.enabled");
@@ -43,7 +43,7 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
         Block block = e.getClickedBlock();
         Material material = e.getMaterial();
         Material itemInHand = player.getInventory().getItemInMainHand().getType();
-        boolean isInWorld = CommandUtils.getMainConfiguration().getCustomConfig().getStringList("zoneprotection.worlds").contains(player.getWorld().getName());
+        boolean isInWorld = CommandUtils.ch.getCustomConfig().getStringList("zoneprotection.worlds").contains(player.getWorld().getName());
 
         if (block != null && material != null && isEnabled && isInWorld) {
 
@@ -80,11 +80,11 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
             if (playerCanClaim && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && itemInHand == claimItem) {
 
                 if (Main.getEconomy().getBalance(player) >= landCost) {
-                    playerConfig.setValue("antigrief.location.a", loc1, player.getUniqueId());
-                    playerConfig.setValue("antigrief.location.b", loc2, player.getUniqueId());
-                    playerConfig.setValue("antigrief.enabled", true, player.getUniqueId());
-                    playerConfig.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc1);
-                    playerConfig.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc2);
+                    pch.setValue("antigrief.location.a", loc1, player.getUniqueId());
+                    pch.setValue("antigrief.location.b", loc2, player.getUniqueId());
+                    pch.setValue("antigrief.enabled", true, player.getUniqueId());
+                    pch.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc1);
+                    pch.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc2);
                     Main.getEconomy().withdrawPlayer(player, landCost);
                     CommandUtils.sendBannerMessage(player, "&eYou have successfully claimed your plot! Enjoy!");
 

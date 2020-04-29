@@ -23,7 +23,7 @@ public class CommandUtils {
     public static ParticleConfigurationHandler partch;
     public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[[&9BetterLife&c]] ") + ChatColor.RESET;
     public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco"};
-    public PlayerConfigurationHandler playerConfig = pch;
+    public static PlayerConfigurationHandler playerConfig = pch;
 
     /**
      * Send the sender the BetterLife banner.
@@ -107,34 +107,12 @@ public class CommandUtils {
     }
 
     /**
-     * @return MainConfiguration
-     */
-    public static MainConfigurationHandler getMainConfiguration() {
-        return ch;
-    }
-
-    /**
-     * @return PlayerConfigurationHandler
-     */
-    public static PlayerConfigurationHandler getPlayerConfiguration() {
-        return pch;
-    }
-
-    /**
-     * @return ParticleConfigurationHandler
-     */
-    public static ParticleConfigurationHandler getParticleConfiguration() {
-        return partch;
-    }
-
-    /**
      * Reloads all configuration helpers
      */
     public static void reloadConfiguration() {
         m.reloadConfig();
-        ch.reloadCustomConfig();
-        pch.reloadCustomConfig();
-        partch.saveDefaultConfig();
+        disableConfiguration();
+        enableConfiguration();
     }
 
     /**

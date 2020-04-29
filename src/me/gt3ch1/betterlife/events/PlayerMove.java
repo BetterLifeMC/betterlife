@@ -17,7 +17,7 @@ public class PlayerMove extends PlayerAccessHelper implements Listener {
     @EventHandler
     public void roadBoostEvents(PlayerMoveEvent e) {
 
-        boolean boostEnabled = playerConfig.roadboostPerPlayer.get(e.getPlayer().getUniqueId());
+        boolean boostEnabled = pch.roadboostPerPlayer.get(e.getPlayer().getUniqueId());
 
         Location loc = e.getPlayer().getLocation();
         loc.setY(loc.getY() + 0.06250);
@@ -33,7 +33,7 @@ public class PlayerMove extends PlayerAccessHelper implements Listener {
         boolean trailEnabled;
         Location location = e.getPlayer().getLocation();
         try {
-            trailEnabled = playerConfig.trailEnabledPerPlayer.get(e.getPlayer().getUniqueId());
+            trailEnabled = pch.trailEnabledPerPlayer.get(e.getPlayer().getUniqueId());
         } catch (NullPointerException npe) {
             trailEnabled = false;
         }
@@ -75,12 +75,12 @@ public class PlayerMove extends PlayerAccessHelper implements Listener {
 
             try {
 
-                p = Particle.valueOf(playerConfig.trailPerPlayer.get(e.getPlayer().getUniqueId()));
+                p = Particle.valueOf(pch.trailPerPlayer.get(e.getPlayer().getUniqueId()));
                 e.getPlayer().getWorld().spawnParticle(p, location, 1);
 
             } catch (Exception ex) {
 
-                p = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle"));
+                p = Particle.valueOf(CommandUtils.ch.getCustomConfig().getString("defaultParticle"));
                 e.getPlayer().getWorld().spawnParticle(p, location, 1);
 
             }

@@ -20,13 +20,13 @@ public class PlayerJoin extends PlayerAccessHelper implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
 
         Player p = e.getPlayer();
-        Particle newPlayerParticle = Particle.valueOf(CommandUtils.getMainConfiguration().getCustomConfig().getString("defaultParticle").toUpperCase());
+        Particle newPlayerParticle = Particle.valueOf(CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
         UUID playerUUID = p.getUniqueId();
         try {
-            playerConfig.getStringValue("trails.enabled", playerUUID);
+            pch.getStringValue("trails.enabled", playerUUID);
         } catch (Exception ex) {
-            playerConfig.setValue("trails.trail", newPlayerParticle.toString(), playerUUID);
-            playerConfig.setValue("trails.enabled", false, playerUUID);
+            pch.setValue("trails.trail", newPlayerParticle.toString(), playerUUID);
+            pch.setValue("trails.enabled", false, playerUUID);
         }
         PlayerAccessHelper.setupPlayerConfig(playerUUID);
     }

@@ -57,10 +57,10 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (player.hasPermission("betterlife.trail.toggle")) {
-                        boolean trailsEnabled = playerConfig.trailEnabledPerPlayer.get(player.getUniqueId()
+                        boolean trailsEnabled = pch.trailEnabledPerPlayer.get(player.getUniqueId()
                         );
-                        playerConfig.setValue("trails.enabled", !trailsEnabled, player.getUniqueId());
-                        playerConfig.trailEnabledPerPlayer.replace(player.getUniqueId(), !trailsEnabled);
+                        pch.setValue("trails.enabled", !trailsEnabled, player.getUniqueId());
+                        pch.trailEnabledPerPlayer.replace(player.getUniqueId(), !trailsEnabled);
                         String toggleState = trailsEnabled ? "&cdisabled" : "&aenabled";
                         sendBannerMessage(player, "&7Trail " + toggleState + "&7!");
                         return true;
@@ -75,9 +75,9 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()) || player.hasPermission("betterlife.trail.particle.*"))) {
-                        playerConfig.setValue("trails.trail", args[1].toUpperCase(), player.getUniqueId());
+                        pch.setValue("trails.trail", args[1].toUpperCase(), player.getUniqueId());
                         sendBannerMessage(player, "&7Your trail is now set to: &6" + args[1].toUpperCase());
-                        playerConfig.trailPerPlayer.replace(player.getUniqueId(), args[1].toUpperCase());
+                        pch.trailPerPlayer.replace(player.getUniqueId(), args[1].toUpperCase());
 
                     } else if (!player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()))
                         sendBannerMessage(player, "&4You need permission to use that trail!");
