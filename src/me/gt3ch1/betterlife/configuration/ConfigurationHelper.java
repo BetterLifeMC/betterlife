@@ -1,6 +1,8 @@
 package me.gt3ch1.betterlife.configuration;
 
 import me.gt3ch1.betterlife.Main.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -33,6 +35,7 @@ public class ConfigurationHelper {
     public ConfigurationHelper(String table, String filename) {
         this.table = table;
         this.filename = filename;
+        Bukkit.getLogger().info(ChatColor.RED + "File handler for " + filename + " enabled.");
         reloadCustomConfig();
     }
 
@@ -87,6 +90,17 @@ public class ConfigurationHelper {
         }
     }
 
+    /**
+     * Saves default config.
+     */
+    public void saveDefaultConfig() {
+        if (customConfigFile == null) {
+            customConfigFile = new File(m.getDataFolder(), filename+".yml");
+        }
+        if (!customConfigFile.exists()) {
+            m.saveResource(filename+".yml", false);
+        }
+    }
     /**
      * Sets the value of path to value for playerUUID
      *

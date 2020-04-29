@@ -84,10 +84,8 @@ public class CommandUtils {
         pch = new PlayerConfigurationHandler();
         partch = new ParticleConfigurationHandler();
         m.saveDefaultConfig();
-        pch.getCustomConfig();
         pch.saveCustomConfig();
-        partch.getCustomConfig();
-        partch.saveCustomConfig();
+        partch.saveDefaultConfig();
     }
 
     /**

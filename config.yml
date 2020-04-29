@@ -1,7 +1,7 @@
 # Main BetterLife Configuration File
 
 sql:
-  enabled: true
+  enabled: false
   username: username
   password: password
   database: database
