@@ -92,19 +92,6 @@ public class Sql {
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + " Creating Sql database for homes");
             executeUpdate(query);
         }
-        query = "SELECT `particle` FROM `betterlife_particles` LIMIT 1";
-
-        try {
-            getStatement().executeQuery(query);
-        } catch (SQLException throwables) {
-            query = "CREATE TABLE `betterlife_particles` (" +
-                    "  `particles` text COLLATE utf8mb4_unicode_ci DEFAULT NULL," +
-                    "  `id` int(11) NOT NULL AUTO_INCREMENT" +
-                    ")";
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + " Creating Sql database for particles");
-            executeUpdate(query);
-        }
-
     }
 
     /**
@@ -185,7 +172,7 @@ public class Sql {
 
         List<String> playerUUIDs = new ArrayList<>();
         try {
-            rs = executeQuery("SELECT `" + row + "` FROM `betterlife_" + table+"`");
+            rs = executeQuery("SELECT `" + row + "` FROM `betterlife_" + table + "`");
             while (rs.next()) {
                 playerUUIDs.add(rs.getString(row).replace("_", "-"));
             }
