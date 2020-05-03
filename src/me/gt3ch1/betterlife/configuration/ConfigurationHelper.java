@@ -31,6 +31,9 @@ public class ConfigurationHelper {
     public boolean isUsingSql = Main.isUsingSql;
     /**
      * Creates a new configuration helper
+     * @param table SQL table/
+     * @param filename File to be createad/writen to if not using SQL.
+     * @param isUsingSQL Whether or not to use MySQL for configuration storage.
      */
     public ConfigurationHelper(String table,String filename,boolean isUsingSQL){
         this.table = table;
@@ -38,6 +41,8 @@ public class ConfigurationHelper {
         this.isUsingSql=isUsingSQL;
         if(isUsingSQL)
             Main.doBukkitLog(ChatColor.DARK_PURPLE+"Using SQL for configuration » " + filename);
+        else
+            this.filename = filename + ".yml";
     }
 
     /**
@@ -46,12 +51,12 @@ public class ConfigurationHelper {
     public void reloadCustomConfig() {
 
         if (customConfigFile == null) {
-            customConfigFile = new File(m.getDataFolder(), filename + ".yml");
+            customConfigFile = new File(m.getDataFolder(), filename);
         }
         customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
         Reader defConfigStream = null;
 
-        defConfigStream = new InputStreamReader(m.getResource(filename + ".yml"), StandardCharsets.UTF_8);
+        defConfigStream = new InputStreamReader(m.getResource(filename), StandardCharsets.UTF_8);
 
         if (defConfigStream != null) {
 
@@ -96,18 +101,18 @@ public class ConfigurationHelper {
      */
     public void saveDefaultConfig() {
         if (customConfigFile == null) {
-            customConfigFile = new File(m.getDataFolder(), filename+".yml");
+            customConfigFile = new File(m.getDataFolder(), filename);
         }
         if (!customConfigFile.exists()) {
-            m.saveResource(filename+".yml", false);
+            m.saveResource(filename, false);
         }
     }
     /**
      * Sets the value of path to value for playerUUID
      *
-     * @param path
-     * @param value
-     * @param playerUUID
+     * @param path Location to set value
+     * @param value Object to set value
+     * @param playerUUID Player UUID
      */
     public void setValue(String path, Object value, UUID playerUUID) {
         if (!isUsingSql) {
@@ -125,8 +130,8 @@ public class ConfigurationHelper {
     /**
      * Gets the boolean value of path from config for playerUUID
      *
-     * @param path
-     * @param playerUUID
+     * @param path Location of boolean in config
+     * @param playerUUID Player UUID
      * @return
      */
     public boolean getBooleanValue(String path, UUID playerUUID) {
@@ -139,8 +144,8 @@ public class ConfigurationHelper {
     /**
      * Gets a string value from the config. for playerUUID.
      *
-     * @param path
-     * @param playerUUID
+     * @param path Location of wanted value
+     * @param playerUUID Player UUID
      * @return value
      */
     public String getStringValue(String path, UUID playerUUID) {
@@ -153,8 +158,8 @@ public class ConfigurationHelper {
     /**
      * Get's the row of data from SQL
      *
-     * @param path
-     * @return List
+     * @param path Location in config
+     * @return Items existing at row
      */
     public List<String> getRow(String path) {
         if (isUsingSql) {
@@ -171,7 +176,7 @@ public class ConfigurationHelper {
      *
      * @param path
      * @param playerUUID
-     * @return
+     * @return value at path
      */
     public Object get(String path, UUID playerUUID) {
         if (!isUsingSql)
