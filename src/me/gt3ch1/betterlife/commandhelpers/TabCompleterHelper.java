@@ -20,10 +20,9 @@ import java.util.*;
  * @author Starmism
  */
 public class TabCompleterHelper implements TabCompleter {
-    // Initialize a string of variables
+
     private List<String> subCommands = new ArrayList<>();
     private List<String> newList = new ArrayList<>();
-    private final Particle[] particles = Particle.values();
 
     /**
      * When we can tab complete commands.
