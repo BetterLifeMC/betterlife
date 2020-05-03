@@ -13,7 +13,7 @@ public class HelpHelper {
 
     /**
      * Returns the help commands for the given command
-     * @param hash
+     * @param hash What help message is to be sent.
      * @return
      */
     public static LinkedHashMap<String, String> getAHelpHash(String hash) {
