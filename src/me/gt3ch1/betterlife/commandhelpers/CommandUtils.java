@@ -27,7 +27,6 @@ public class CommandUtils {
     public static ParticleConfigurationHandler partch;
     public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[[&9BetterLife&c]] ") + ChatColor.RESET;
     public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco"};
-    public static PlayerConfigurationHandler playerConfig = pch;
     public static Object[] playerUUIDs;
 
     /**
@@ -38,11 +37,10 @@ public class CommandUtils {
      */
     public static void sendBannerMessage(CommandSender sender, String message) {
         String coloredMessage = ChatColor.translateAlternateColorCodes('&', message);
-        if (sender instanceof Player) {
+        if (sender instanceof Player)
             sender.sendMessage(betterLifeBanner + coloredMessage);
-        } else {
+        else
             sender.sendMessage(ChatColor.stripColor(coloredMessage));
-        }
     }
 
     /**
@@ -53,11 +51,10 @@ public class CommandUtils {
      */
     public static void sendMessage(CommandSender sender, String message) {
         String coloredMessage = ChatColor.translateAlternateColorCodes('&', message);
-        if (sender instanceof Player) {
+        if (sender instanceof Player)
             sender.sendMessage(coloredMessage);
-        } else {
+        else
             sender.sendMessage(ChatColor.stripColor(coloredMessage));
-        }
     }
 
     public static void sendPermissionErrorMessage(CommandSender sender) {
@@ -131,13 +128,13 @@ public class CommandUtils {
 
     /**
      * Converts a String into a location.
-     * @param antigriefLocation Location as string
+     * @param item Path to location in configurationf file
      * @param playerUUID Player UUID
      * @return parsed location
      */
-    public static Location parseLocation(String antigriefLocation, UUID playerUUID, ConfigurationHelper ch) {
+    public static Location parseLocation(String item, UUID playerUUID, ConfigurationHelper ch) {
 
-        String locationString1 = ch.get("antigrief.location." + antigriefLocation, playerUUID).toString()
+        String locationString1 = ch.get(item, playerUUID).toString()
                 .replace("Location{world=CraftWorld{name", "").replace("}", "");
 
         String[] splitLocString1 = locationString1.split(",");
