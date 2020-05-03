@@ -14,12 +14,18 @@ import java.util.UUID;
 
 public class PlayerAccessHelper extends CommandUtils {
 
+    /** Set's up the cache for all player data
+     * @param playerUUID Player UUID
+     */
     public static void setupPlayerConfig(UUID playerUUID) {
         pch.trailEnabledPerPlayer.put(playerUUID, pch.getBooleanValue("trails.enabled", playerUUID));
         pch.trailPerPlayer.put(playerUUID, pch.getStringValue("trails.trail", playerUUID));
         pch.roadboostPerPlayer.put(playerUUID, pch.getBooleanValue("roadboost", playerUUID));
     }
 
+    /**
+     * Clears the player configuration cache
+     */
     public static void clearPlayerConfigs() {
         try {
             pch.trailEnabledPerPlayer.clear();
@@ -30,6 +36,10 @@ public class PlayerAccessHelper extends CommandUtils {
         }
     }
 
+    /**
+     * Clears the cache for the player
+     * @param uuid Player UUID
+     */
     public static void clearPlayerConfigs(UUID uuid) {
         try {
             pch.trailEnabledPerPlayer.remove(uuid);
