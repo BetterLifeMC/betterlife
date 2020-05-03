@@ -74,7 +74,7 @@ public abstract class BetterLifeCommands extends CommandUtils {
 		return "betterlife." + permission;
 	}
 	/**
-	 * This needs to be implemented if the a class extends this one.  It is 
+	 * This needs to be implemented if the a class extends BetterLifeCommands.  It is
 	 * the boolean needed for CommandExecutor.
 	 * @param sender
 	 * @param c
