@@ -68,9 +68,9 @@ public class Main extends JavaPlugin {
         CommandUtils.enableConfiguration();
         new ListenersSetup(m);
 
-        for (String command : CommandUtils.getEnabledTabCommands()) {
+        for (String command : CommandUtils.getEnabledTabCommands())
             getCommand(command).setTabCompleter(new TabCompleterHelper());
-        }
+
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
         enabledParticles = CommandUtils.partch.getRow("particle");
@@ -88,9 +88,10 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         CommandUtils.disableConfiguration();
-        for (Listener l : listeners) {
+
+        for (Listener l : listeners)
             l = null;
-        }
+
         doBukkitLog(ChatColor.DARK_PURPLE + "Goodbye!");
         PlayerAccessHelper.clearPlayerConfigs();
         sql = null;
