@@ -44,6 +44,22 @@ public class ConfigurationHelper {
     }
 
     /**
+     * Creates a new configuration helper (assumes the config is using
+     * whatever is defined in Main).
+     * @param table SQL table.
+     * @param filename File to be created/written if not using SQL.
+     */
+    public ConfigurationHelper(String table,String filename){
+        this.table = table;
+        this.filename = filename;
+        if(isUsingSql)
+            Main.doBukkitLog(ChatColor.DARK_PURPLE+"Using SQL for configuration » " + filename);
+        else
+            this.filename = filename + ".yml";
+    }
+
+
+    /**
      * Reloads the configuration of all players
      */
     public void reloadCustomConfig() {
