@@ -32,7 +32,7 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
             try {
                 playerUUIDs = (UUID[]) this.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
             } catch (NullPointerException e) {
-                Main.doBukkitLog("Error initializing playerUUIDs.");
+                Main.doBukkitLog("Error initializing playerUUIDs - no players in table.");
             }
         }
 
