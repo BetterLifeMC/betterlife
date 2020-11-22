@@ -23,7 +23,7 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
      * Creates a new configuration handler for players (player_config.yml)
      */
     public PlayerConfigurationHandler() {
-        super("players", "player_config", Main.isUsingSql);
+        super("players", "player_config");
 
         UUID[] playerUUIDs = null;
         if (isUsingSql) {
