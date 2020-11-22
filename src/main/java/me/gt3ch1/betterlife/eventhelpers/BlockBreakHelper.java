@@ -1,13 +1,11 @@
 package me.gt3ch1.betterlife.eventhelpers;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 /**
