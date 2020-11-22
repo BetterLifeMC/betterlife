@@ -25,12 +25,12 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
     public PlayerConfigurationHandler() {
         super("players", "player_config", Main.isUsingSql);
 
-        Object[] playerUUIDs;
+        UUID[] playerUUIDs = null;
         if (isUsingSql) {
-            playerUUIDs = this.getRow("uuid").toArray();
+             playerUUIDs = (UUID[]) this.getRow("uuid").toArray();
         } else {
             try {
-                playerUUIDs = this.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
+                playerUUIDs = (UUID[]) this.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
             } catch (NullPointerException e) {
                 Main.doBukkitLog("Error initializing playerUUIDs.");
             }
