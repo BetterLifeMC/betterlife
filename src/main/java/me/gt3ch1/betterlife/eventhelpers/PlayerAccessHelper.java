@@ -1,7 +1,6 @@
 package me.gt3ch1.betterlife.eventhelpers;
 
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import org.bukkit.Location;
 
 import java.util.UUID;
 
