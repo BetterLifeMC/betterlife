@@ -6,3 +6,5 @@
 /build.xml
 /.idea
 /betterlife.iml
+/target
+/out
