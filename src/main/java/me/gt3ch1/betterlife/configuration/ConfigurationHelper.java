@@ -29,8 +29,8 @@ public class ConfigurationHelper {
     public boolean isUsingSql = Main.isUsingSql;
     /**
      * Creates a new configuration helper
-     * @param table SQL table/
-     * @param filename File to be createad/writen to if not using SQL.
+     * @param table SQL table
+     * @param filename File to be created/written to if not using SQL.
      * @param isUsingSQL Whether or not to use MySQL for configuration storage.
      */
     public ConfigurationHelper(String table,String filename,boolean isUsingSQL){
