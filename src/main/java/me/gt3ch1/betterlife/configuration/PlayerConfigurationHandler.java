@@ -40,17 +40,17 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
         Location loc1, loc2;
 
         // sets up antigrief locations
-        /*
-        for (Object uuid : playerUUIDs) {
-            UUID playerUUID = (UUID) uuid;
-            try {
-                loc1 = CommandUtils.parseLocation("antigrief.location.a", playerUUID, this);
-                loc2 = CommandUtils.parseLocation("antigrief.location.b", playerUUID, this);
-                antiGriefLocation1PerPlayer.put(playerUUID, loc1);
-                antiGriefLocation2PerPlayer.put(playerUUID, loc2);
-            } catch (Exception ignored) {
+        if(playerUUIDs != null)
+            for (Object uuid : playerUUIDs) {
+                UUID playerUUID = (UUID) uuid;
+                try {
+                    loc1 = CommandUtils.parseLocation("antigrief.location.a", playerUUID, this);
+                    loc2 = CommandUtils.parseLocation("antigrief.location.b", playerUUID, this);
+                    antiGriefLocation1PerPlayer.put(playerUUID, loc1);
+                    antiGriefLocation2PerPlayer.put(playerUUID, loc2);
+                } catch (Exception ignored) {
 
+                }
             }
-        }*/
     }
 }
