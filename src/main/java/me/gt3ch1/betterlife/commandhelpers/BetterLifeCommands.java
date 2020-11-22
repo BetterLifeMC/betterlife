@@ -1,7 +1,6 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
 import me.gt3ch1.betterlife.Main.Main;
-import me.gt3ch1.betterlife.configuration.PlayerConfigurationHandler;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

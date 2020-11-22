@@ -2,12 +2,9 @@ package me.gt3ch1.betterlife.configuration;
 
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -29,24 +26,31 @@ public class PlayerConfigurationHandler extends ConfigurationHelper {
         super("players", "player_config", Main.isUsingSql);
 
         Object[] playerUUIDs;
-        if(isUsingSql)
+        if (isUsingSql) {
             playerUUIDs = this.getRow("uuid").toArray();
-        else
-            playerUUIDs = this.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
+        } else {
+            try {
+                playerUUIDs = this.getCustomConfig().getConfigurationSection("player").getKeys(false).toArray();
+            } catch (NullPointerException e) {
+                Main.doBukkitLog("Error initializing playerUUIDs.");
+            }
+        }
+
 
         Location loc1, loc2;
 
         // sets up antigrief locations
-        for (int i=0; i<playerUUIDs.length; i++) {
-            UUID playerUUID = (UUID) playerUUIDs[i];
+        /*
+        for (Object uuid : playerUUIDs) {
+            UUID playerUUID = (UUID) uuid;
             try {
-                loc1 = CommandUtils.parseLocation("antigrief.location.a", playerUUID,this);
-                loc2 = CommandUtils.parseLocation("antigrief.location.b", playerUUID,this);
+                loc1 = CommandUtils.parseLocation("antigrief.location.a", playerUUID, this);
+                loc2 = CommandUtils.parseLocation("antigrief.location.b", playerUUID, this);
                 antiGriefLocation1PerPlayer.put(playerUUID, loc1);
                 antiGriefLocation2PerPlayer.put(playerUUID, loc2);
             } catch (Exception ignored) {
 
             }
-        }
+        }*/
     }
 }

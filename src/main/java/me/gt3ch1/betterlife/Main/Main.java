@@ -12,6 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +25,7 @@ import java.util.List;
  * Main class for BetterLife. It enables all of the listeners, economy, and tab completion.
  *
  * @author gt3ch1
- * @authoer Starmism
+ * @author Starmism
  */
 public class Main extends JavaPlugin {
 
@@ -89,8 +90,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         CommandUtils.disableConfiguration();
 
-        for (Listener l : listeners)
-            l = null;
+        HandlerList.unregisterAll(m);
 
         doBukkitLog(ChatColor.DARK_PURPLE + "Goodbye!");
         PlayerAccessHelper.clearPlayerConfigs();
@@ -106,7 +106,7 @@ public class Main extends JavaPlugin {
             /*
              * This will set the command executor for the command passed in.
              * Once it is set, this does nothing.  The commands class file
-             * is located in package me.gt3ch1.betterlife.commands.LABEL
+             * is located in package main.java.me.gt3ch1.betterlife.commands.LABEL
              * where label is the name of the command in caps.
              */
             this.getCommand(label).setExecutor((CommandExecutor) Class
@@ -121,17 +121,20 @@ public class Main extends JavaPlugin {
     }
 
     /**
-     * Set's up the economy from vault.
-     *
-     * @return
+     * Sets up the economy from vault.
      */
-    private boolean setupEconomy() {
-        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
-        if (economyProvider != null) {
-            economy = economyProvider.getProvider();
-            doBukkitLog("Using economy provider: " + economy.toString());
+    private void setupEconomy() {
+        if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
+            doBukkitLog("Vault not found. No economy provider enabled.");
+            return;
         }
 
-        return (economy != null);
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
+        if (economyProvider == null) {
+            doBukkitLog("Vault failed to register.");
+            return;
+        }
+        economy = economyProvider.getProvider();
+        doBukkitLog("Using economy provider: " + economy.toString());
     }
 }

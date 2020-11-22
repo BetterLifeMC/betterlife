@@ -28,7 +28,7 @@ public class ListenersSetup {
 
 		for (Listener listener : plugin.listeners) {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
-            plugin.doBukkitLog("Enabling listener: " + ChatColor.GOLD + listener.toString());
+            Main.doBukkitLog("Enabling listener: " + ChatColor.GOLD + listener.toString());
         }
     }
 }

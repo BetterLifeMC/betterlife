@@ -3,7 +3,6 @@ package me.gt3ch1.betterlife.commandhelpers;
 import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.command.Command;
@@ -28,7 +27,6 @@ public class TabCompleterHelper implements TabCompleter {
      * When we can tab complete commands.
      * NOTE: Must be enabled in Main!
      */
-    @SuppressWarnings("unchecked")
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         newList.clear();
