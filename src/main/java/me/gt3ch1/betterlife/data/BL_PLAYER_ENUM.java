@@ -2,9 +2,9 @@ package me.gt3ch1.betterlife.data;
 
 public enum BL_PLAYER_ENUM {
 
-    TRAIL_ENABLED_PER_PLAYER("trailEnabledPerPlayer"),
-    TRAIL_PER_PLAYER("trailPerPlayer"),
-    ROADBOOST_PER_PLAYER("roadboost");
+    TRAIL_ENABLED_PER_PLAYER("TrailToggle"),
+    TRAIL_PER_PLAYER("Trail"),
+    ROADBOOST_PER_PLAYER("RoadBoostToggle");
 
     private String type;
 
