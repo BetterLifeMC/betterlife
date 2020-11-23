@@ -8,6 +8,6 @@ public class ParticleConfigurationHandler extends ConfigurationHelper {
      * Creates a new configuration handler for particles (particles.yml)
      */
     public ParticleConfigurationHandler() {
-        super("particles","particles",false);
+        super("particles","particles");
     }
 }

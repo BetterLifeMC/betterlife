@@ -26,6 +26,14 @@ commands:
         description: Various economy-related commands
         usage: "Usage: /eco [ bal ]"
         permission: betterlife.eco
+    home:
+        description: Allows users to go home!
+        usage: "Usage: /home [ home ]"
+        permission: betterlife.home
+    sethome:
+        description: Lets you set a home.
+        usage: "Usage: /sethome [ home ]"
+        permission: betterlife.sethome
 permissions:
     betterlife.trail.set:
         description: Allows the trail to be set per-player

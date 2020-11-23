@@ -55,8 +55,10 @@ public class TabCompleterHelper implements TabCompleter {
                         case 2:
                             // If it is set, return the list of currently enabled particles,
                             // and append them to the tablist list.
+                            List<String> allowedParticles = CommandUtils.partch.getCustomConfig()
+                                .getStringList("particle");
                             if ("set".equals(args[0])) {
-                                for (String particle : Main.enabledParticles)
+                                for (String particle : allowedParticles)
                                     if (Arrays.stream(args).anyMatch(particle::contains) && player
                                             .hasPermission("betterlife.trail.particle." + particle.toLowerCase()))
                                         newList.add(particle);
