@@ -108,7 +108,25 @@ public class BL_PLAYER {
         return null;
     }
 
-    public void setPlayerToggle(UUID playerUUID, String toggle) {
+    public void setPlayerToggle(UUID playerUUID, BL_PLAYER_ENUM type){
+        boolean currentVal = false;
+        switch(type){
+            case TRAIL_ENABLED_PER_PLAYER:
+                currentVal = trailEnabledPerPlayer.get(playerUUID);
+                trailEnabledPerPlayer.put(playerUUID, !currentVal);
+                setPlayerToggleSQL(playerUUID,type);
+                break;
+            case ROADBOOST_PER_PLAYER:
+                currentVal = roadboostPerPlayer.get(playerUUID);
+                roadboostPerPlayer.put(playerUUID,!currentVal);
+                setPlayerToggleSQL(playerUUID, type);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setPlayerToggleSQL(UUID playerUUID, BL_PLAYER_ENUM toggle) {
         String query;
 
         try {
