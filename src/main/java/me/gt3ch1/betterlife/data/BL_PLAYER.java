@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
+
 import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -14,6 +15,7 @@ public class BL_PLAYER {
     private ResultSet rs;
 
     //TODO: Re-enable caching
+
     public HashMap<UUID, Boolean> trailEnabledPerPlayer = new HashMap<>();
     public HashMap<UUID, String> trailPerPlayer = new HashMap<>();
     public HashMap<UUID, Boolean> roadboostPerPlayer = new HashMap<>();
@@ -49,8 +51,8 @@ public class BL_PLAYER {
      */
     private boolean getPlayerToggleSQL(UUID playerUUID, String toggle) {
         String query =
-            "SELECT `" + toggle + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
-                + "'";
+                "SELECT `" + toggle + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
+                        + "'";
 
         try {
             rs = sql.executeQuery(query);
@@ -91,8 +93,8 @@ public class BL_PLAYER {
      */
     private String getPlayerStringSQL(UUID playerUUID, String string) {
         String query =
-            "SELECT `" + string + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
-                + "'";
+                "SELECT `" + string + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
+                        + "'";
 
         try {
             rs = sql.executeQuery(query);
@@ -100,7 +102,7 @@ public class BL_PLAYER {
                 return rs.getString(string);
             } else {
                 insertNewPlayer(playerUUID);
-                getPlayerString(playerUUID, string);
+                getPlayerStringSQL(playerUUID, string);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -113,12 +115,12 @@ public class BL_PLAYER {
 
         try {
             rs = sql.executeQuery(
-                "SELECT * FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString() + "'");
+                    "SELECT * FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString() + "'");
 
             if (rs.next()) {
                 query = "UPDATE `BL_PLAYER` SET `" + toggle + "` = '"
-                    + (getPlayerToggle(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
-                    + playerUUID.toString() + "'";
+                        + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
+                        + playerUUID.toString() + "'";
 
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
@@ -136,11 +138,11 @@ public class BL_PLAYER {
 
         try {
             rs = sql.executeQuery(
-                "SELECT * FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString() + "'");
+                    "SELECT * FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString() + "'");
 
             if (rs.next()) {
                 query = "UPDATE `BL_PLAYER` SET `" + string + "` = '"
-                    + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
+                        + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
 
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
