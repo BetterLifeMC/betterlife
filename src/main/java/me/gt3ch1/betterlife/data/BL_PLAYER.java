@@ -126,6 +126,11 @@ public class BL_PLAYER {
         }
     }
 
+    /**
+     * SQL helper method for setPlayerToggleSQL - sets the given toggle to the sql backend.
+     * @param playerUUID Player UUID we are updating.
+     * @param toggle Toggle item we are setting.
+     */
     private void setPlayerToggleSQL(UUID playerUUID, BL_PLAYER_ENUM toggle) {
         String query;
 
