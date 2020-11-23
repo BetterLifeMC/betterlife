@@ -1,0 +1,52 @@
+main: me.gt3ch1.betterlife.Main.Main
+name: BetterLife
+version: '0.3'
+description: "Making running a Minecraft server a little more humane."
+authors: [Starmism, GT3CH1]
+api-version: '1.13'
+softdepend: [Vault]
+commands:
+    bl:
+        description: The primary command for BetterLife
+        usage: "Usage: /bl [args]"
+    toggledownfall:
+        description: Toggles whether or not it is storming
+        usage: "Usage: /toggledownfall"
+        permission: betterlife.toggledownfall
+    roadboost:
+        description: Toggles if you get speed 1 when you are over a defined road.
+        usage: "Usage: /roadboost"
+        permission: betterlife.roadboost
+    trail:
+        description: Sets a fancy trail behind your player
+        usage: "Usage: /trail [ list | help | set ]"
+        permission: betterlife.trail
+    eco:
+        description: Various economy-related commands
+        usage: "Usage: /eco [ bal ]"
+        permission: betterlife.eco
+permissions:
+    betterlife.trail.set:
+        description: Allows the trail to be set per-player
+        default: op
+    betterlife.trail.toggle:
+        description: Allows toggling of the trail.
+        default: op
+    betterlife.trail.particle.*:
+        description: Allows access to every trail particle.
+        default: op
+    betterlife.toggledownfall:
+        description: Toggles the weather
+        default: op
+    betterlife.roadboost:
+        description: Gain a speed 1 boost over paths.
+        default: op
+    betterlife.reload:
+        description: Reloads the configuration files of betterlife
+        default: op
+    betterlife.eco.bal:
+        description: Allows player to see their current balance
+    betterlife.eco.bal.others:
+        description: Allows player to see other players' current balance
+        default: op
+    
