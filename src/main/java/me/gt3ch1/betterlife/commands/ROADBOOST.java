@@ -3,6 +3,7 @@ package me.gt3ch1.betterlife.commands;
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
+import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,7 +42,7 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
             UUID playerUUID = p.getUniqueId();
             if (p.hasPermission(this.getPermission())) {
 
-                boolean hasToggleSprintEnabled = playerGetter.getPlayerToggle(playerUUID, "RoadBoostToggle");
+                boolean hasToggleSprintEnabled = playerGetter.getPlayerToggle(playerUUID, "RoadBoostToggle", BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
                 playerGetter.setPlayerToggle(playerUUID, "RoadBoostToggle");
                 String toggleState = hasToggleSprintEnabled ? "&cdisabled" : "&aenabled";
                 sendMessage(p, "&7Roadboost has been " + toggleState + "&7!", true);
