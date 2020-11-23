@@ -1,6 +1,7 @@
 package me.gt3ch1.betterlife.commands;
 
 import java.util.LinkedHashMap;
+import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.data.BL_HOME;
 import org.bukkit.Bukkit;
@@ -15,7 +16,7 @@ import org.bukkit.scheduler.BukkitTask;
 public class HOME extends BetterLifeCommands implements CommandExecutor {
     private int checkerID;
     private int taskID;
-    BL_HOME homeGetter = new BL_HOME();
+    BL_HOME homeGetter = Main.bl_home;
 
     public HOME(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
