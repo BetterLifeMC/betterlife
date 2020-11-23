@@ -149,7 +149,18 @@ public class BL_PLAYER {
         }
     }
 
-    public void setPlayerString(UUID playerUUID, String string, String newString) {
+    public void setPlayerString(UUID playerUUID, BL_PLAYER_ENUM type,String stringToSet){
+        switch (type){
+            case TRAIL_PER_PLAYER:
+                trailPerPlayer.put(playerUUID,stringToSet);
+                setPlayerStringSQL(playerUUID,type.getType(),stringToSet);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void setPlayerStringSQL(UUID playerUUID, String string, String newString) {
         String query;
 
         try {
