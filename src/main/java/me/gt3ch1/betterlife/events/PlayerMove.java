@@ -23,7 +23,7 @@ public class PlayerMove implements Listener {
     public void roadBoostEvents(PlayerMoveEvent e) {
 
         UUID playerUUID = e.getPlayer().getUniqueId();
-        boolean boostEnabled = playerGetter.getPlayerToggle(playerUUID, "RoadBoostToggle");
+        boolean boostEnabled = playerGetter.getPlayerToggle(playerUUID, "RoadBoostToggle",BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
 
         Location loc = e.getPlayer().getLocation();
         loc.setY(loc.getY() + 0.06250);
@@ -40,7 +40,7 @@ public class PlayerMove implements Listener {
         boolean trailEnabled;
         Location location = e.getPlayer().getLocation();
         try {
-            trailEnabled = playerGetter.getPlayerToggle(playerUUID, "TrailToggle");
+            trailEnabled = playerGetter.getPlayerToggle(playerUUID, "TrailToggle",BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
         } catch (NullPointerException npe) {
             trailEnabled = false;
         }
@@ -82,7 +82,7 @@ public class PlayerMove implements Listener {
 
             try {
 
-                p = Particle.valueOf(playerGetter.getPlayerString(playerUUID, "Trail"));
+                p = Particle.valueOf(playerGetter.getPlayerString(playerUUID, "Trail", BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
                 e.getPlayer().getWorld().spawnParticle(p, location, 1);
 
             } catch (Exception ex) {
