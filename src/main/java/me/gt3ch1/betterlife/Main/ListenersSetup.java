@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 
 /**
  * Enabled the listeners needed for BetterLife to run properly.
+ *
  * @author gt3ch1
  */
 public class ListenersSetup {
@@ -14,9 +15,10 @@ public class ListenersSetup {
 
     /**
      * Enables the needed listeners for BetterLife.
+     *
      * @param plugin
      */
-    public ListenersSetup(Main plugin){
+    public ListenersSetup(Main plugin) {
 
         plugin.listeners.add(new BlockFade());
         plugin.listeners.add(new PlayerMove());
@@ -26,7 +28,7 @@ public class ListenersSetup {
         plugin.listeners.add(new BlockExplode());
         plugin.listeners.add(new BlockIgnite());*/
 
-		for (Listener listener : plugin.listeners) {
+        for (Listener listener : plugin.listeners) {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
             Main.doBukkitLog("Enabling listener: " + ChatColor.GOLD + listener.toString());
         }
