@@ -3,6 +3,10 @@ package me.gt3ch1.betterlife.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
+import me.gt3ch1.betterlife.data.BL_HOME;
+import me.gt3ch1.betterlife.data.BL_PLAYER;
+import me.gt3ch1.betterlife.data.BL_ZONE;
+import me.gt3ch1.betterlife.data.BL_ZONE_MEMBER;
 import me.gt3ch1.betterlife.data.Sql;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -30,6 +34,10 @@ public class Main extends JavaPlugin {
     public static Economy economy;
     public static Sql sql;
     protected ArrayList<Listener> listeners = new ArrayList<>();
+    public static BL_PLAYER bl_player;
+    public static BL_HOME bl_home;
+    public static BL_ZONE bl_zone;
+    public static BL_ZONE_MEMBER bl_zone_member;
 
     /**
      * Logs to the bukkit console.
@@ -64,6 +72,11 @@ public class Main extends JavaPlugin {
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
 
+        bl_home = new BL_HOME();
+        bl_player = new BL_PLAYER();
+        bl_zone = new BL_ZONE();
+        bl_zone_member = new BL_ZONE_MEMBER();
+
         doBukkitLog(ChatColor.DARK_GREEN + "Enabled!");
     }
 
@@ -78,6 +91,10 @@ public class Main extends JavaPlugin {
 
         doBukkitLog(ChatColor.DARK_PURPLE + "Goodbye!");
         sql = null;
+        bl_home = null;
+        bl_player = null;
+        bl_zone = null;
+        bl_zone_member = null;
     }
 
     /**
