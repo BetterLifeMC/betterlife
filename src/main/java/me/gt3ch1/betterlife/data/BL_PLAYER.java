@@ -171,7 +171,13 @@ public class BL_PLAYER {
         }
     }
 
-    private void setPlayerStringSQL(UUID playerUUID, String string, String newString) {
+    /**
+     * SQL helper method for setPlayerString - sets the given string to the row corresponding to type.
+     * @param playerUUID Player UUID we are modifying.
+     * @param type The Enum type
+     * @param newString String we are setting the row of type to.
+     */
+    private void setPlayerStringSQL(UUID playerUUID, BL_PLAYER_ENUM type, String newString) {
         String query;
 
         try {
