@@ -24,11 +24,11 @@ public class PlayerJoin implements Listener {
 
         Particle newPlayerParticle = Particle.valueOf(
             CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
-        if (playerGetter.getPlayerString(playerUUID, "Trail") == null) {
+        setupPlayerConfig(playerUUID);
+        if (playerGetter.getPlayerString(playerUUID, "Trail", BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
             playerGetter.setPlayerString(playerUUID, "Trail", newPlayerParticle.toString());
         }
 
-        setupPlayerConfig(playerUUID);
     }
 
     /** Set's up the cache for all player data
