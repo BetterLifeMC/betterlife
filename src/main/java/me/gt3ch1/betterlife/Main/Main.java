@@ -45,7 +45,7 @@ public class Main extends JavaPlugin {
      * @param log
      */
     public static void doBukkitLog(String log) {
-        Bukkit.getLogger().info(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
+        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
     }
 
     /**
