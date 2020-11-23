@@ -164,7 +164,7 @@ public class BL_PLAYER {
         switch (type){
             case TRAIL_PER_PLAYER:
                 trailPerPlayer.put(playerUUID,stringToSet);
-                setPlayerStringSQL(playerUUID,type.getType(),stringToSet);
+                setPlayerStringSQL(playerUUID,type,stringToSet);
                 break;
             default:
                 break;
@@ -185,14 +185,14 @@ public class BL_PLAYER {
                     "SELECT * FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString() + "'");
 
             if (rs.next()) {
-                query = "UPDATE `BL_PLAYER` SET `" + string + "` = '"
+                query = "UPDATE `BL_PLAYER` SET `" + type.getType() + "` = '"
                         + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
 
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
             } else {
                 insertNewPlayer(playerUUID);
-                setPlayerStringSQL(playerUUID, string, newString);
+                setPlayerStringSQL(playerUUID, type, newString);
             }
         } catch (SQLException e) {
             e.printStackTrace();
