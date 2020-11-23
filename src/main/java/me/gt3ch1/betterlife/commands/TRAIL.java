@@ -5,6 +5,7 @@ import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
+import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -62,7 +63,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                             Player player = (Player) sender;
                             UUID playerUUID = player.getUniqueId();
                             if (player.hasPermission("betterlife.trail.toggle")) {
-                                boolean trailsEnabled = playerGetter.getPlayerToggle(playerUUID, "TrailToggle");
+                                boolean trailsEnabled = playerGetter.getPlayerToggle(playerUUID, "TrailToggle", BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
                                 playerGetter.setPlayerToggle(playerUUID, "TrailToggle");
                                 String toggleState = trailsEnabled ? "&cdisabled" : "&aenabled";
                                 sendMessage(player, "&7Trail " + toggleState + "&7!", true);
