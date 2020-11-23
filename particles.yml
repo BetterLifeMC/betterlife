@@ -1,5 +1,0 @@
-# This config file lists all enabled particles. BE CAREFUL WHEN EDITING - They must be ALL CAPS
-enabledParticles:
-  - NOTE
-  - CRIT
-  - CLOUD
