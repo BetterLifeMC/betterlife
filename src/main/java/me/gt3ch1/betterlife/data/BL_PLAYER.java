@@ -24,19 +24,18 @@ public class BL_PLAYER {
 
     /**
      * @param playerUUID The UUID we are getting the toggle for.
-     * @param toggle The name of the toggle.
      * @param type The Type of the toggle
      * @return Varies, depending on the context that the player sat.
      */
-    public boolean getPlayerToggle(UUID playerUUID, String toggle, BL_PLAYER_ENUM type){
+    public boolean getPlayerToggle(UUID playerUUID, BL_PLAYER_ENUM type){
         switch(type){
             case TRAIL_ENABLED_PER_PLAYER:
                 if(!trailEnabledPerPlayer.containsKey(playerUUID))
-                    trailEnabledPerPlayer.put(playerUUID, getPlayerToggleSQL(playerUUID,toggle));
+                    trailEnabledPerPlayer.put(playerUUID, getPlayerToggleSQL(playerUUID,type.getType()));
                 return trailEnabledPerPlayer.get(playerUUID);
             case ROADBOOST_PER_PLAYER:
                 if(!roadboostPerPlayer.containsKey(playerUUID))
-                    roadboostPerPlayer.put(playerUUID,getPlayerToggleSQL(playerUUID,toggle));
+                    roadboostPerPlayer.put(playerUUID,getPlayerToggleSQL(playerUUID,type.getType()));
                 return roadboostPerPlayer.get(playerUUID);
             default:
                 return false;
