@@ -1,6 +1,7 @@
 package me.gt3ch1.betterlife.commands;
 
 import java.util.UUID;
+import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
@@ -12,7 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class TRAIL extends BetterLifeCommands implements CommandExecutor {
-    BL_PLAYER playerGetter = new BL_PLAYER();
+    BL_PLAYER playerGetter = Main.bl_player;
 
     /**
      * Handles the command /trail

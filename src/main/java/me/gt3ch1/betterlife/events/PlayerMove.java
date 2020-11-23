@@ -15,7 +15,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class PlayerMove implements Listener {
-    BL_PLAYER playerGetter = new BL_PLAYER();
+    BL_PLAYER playerGetter = Main.bl_player;
 
     @EventHandler
     public void roadBoostEvents(PlayerMoveEvent e) {
