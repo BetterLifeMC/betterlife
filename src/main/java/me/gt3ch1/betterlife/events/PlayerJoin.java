@@ -15,5 +15,18 @@ public class PlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         // do something i guess
         // Oh it will do something.
+        //TODO: Make this function with the redesign.
+        /*
+         Player p = e.getPlayer();
+        Particle newPlayerParticle = Particle.valueOf(CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
+        UUID playerUUID = p.getUniqueId();
+        try {
+            pch.getStringValue("trails.enabled", playerUUID);
+        } catch (Exception ex) {
+            pch.setValue("trails.trail", newPlayerParticle.toString(), playerUUID);
+            pch.setValue("trails.enabled", false, playerUUID);
+        }
+        PlayerAccessHelper.setupPlayerConfig(playerUUID);
+         */
     }
 }
