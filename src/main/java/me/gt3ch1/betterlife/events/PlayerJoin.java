@@ -3,6 +3,7 @@ package me.gt3ch1.betterlife.events;
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
+import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,20 +25,20 @@ public class PlayerJoin implements Listener {
 
         Particle newPlayerParticle = Particle.valueOf(
             CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
-        if (playerGetter.getPlayerString(playerUUID, "Trail") == null) {
+        setupPlayerConfig(playerUUID);
+        if (playerGetter.getPlayerString(playerUUID, "Trail", BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
             playerGetter.setPlayerString(playerUUID, "Trail", newPlayerParticle.toString());
         }
 
-        setupPlayerConfig(playerUUID);
     }
 
     /** Set's up the cache for all player data
      * @param playerUUID Player UUID
      */
     public static void setupPlayerConfig(UUID playerUUID) {
-        playerGetter.trailEnabledPerPlayer.put(playerUUID, playerGetter.getPlayerToggle(playerUUID,"trails.enabled"));
-        playerGetter.trailPerPlayer.put(playerUUID, playerGetter.getPlayerString(playerUUID,"trails.trail"));
-        playerGetter.roadboostPerPlayer.put(playerUUID, playerGetter.getPlayerToggle(playerUUID,"roadboost"));
+        playerGetter.trailEnabledPerPlayer.put(playerUUID, playerGetter.getPlayerToggle(playerUUID,"trails.enabled",BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER));
+        playerGetter.trailPerPlayer.put(playerUUID, playerGetter.getPlayerString(playerUUID,"trails.trail",BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
+        playerGetter.roadboostPerPlayer.put(playerUUID, playerGetter.getPlayerToggle(playerUUID,"roadboost",BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER));
     }
 
     /**

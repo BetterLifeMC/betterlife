@@ -64,6 +64,11 @@ public class Main extends JavaPlugin {
 
         sql = new Sql(dbType, host, database, username, password);
 
+        bl_home = new BL_HOME();
+        bl_player = new BL_PLAYER();
+        bl_zone = new BL_ZONE();
+        bl_zone_member = new BL_ZONE_MEMBER();
+
         new ListenersSetup(m);
 
         for (String command : CommandUtils.getEnabledTabCommands())
@@ -72,10 +77,7 @@ public class Main extends JavaPlugin {
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
 
-        bl_home = new BL_HOME();
-        bl_player = new BL_PLAYER();
-        bl_zone = new BL_ZONE();
-        bl_zone_member = new BL_ZONE_MEMBER();
+
 
         doBukkitLog(ChatColor.DARK_GREEN + "Enabled!");
     }
