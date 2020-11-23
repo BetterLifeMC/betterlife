@@ -1,31 +1,40 @@
 # Main BetterLife Configuration File
 
+# SQL Database Connection
+# dbType: The type of database you're using. Must be: mysql or mariadb
+# host: IP to connect to
+# database: The name of the schema to use
+# username: Username of user. Recommended to create one specifically for Minecraft
+# password: Password of user. ^^
 sql:
-  enabled: false
+  dbType: mysql
+  host: localhost
+  database: BetterLife
   username: username
   password: password
-  database: database
-  server: server
 
 events:
-  # Is crop trample enabled globally?
+  # Enable Crop Trample Protection
   croptrample: true
 
-# What is the default particle for new players?
+# Default particle (must be in all caps)
+# Default: NOTE
 defaultParticle: NOTE
 
-# Zone Protection / Anti Grief
-zoneprotection:
+# Number of homes allowed per player
+# Bypass this with the betterlife.homes.bypass permission
+homes: 2
 
-  # Is it enabled?
+# How many seconds to countdown before teleporting a player home
+home-countdown: 5
+
+# ZoneSafe - Allows players to protect zones
+zonesafe:
   enabled: true
-
-  # What is the item to use for claiming/protecting?
+  # The item to use for claiming zones
   item: GOLDEN_SHOVEL
-
-  # What world is it enabled in?
+  # List of worlds to allow zone claiming in
   worlds:
     - world
-
-  # What is the cost per block?
+  # Cost per block claimed
   cost: 25.0

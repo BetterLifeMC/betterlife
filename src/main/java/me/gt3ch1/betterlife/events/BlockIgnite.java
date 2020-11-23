@@ -1,3 +1,4 @@
+/*
 package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.eventhelpers.BlockBreakHelper;
@@ -9,11 +10,13 @@ import org.bukkit.event.block.BlockIgniteEvent;
 
 import java.util.UUID;
 
+*/
 /**
  * Contains method listener for when a block caches fire within a defined region.
  *
  * @author gt3ch1
- */
+ *//*
+
 public class BlockIgnite extends BlockBreakHelper implements Listener {
 
     private static BlockBreakHelper bbh;
@@ -35,3 +38,4 @@ public class BlockIgnite extends BlockBreakHelper implements Listener {
         }
     }
 }
+*/
