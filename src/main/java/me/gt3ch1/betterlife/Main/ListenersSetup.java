@@ -19,7 +19,7 @@ public class ListenersSetup {
     public ListenersSetup(Main plugin){
 
         plugin.listeners.add(new BlockFade());
-        // plugin.listeners.add(new PlayerMove());
+        plugin.listeners.add(new PlayerMove());
         plugin.listeners.add(new PlayerJoin());
         /*plugin.listeners.add(new PlayerInteract());
         plugin.listeners.add(new BlockBreak());
