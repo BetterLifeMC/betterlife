@@ -20,8 +20,34 @@ public class BL_PLAYER {
     public HashMap<UUID, Location> antiGriefLocation1PerPlayer = new HashMap<>();
     public HashMap<UUID, Location> antiGriefLocation2PerPlayer = new HashMap<>();
 
+    /**
+     * @param playerUUID The UUID we are getting the toggle for.
+     * @param toggle The name of the toggle.
+     * @param type The Type of the toggle
+     * @return Varies, depending on the context that the player sat.
+     */
+    public boolean getPlayerToggle(UUID playerUUID, String toggle, BL_PLAYER_ENUM type){
+        switch(type){
+            case TRAIL_ENABLED_PER_PLAYER:
+                if(!trailEnabledPerPlayer.containsKey(playerUUID))
+                    trailEnabledPerPlayer.put(playerUUID, getPlayerToggleSQL(playerUUID,toggle));
+                return trailEnabledPerPlayer.get(playerUUID);
+            case ROADBOOST_PER_PLAYER:
+                if(!roadboostPerPlayer.containsKey(playerUUID))
+                    roadboostPerPlayer.put(playerUUID,getPlayerToggleSQL(playerUUID,toggle));
+                return roadboostPerPlayer.get(playerUUID);
+            default:
+                return false;
+        }
+    }
 
-    public boolean getPlayerToggle(UUID playerUUID, String toggle) {
+    /**
+     * Gets the given toggle from the backend SQL database.
+     * @param playerUUID PlayerUUID to pull information from.
+     * @param toggle Toggle to search for.
+     * @return Varies, depending on the context that the player sat.
+     */
+    private boolean getPlayerToggleSQL(UUID playerUUID, String toggle) {
         String query =
             "SELECT `" + toggle + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
                 + "'";
