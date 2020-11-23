@@ -134,8 +134,8 @@ public class BL_PLAYER {
                     "SELECT * FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString() + "'");
 
             if (rs.next()) {
-                query = "UPDATE `BL_PLAYER` SET `" + toggle + "` = '"
-                        + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
+                query = "UPDATE `BL_PLAYER` SET `" + toggle.getType() + "` = '"
+                        + (getPlayerToggleSQL(playerUUID, toggle.getType()) ? 0 : 1) + "' WHERE `UUID` = '"
                         + playerUUID.toString() + "'";
 
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
