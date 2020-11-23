@@ -175,7 +175,7 @@ public class BL_PLAYER {
                 sql.executeUpdate(query);
             } else {
                 insertNewPlayer(playerUUID);
-                setPlayerString(playerUUID, string, newString);
+                setPlayerStringSQL(playerUUID, string, newString);
             }
         } catch (SQLException e) {
             e.printStackTrace();
