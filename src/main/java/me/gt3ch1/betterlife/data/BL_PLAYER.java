@@ -154,6 +154,12 @@ public class BL_PLAYER {
         }
     }
 
+    /**
+     * Sets the given type to the string specified for the player with playerUUID.
+     * @param playerUUID Player UUID we are updating.
+     * @param type String item we are updating.
+     * @param stringToSet String we are setting the row of type to.
+     */
     public void setPlayerString(UUID playerUUID, BL_PLAYER_ENUM type,String stringToSet){
         switch (type){
             case TRAIL_PER_PLAYER:
