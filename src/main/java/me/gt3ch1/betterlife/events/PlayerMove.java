@@ -1,4 +1,3 @@
-/*
 package me.gt3ch1.betterlife.events;
 
 import java.util.UUID;
@@ -92,4 +91,4 @@ public class PlayerMove implements Listener {
         }
     }
 }
-*/
+
