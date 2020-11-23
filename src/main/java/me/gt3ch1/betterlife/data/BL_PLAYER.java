@@ -58,7 +58,7 @@ public class BL_PLAYER {
                 return rs.getBoolean(toggle);
             } else {
                 insertNewPlayer(playerUUID);
-                getPlayerToggle(playerUUID, toggle);
+                getPlayerToggleSQL(playerUUID, toggle);
             }
         } catch (SQLException e) {
             e.printStackTrace();
