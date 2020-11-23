@@ -63,8 +63,8 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                             Player player = (Player) sender;
                             UUID playerUUID = player.getUniqueId();
                             if (player.hasPermission("betterlife.trail.toggle")) {
-                                boolean trailsEnabled = playerGetter.getPlayerToggle(playerUUID, "TrailToggle", BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
-                                playerGetter.setPlayerToggle(playerUUID, "TrailToggle");
+                                boolean trailsEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
+                                playerGetter.setPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
                                 String toggleState = trailsEnabled ? "&cdisabled" : "&aenabled";
                                 sendMessage(player, "&7Trail " + toggleState + "&7!", true);
                                 return true;
@@ -87,7 +87,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                         Player player = (Player) sender;
                         UUID playerUUID = player.getUniqueId();
                         if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()) || player.hasPermission("betterlife.trail.particle.*"))) {
-                            playerGetter.setPlayerString(playerUUID, "Trail", args[1].toUpperCase());
+                            playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, args[1].toUpperCase());
                             sendMessage(player, "&7Your trail is now set to: &6" + args[1].toUpperCase(), true);
 
                         } else if (!player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()))

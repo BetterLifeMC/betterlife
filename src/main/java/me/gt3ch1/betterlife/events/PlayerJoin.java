@@ -26,8 +26,8 @@ public class PlayerJoin implements Listener {
         Particle newPlayerParticle = Particle.valueOf(
             CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
         setupPlayerConfig(playerUUID);
-        if (playerGetter.getPlayerString(playerUUID, "Trail", BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
-            playerGetter.setPlayerString(playerUUID, "Trail", newPlayerParticle.toString());
+        if (playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
+            playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER,newPlayerParticle.toString());
         }
 
     }
@@ -36,9 +36,9 @@ public class PlayerJoin implements Listener {
      * @param playerUUID Player UUID
      */
     public static void setupPlayerConfig(UUID playerUUID) {
-        playerGetter.trailEnabledPerPlayer.put(playerUUID, playerGetter.getPlayerToggle(playerUUID,"trails.enabled",BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER));
-        playerGetter.trailPerPlayer.put(playerUUID, playerGetter.getPlayerString(playerUUID,"trails.trail",BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
-        playerGetter.roadboostPerPlayer.put(playerUUID, playerGetter.getPlayerToggle(playerUUID,"roadboost",BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER));
+        playerGetter.trailEnabledPerPlayer.put(playerUUID, playerGetter.getPlayerToggle(playerUUID,BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER));
+        playerGetter.trailPerPlayer.put(playerUUID, playerGetter.getPlayerString(playerUUID,BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
+        playerGetter.roadboostPerPlayer.put(playerUUID, playerGetter.getPlayerToggle(playerUUID,BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER));
     }
 
     /**
