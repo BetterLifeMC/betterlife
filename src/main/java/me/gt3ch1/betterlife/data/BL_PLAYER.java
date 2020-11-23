@@ -66,7 +66,30 @@ public class BL_PLAYER {
         return false;
     }
 
-    public String getPlayerString(UUID playerUUID, String string) {
+    /**
+     * @param playerUUID The UUID we are getting the toggle for.
+     * @param string The row in the SQL backend.
+     * @param type The Type of the toggle
+     * @return Varies, depending on the context that the player sat.
+     */
+    public String getPlayerString(UUID playerUUID, String string, BL_PLAYER_ENUM type) {
+        switch (type) {
+            case TRAIL_PER_PLAYER:
+                if (!trailPerPlayer.containsKey(playerUUID))
+                    trailPerPlayer.put(playerUUID, getPlayerStringSQL(playerUUID, string));
+                return trailPerPlayer.get(playerUUID);
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Searches the sql backend for the given player uuid.
+     * @param playerUUID PlayerUUID to get.
+     * @param string String to search for.
+     * @return Varies depending on user context.
+     */
+    private String getPlayerStringSQL(UUID playerUUID, String string) {
         String query =
             "SELECT `" + string + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
                 + "'";
