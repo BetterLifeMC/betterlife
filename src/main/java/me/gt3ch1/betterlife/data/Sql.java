@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 /**
  * This class contains methods needed to provided SQL support for the BetterLife plugin.
  *
+ * @author Starmism
  * @author gt3ch1
  */
 public class Sql {
