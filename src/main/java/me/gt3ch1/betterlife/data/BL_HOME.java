@@ -48,6 +48,11 @@ public class BL_HOME {
             + player.getLocation().getYaw() + ","
             + player.getLocation().getPitch()
             + ")";
-        sql.addHome(query, home);
+        sql.modifyHome(query, home);
+    }
+
+    public void delHome(Player player, String home) {
+        String query = "DELETE FROM BL_HOME WHERE `UUID` = '" + player.getUniqueId() + "' AND `Home` = ?;";
+        sql.modifyHome(query, home);
     }
 }
