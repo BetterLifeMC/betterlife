@@ -36,5 +36,6 @@ zonesafe:
   # List of worlds to allow zone claiming in
   worlds:
     - world
+
   # Cost per block claimed
   cost: 25.0

@@ -1,6 +1,6 @@
 main: me.gt3ch1.betterlife.Main.Main
 name: BetterLife
-version: '0.3'
+version: '0.4'
 description: "Making running a Minecraft server a little more humane."
 authors: [Starmism, GT3CH1]
 api-version: '1.13'
@@ -27,12 +27,8 @@ commands:
         permission: betterlife.eco
     home:
         description: Allows users to go home!
-        usage: "Usage: /home [ home ]"
+        usage: "Usage: /home [ home ] or /home [ set / del ] [ home ]"
         permission: betterlife.home
-    sethome:
-        description: Lets you set a home.
-        usage: "Usage: /sethome [ home ]"
-        permission: betterlife.sethome
 permissions:
     betterlife.trail.set:
         description: Allows the trail to be set per-player
