@@ -1,6 +1,9 @@
 package me.gt3ch1.betterlife.commands;
 
+import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
+import me.gt3ch1.betterlife.data.BL_PLAYER;
+import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,6 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
+    BL_PLAYER playerGetter = Main.bl_player;
 
     /**
      * Handles the command /roadboost
@@ -38,16 +42,15 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
             UUID playerUUID = p.getUniqueId();
             if (p.hasPermission(this.getPermission())) {
 
-                boolean hasToggleSprintEnabled = pch.roadboostPerPlayer.get(playerUUID);
-                pch.setValue("roadboost", !hasToggleSprintEnabled, playerUUID);
-                pch.roadboostPerPlayer.replace(playerUUID, !hasToggleSprintEnabled);
+                boolean hasToggleSprintEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
+                playerGetter.setPlayerToggle(playerUUID,BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
                 String toggleState = hasToggleSprintEnabled ? "&cdisabled" : "&aenabled";
-                sendBannerMessage(p, "&7Roadboost has been " + toggleState + "&7!");
+                sendMessage(p, "&7Roadboost has been " + toggleState + "&7!", true);
 
             }
         } else {
             // TODO: Add second arg for targeting a player
-            sendBannerMessage(sender, "&4This command can only be done in-game!");
+            sendMessage(sender, "&4This command can only be done in-game!", true);
         }
         return true;
     }

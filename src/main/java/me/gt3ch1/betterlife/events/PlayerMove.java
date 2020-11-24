@@ -1,7 +1,11 @@
 package me.gt3ch1.betterlife.events;
 
+import java.util.UUID;
+
+import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
+import me.gt3ch1.betterlife.data.BL_PLAYER;
+import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -12,12 +16,14 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class PlayerMove extends PlayerAccessHelper implements Listener {
+public class PlayerMove implements Listener {
+    BL_PLAYER playerGetter = Main.bl_player;
 
     @EventHandler
     public void roadBoostEvents(PlayerMoveEvent e) {
 
-        boolean boostEnabled = pch.roadboostPerPlayer.get(e.getPlayer().getUniqueId());
+        UUID playerUUID = e.getPlayer().getUniqueId();
+        boolean boostEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
 
         Location loc = e.getPlayer().getLocation();
         loc.setY(loc.getY() + 0.06250);
@@ -30,10 +36,11 @@ public class PlayerMove extends PlayerAccessHelper implements Listener {
 
     @EventHandler
     public void trailsEvents(PlayerMoveEvent e) {
+        UUID playerUUID = e.getPlayer().getUniqueId();
         boolean trailEnabled;
         Location location = e.getPlayer().getLocation();
         try {
-            trailEnabled = pch.trailEnabledPerPlayer.get(e.getPlayer().getUniqueId());
+            trailEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
         } catch (NullPointerException npe) {
             trailEnabled = false;
         }
@@ -75,7 +82,7 @@ public class PlayerMove extends PlayerAccessHelper implements Listener {
 
             try {
 
-                p = Particle.valueOf(pch.trailPerPlayer.get(e.getPlayer().getUniqueId()));
+                p = Particle.valueOf(playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
                 e.getPlayer().getWorld().spawnParticle(p, location, 1);
 
             } catch (Exception ex) {
@@ -87,3 +94,4 @@ public class PlayerMove extends PlayerAccessHelper implements Listener {
         }
     }
 }
+
