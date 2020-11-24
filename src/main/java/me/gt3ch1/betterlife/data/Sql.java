@@ -177,7 +177,7 @@ public class Sql {
         return false;
     }
 
-    public void addHome(String query, String home) {
+    public void modifyHome(String query, String home) {
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
