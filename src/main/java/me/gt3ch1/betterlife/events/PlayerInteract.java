@@ -1,8 +1,8 @@
+/*
 package me.gt3ch1.betterlife.events;
 
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,12 +13,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+*/
 /**
  * Contains listeners that allow a player to claim piece of land to disable outside
  * modifications from other players.
  *
  * @author gt3ch1
- */
+ *//*
+
 public class PlayerInteract extends PlayerAccessHelper implements Listener {
 
     Location loc1 = null, loc2 = null;
@@ -41,11 +43,10 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
 
         Player player = e.getPlayer();
         Block block = e.getClickedBlock();
-        Material material = e.getMaterial();
         Material itemInHand = player.getInventory().getItemInMainHand().getType();
         boolean isInWorld = CommandUtils.ch.getCustomConfig().getStringList("zoneprotection.worlds").contains(player.getWorld().getName());
 
-        if (block != null && material != null && isEnabled && isInWorld) {
+        if (block != null && isEnabled && isInWorld) {
 
             if (itemInHand == claimItem && e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
 
@@ -55,7 +56,7 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
                     loc1 = block.getLocation();
 
                     CommandUtils.sendMessage(player, "&dLocation &a1&6 sat to : &7X:&6 " + loc1.getX()
-                            + "&7 Y:&6 " + loc1.getY() + "&7 Z:&6 " + loc1.getZ());
+                            + "&7 Y:&6 " + loc1.getY() + "&7 Z:&6 " + loc1.getZ(), false);
 
                 } else {
 
@@ -63,12 +64,12 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
                     loc2 = block.getLocation();
                     double area = doMath(loc1.getX(), loc2.getX(), loc1.getZ(), loc2.getZ());
                     CommandUtils.sendMessage(player, "&dLocation &a2&6 sat to : &7X:&6 " + loc2.getX()
-                            + "&7 Y:&6 " + loc2.getY() + "&7 Z:&6 " + loc2.getZ());
+                            + "&7 Y:&6 " + loc2.getY() + "&7 Z:&6 " + loc2.getZ(), false);
                     landCost = area * antiGriefCost;
-                    CommandUtils.sendBannerMessage(player, "&dDo you want to claim this land?\n It will cost you: &c$&l"
-                            + landCost + "&r&d to claim. Right click with the claiming item to claim the land.");
+                    CommandUtils.sendMessage(player, "&dDo you want to claim this land?\n It will cost you: &c$&l"
+                            + landCost + "&r&d to claim. Right click with the claiming item to claim the land.", true);
                     CommandUtils.sendMessage(player, "&bTotal area: \n" +
-                            "  &9→  &7" + area);
+                            "  &9→  &7" + area, false);
                     playerCanClaim = true;
 
                 }
@@ -79,7 +80,7 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
             }
             if (playerCanClaim && e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && itemInHand == claimItem) {
 
-                if (Main.getEconomy().getBalance(player) >= landCost) {
+                if (Main.economy.getBalance(player) >= landCost) {
                     pch.setValue("antigrief.location.a", loc1, player.getUniqueId());
                     pch.setValue("antigrief.location.b", loc2, player.getUniqueId());
                     pch.setValue("antigrief.enabled", true, player.getUniqueId());
@@ -90,12 +91,12 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
                         pch.antiGriefLocation1PerPlayer.put(player.getUniqueId(), loc1);
                         pch.antiGriefLocation2PerPlayer.put(player.getUniqueId(), loc2);
                     }
-                    Main.getEconomy().withdrawPlayer(player, landCost);
-                    CommandUtils.sendBannerMessage(player, "&eYou have successfully claimed your plot! Enjoy!");
+                    Main.economy.withdrawPlayer(player, landCost);
+                    CommandUtils.sendMessage(player, "&eYou have successfully claimed your plot! Enjoy!", true);
 
                 } else {
 
-                    CommandUtils.sendBannerMessage(player, "&cYou do not have enough funds!");
+                    CommandUtils.sendMessage(player, "&cYou do not have enough funds!", true);
 
                 }
 
@@ -133,3 +134,4 @@ public class PlayerInteract extends PlayerAccessHelper implements Listener {
 
     }
 }
+*/
