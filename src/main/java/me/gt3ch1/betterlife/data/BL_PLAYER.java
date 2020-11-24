@@ -31,11 +31,11 @@ public class BL_PLAYER {
         switch(type){
             case TRAIL_ENABLED_PER_PLAYER:
                 if(!trailEnabledPerPlayer.containsKey(playerUUID))
-                    trailEnabledPerPlayer.put(playerUUID, getPlayerToggleSQL(playerUUID,type.getType()));
+                    trailEnabledPerPlayer.put(playerUUID, getPlayerToggleSQL(playerUUID,type));
                 return trailEnabledPerPlayer.get(playerUUID);
             case ROADBOOST_PER_PLAYER:
                 if(!roadboostPerPlayer.containsKey(playerUUID))
-                    roadboostPerPlayer.put(playerUUID,getPlayerToggleSQL(playerUUID,type.getType()));
+                    roadboostPerPlayer.put(playerUUID,getPlayerToggleSQL(playerUUID,type));
                 return roadboostPerPlayer.get(playerUUID);
             default:
                 return false;
@@ -48,15 +48,15 @@ public class BL_PLAYER {
      * @param toggle Toggle to search for.
      * @return Varies, depending on the context that the player sat.
      */
-    private boolean getPlayerToggleSQL(UUID playerUUID, String toggle) {
+    private boolean getPlayerToggleSQL(UUID playerUUID,BL_PLAYER_ENUM toggle) {
         String query =
-                "SELECT `" + toggle + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
+                "SELECT `" + toggle.getColumn() + "` FROM `"+toggle.getTable()+"` WHERE `UUID` = '" + playerUUID.toString()
                         + "'";
 
         try {
             rs = sql.executeQuery(query);
             if (rs.next()) {
-                return rs.getBoolean(toggle);
+                return rs.getBoolean(toggle.getColumn());
             } else {
                 insertNewPlayer(playerUUID);
                 getPlayerToggleSQL(playerUUID, toggle);
@@ -76,7 +76,7 @@ public class BL_PLAYER {
         switch (type) {
             case TRAIL_PER_PLAYER:
                 if (!trailPerPlayer.containsKey(playerUUID))
-                    trailPerPlayer.put(playerUUID, getPlayerStringSQL(playerUUID, type.getType()));
+                    trailPerPlayer.put(playerUUID, getPlayerStringSQL(playerUUID, type.getColumn()));
                 return trailPerPlayer.get(playerUUID);
             default:
                 return null;
@@ -136,11 +136,11 @@ public class BL_PLAYER {
 
         try {
             rs = sql.executeQuery(
-                    "SELECT * FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString() + "'");
+                    "SELECT * FROM `"+toggle.getTable()+"` WHERE `UUID` = '" + playerUUID.toString() + "'");
 
             if (rs.next()) {
-                query = "UPDATE `BL_PLAYER` SET `" + toggle.getType() + "` = '"
-                        + (getPlayerToggleSQL(playerUUID, toggle.getType()) ? 0 : 1) + "' WHERE `UUID` = '"
+                query = "UPDATE `"+toggle.getTable()+"` SET `" + toggle.getColumn() + "` = '"
+                        + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
                         + playerUUID.toString() + "'";
 
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
@@ -182,10 +182,10 @@ public class BL_PLAYER {
 
         try {
             rs = sql.executeQuery(
-                    "SELECT * FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString() + "'");
+                    "SELECT * FROM `"+type.getTable()+"` WHERE `UUID` = '" + playerUUID.toString() + "'");
 
             if (rs.next()) {
-                query = "UPDATE `BL_PLAYER` SET `" + type.getType() + "` = '"
+                query = "UPDATE `"+type.getTable()+"` SET `" + type.getColumn() + "` = '"
                         + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
 
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
