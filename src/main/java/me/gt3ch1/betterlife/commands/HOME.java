@@ -59,6 +59,21 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                 }
                 teleportPlayer(player, home, args[0]);
                 break;
+            case 2:
+                switch (args[0]) {
+                    case "set":
+                        homeGetter.addHome(player, args[1]);
+                        sendMessage(player, "&aHome &f" + args[1] + " &acreated!", true);
+                        break;
+                    case "del":
+                        homeGetter.delHome(player, args[1]);
+                        sendMessage(player, "&aHome &f" + args[1] + " &adeleted!", true);
+                        break;
+                    default:
+                        sendMessage(sender, "&4Invalid option.", true);
+                        break;
+                }
+                break;
             default:
                 sendMessage(sender, "&4Too many arguments!", true);
                 return false;
