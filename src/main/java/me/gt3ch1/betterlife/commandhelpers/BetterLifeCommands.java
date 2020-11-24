@@ -16,11 +16,11 @@ import java.util.LinkedHashMap;
  */
 public abstract class BetterLifeCommands extends CommandUtils {
 	private String permission;
-	private CommandSender cs;
+	public CommandSender cs;
 	private Command c;
 	private String label;
 	private String[] args;
-	protected Economy economy = Main.getEconomy();
+	protected Economy economy = Main.economy;
 	public LinkedHashMap<String, String> helpHash;
 	/**
 	 * @param permission

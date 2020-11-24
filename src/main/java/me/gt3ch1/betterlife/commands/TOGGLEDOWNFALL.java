@@ -48,16 +48,16 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
                     if (world.getEnvironment() != Environment.NETHER && world.getEnvironment() != Environment.THE_END)
                         toggleWeather(world, sender);
                     else
-                        sendBannerMessage(sender, "&4Can't change weather in that world!");
+                        sendMessage(sender, "&4Can't change weather in that world!", true);
                     break;
 
                 } catch (NullPointerException ex) {
-                    sendBannerMessage(sender, "&4That world doesn't exist!");
+                    sendMessage(sender, "&4That world doesn't exist!", true);
                     break;
                 }
 
             default:
-                sendBannerMessage(sender, "&4Too many arguments!");
+                sendMessage(sender, "&4Too many arguments!", true);
                 return false;
         }
         return true;
@@ -74,11 +74,11 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
         if (world.hasStorm() || world.isThundering()) {
             world.setStorm(false);
             world.setThundering(false);
-            sendBannerMessage(sender, "&7Setting weather to &6clear &7in world &6" + world.getName() + "&7!");
+            sendMessage(sender, "&7Setting weather to &6clear &7in world &6" + world.getName() + "&7!", true);
         } else {
             world.setStorm(true);
             world.setThundering(true);
-            sendBannerMessage(sender, "&7Setting weather to &6stormy &7in world &6" + world.getName() + "&7!");
+            sendMessage(sender, "&7Setting weather to &6stormy &7in world &6" + world.getName() + "&7!", true);
         }
     }
 }

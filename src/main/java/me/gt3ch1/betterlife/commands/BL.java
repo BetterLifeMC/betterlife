@@ -32,7 +32,7 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
      * @param sender
      */
     private static void sendVersion(CommandSender sender) {
-        sendBannerMessage(sender, "&7Version &6" + m.getDescription().getVersion() + " &7of BetterLife installed.");
+        sendMessage(sender, "&7Version &6" + m.getDescription().getVersion() + " &7of BetterLife installed.", true);
     }
 
     /**
@@ -41,9 +41,9 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
      * @param sender
      */
     private static void reloadConfig(CommandSender sender) {
-        sendBannerMessage(sender, "&eConfiguration file reloading...");
+        sendMessage(sender, "&eConfiguration file reloading...", true);
         CommandUtils.reloadConfiguration();
-        sendBannerMessage(sender, "&aConfiguration file reloaded!");
+        sendMessage(sender, "&aConfiguration file reloaded!", true);
     }
 
     /**
@@ -65,7 +65,7 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
                             if (p.hasPermission("betterlife.reload"))
                                 reloadConfig(p);
                             else
-                                sendBannerMessage(p, "&4You don't have permission!");
+                                sendPermissionErrorMessage(p);
                         } else
                             reloadConfig(sender);
                         break;

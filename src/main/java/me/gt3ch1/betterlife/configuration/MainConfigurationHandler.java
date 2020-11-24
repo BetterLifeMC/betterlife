@@ -6,7 +6,7 @@ package me.gt3ch1.betterlife.configuration;
 public class MainConfigurationHandler extends ConfigurationHelper {
 
     public MainConfigurationHandler() {
-        super("config", "config", false);
+        super("config", "config");
     }
 
 }

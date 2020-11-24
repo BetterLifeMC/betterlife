@@ -3,15 +3,17 @@ package me.gt3ch1.betterlife.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
-import me.gt3ch1.betterlife.eventhelpers.PlayerAccessHelper;
-import me.gt3ch1.betterlife.sql.Sql;
+import me.gt3ch1.betterlife.data.BL_HOME;
+import me.gt3ch1.betterlife.data.BL_PLAYER;
+import me.gt3ch1.betterlife.data.BL_ZONE;
+import me.gt3ch1.betterlife.data.BL_ZONE_MEMBER;
+import me.gt3ch1.betterlife.data.Sql;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -19,7 +21,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Main class for BetterLife. It enables all of the listeners, economy, and tab completion.
@@ -31,10 +32,12 @@ public class Main extends JavaPlugin {
 
     public static Main m;
     public static Economy economy;
-    public static boolean isUsingSql;
     public static Sql sql;
-    public static List<String> enabledParticles;
     protected ArrayList<Listener> listeners = new ArrayList<>();
+    public static BL_PLAYER bl_player;
+    public static BL_HOME bl_home;
+    public static BL_ZONE bl_zone;
+    public static BL_ZONE_MEMBER bl_zone_member;
 
     /**
      * Logs to the bukkit console.
@@ -42,11 +45,7 @@ public class Main extends JavaPlugin {
      * @param log
      */
     public static void doBukkitLog(String log) {
-        Bukkit.getLogger().info(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
-    }
-
-    public static Economy getEconomy() {
-        return economy;
+        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
     }
 
     /**
@@ -55,18 +54,21 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         m = this;
-        CommandUtils.enableMainConfiguration();
-
-        isUsingSql = CommandUtils.ch.getCustomConfig().getBoolean("sql.enabled");
-        if (isUsingSql) {
-            String username = CommandUtils.ch.getCustomConfig().getString("sql.username");
-            String password = CommandUtils.ch.getCustomConfig().getString("sql.password");
-            String database = CommandUtils.ch.getCustomConfig().getString("sql.database");
-            String server = CommandUtils.ch.getCustomConfig().getString("sql.server");
-            sql = new Sql(database, username, password, server);
-        }
-
         CommandUtils.enableConfiguration();
+
+        String dbType = CommandUtils.ch.getCustomConfig().getString("sql.dbType");
+        String host = CommandUtils.ch.getCustomConfig().getString("sql.host");
+        String database = CommandUtils.ch.getCustomConfig().getString("sql.database");
+        String username = CommandUtils.ch.getCustomConfig().getString("sql.username");
+        String password = CommandUtils.ch.getCustomConfig().getString("sql.password");
+
+        sql = new Sql(dbType, host, database, username, password);
+
+        bl_home = new BL_HOME();
+        bl_player = new BL_PLAYER();
+        bl_zone = new BL_ZONE();
+        bl_zone_member = new BL_ZONE_MEMBER();
+
         new ListenersSetup(m);
 
         for (String command : CommandUtils.getEnabledTabCommands())
@@ -74,13 +76,10 @@ public class Main extends JavaPlugin {
 
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
-        enabledParticles = CommandUtils.partch.getRow("particle");
 
-        for (Player p : this.getServer().getOnlinePlayers())
-            PlayerAccessHelper.setupPlayerConfig(p.getUniqueId());
+
 
         doBukkitLog(ChatColor.DARK_GREEN + "Enabled!");
-
     }
 
     /**
@@ -93,8 +92,11 @@ public class Main extends JavaPlugin {
         HandlerList.unregisterAll(m);
 
         doBukkitLog(ChatColor.DARK_PURPLE + "Goodbye!");
-        PlayerAccessHelper.clearPlayerConfigs();
         sql = null;
+        bl_home = null;
+        bl_player = null;
+        bl_zone = null;
+        bl_zone_member = null;
     }
 
     /**
@@ -106,7 +108,7 @@ public class Main extends JavaPlugin {
             /*
              * This will set the command executor for the command passed in.
              * Once it is set, this does nothing.  The commands class file
-             * is located in package main.java.me.gt3ch1.betterlife.commands.LABEL
+             * is located in package me.gt3ch1.betterlife.commands.LABEL
              * where label is the name of the command in caps.
              */
             this.getCommand(label).setExecutor((CommandExecutor) Class

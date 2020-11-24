@@ -39,7 +39,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                     switch (args[0]) {
                         case "bal":
                             if (player.hasPermission(getPermission() + ".bal"))
-                                sendMessage(player, "&aBalance of &7" + player.getName() + "&7:&a " + economy.getBalance(player));
+                                sendMessage(player, "&aBalance of &7" + player.getName() + "&7:&a " + economy.getBalance(player), false);
                             else
                                 sendPermissionErrorMessage(sender);
                             return true;
@@ -58,18 +58,18 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                                 try {
                                     commandReceiver = Bukkit.getPlayer(args[1]).getPlayer();
                                 } catch (Exception e) {
-                                    sendMessage(player, "&cThat player is not online!");
+                                    sendMessage(player, "&cThat player is not online!", false);
                                     return false;
                                 }
                                 double bal = economy.getBalance(commandReceiver);
                                 // This needs to be redone, but I can't care at the moment.
                                 if (commandReceiver != null || bal > 0)
-                                    sendMessage(player, "&aBalance of&7 " + args[1] + "&7:&a " + bal);
+                                    sendMessage(player, "&aBalance of&7 " + args[1] + "&7:&a " + bal, false);
                                 else
-                                    sendMessage(player, "&4Player not found!");
+                                    sendMessage(player, "&4Player not found!", false);
                                 return true;
                             } else
-                                sendBannerMessage(sender, "&4You do not have permissions!");
+                                sendPermissionErrorMessage(sender);
                         default:
                             return false;
                     }
@@ -79,17 +79,17 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                             try {
                                 commandReceiver = Bukkit.getPlayer(args[1]).getPlayer();
                             } catch (Exception e) {
-                                sendMessage(player, "&cThat player is not online!");
+                                sendMessage(player, "&cThat player is not online!", false);
                                 return false;
                             }
                             if (args.length >= 2 && player.hasPermission(getPermission() + ".give")) {
-                                double playerBalance = Double.valueOf(args[2]);
+                                double playerBalance = Double.parseDouble(args[2]);
                                 if ((economy.getBalance(player) - playerBalance) > 0) {
                                     economy.depositPlayer(commandReceiver, playerBalance);
                                     economy.withdrawPlayer(player, playerBalance);
-                                    sendMessage(player, "&aYou sent &6$" + playerBalance + "&a to &7" + commandReceiver.getName());
+                                    sendMessage(player, "&aYou sent &6$" + playerBalance + "&a to &7" + commandReceiver.getName(), false);
                                     try {
-                                        sendMessage(commandReceiver, "&aYou received &6 $" + playerBalance + "&a from &7" + commandReceiver.getName());
+                                        sendMessage(commandReceiver, "&aYou received &6 $" + playerBalance + "&a from &7" + commandReceiver.getName(), false);
                                     } catch (Exception e) {
                                         return false;
                                     }
@@ -109,7 +109,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                             if (player.hasPermission(getPermission() + ".set")) {
                                 economy.withdrawPlayer(commandReceiver, economy.getBalance(commandReceiver));
                                 economy.depositPlayer(commandReceiver, balance);
-                                sendMessage(sender, "&aSetting player &7" + commandReceiver.getName() + "'s&a balance to &6" + balance);
+                                sendMessage(sender, "&aSetting player &7" + commandReceiver.getName() + "'s&a balance to &6" + balance, false);
                             }
                             if (!player.hasPermission(getPermission() + ".set"))
                                 sendPermissionErrorMessage(sender);
