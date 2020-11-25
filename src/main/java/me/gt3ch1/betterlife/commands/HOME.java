@@ -51,9 +51,9 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                 }
                 break;
             case 1:
-                if(args[0].equalsIgnoreCase("list")){
+                if (args[0].equalsIgnoreCase("list")) {
                     sendListOfHomes(player);
-                    return false;
+                    return true;
                 }
                 home = homeList.get(args[0]);
                 if (home == null) {
