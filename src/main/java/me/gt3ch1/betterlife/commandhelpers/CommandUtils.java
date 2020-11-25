@@ -19,7 +19,7 @@ public class CommandUtils {
     public static MainConfigurationHandler ch;
     public static ParticleConfigurationHandler partch;
     public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[&3BetterLife&c] ") + ChatColor.RESET;
-    public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco"};
+    public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco", "home"};
 
     /**
      * Sends the sender a message.
