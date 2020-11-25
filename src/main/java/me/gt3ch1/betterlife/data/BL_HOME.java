@@ -4,10 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.UUID;
+
 import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -15,7 +18,16 @@ public class BL_HOME {
     private final Sql sql = Main.sql;
     private ResultSet rs;
 
+    public HashMap<UUID, LinkedHashMap<String, Location>> homesPerPlayer = new HashMap<>();
+
     public LinkedHashMap<String, Location> getHomes(UUID playerUUID) {
+        if (!homesPerPlayer.containsKey(playerUUID)) {
+            homesPerPlayer.put(playerUUID, getHomesSql(playerUUID));
+        }
+        return homesPerPlayer.get(playerUUID);
+    }
+
+    private LinkedHashMap<String, Location> getHomesSql(UUID playerUUID) {
         String query = "SELECT * FROM `BL_HOME` WHERE `UUID` = '" + playerUUID.toString() + "'";
         LinkedHashMap<String, Location> homeList = new LinkedHashMap<>();
 
@@ -54,5 +66,8 @@ public class BL_HOME {
     public void delHome(Player player, String home) {
         String query = "DELETE FROM BL_HOME WHERE `UUID` = '" + player.getUniqueId() + "' AND `Home` = ?;";
         sql.modifyHome(query, home);
+        Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+        homesPerPlayer.get(p.getUniqueId()).remove(homesPerPlayer.get(p.getUniqueId()).get(home));
+        getHomes(p.getUniqueId());
     }
 }
