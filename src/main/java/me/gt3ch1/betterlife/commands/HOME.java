@@ -70,8 +70,10 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                         sendMessage(player, "&aHome &f" + args[1] + " &acreated!", true);
                         break;
                     case "del":
-                        homeGetter.delHome(player, args[1]);
-                        sendMessage(player, "&aHome &f" + args[1] + " &adeleted!", true);
+                        if (homeGetter.delHome(player, args[1]))
+                            sendMessage(player, "&aHome &f" + args[1] + " &adeleted!", true);
+                        else
+                            sendMessage(player, "&4Home not found!", true);
                         break;
                     default:
                         sendMessage(sender, "&4Invalid option.", true);
