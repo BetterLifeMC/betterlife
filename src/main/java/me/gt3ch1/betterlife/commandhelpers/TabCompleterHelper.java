@@ -2,6 +2,7 @@ package me.gt3ch1.betterlife.commandhelpers;
 
 import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -25,7 +26,7 @@ public class TabCompleterHelper implements TabCompleter {
 
     /**
      * When we can tab complete commands.
-     * NOTE: Must be enabled in Main!
+     * NOTE: Must be enabled in CommandUtils!
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
@@ -56,7 +57,7 @@ public class TabCompleterHelper implements TabCompleter {
                             // If it is set, return the list of currently enabled particles,
                             // and append them to the tablist list.
                             List<String> allowedParticles = CommandUtils.partch.getCustomConfig()
-                                .getStringList("particle");
+                                    .getStringList("particle");
                             if ("set".equals(args[0])) {
                                 for (String particle : allowedParticles)
                                     if (Arrays.stream(args).anyMatch(particle::contains) && player
@@ -102,7 +103,7 @@ public class TabCompleterHelper implements TabCompleter {
                                     subCommands.add("set");
                             break;
                         case 2:
-                            switch(args[0]){
+                            switch (args[0]) {
                                 case "bal":
                                     if (player.hasPermission("betterlife.eco.bal"))
                                         for (OfflinePlayer p : Bukkit.getServer().getOfflinePlayers())
@@ -110,14 +111,14 @@ public class TabCompleterHelper implements TabCompleter {
                                                 subCommands.add(p.getName());
                                     break;
                                 case "set":
-                                    if(player.hasPermission("betterlife.eco.set"))
-                                        for(OfflinePlayer p : Bukkit.getServer().getOfflinePlayers())
-                                            if(Arrays.stream(args).anyMatch(Objects.requireNonNull(p.getName())::contains))
+                                    if (player.hasPermission("betterlife.eco.set"))
+                                        for (OfflinePlayer p : Bukkit.getServer().getOfflinePlayers())
+                                            if (Arrays.stream(args).anyMatch(Objects.requireNonNull(p.getName())::contains))
                                                 subCommands.add(p.getName());
                                 case "give":
-                                    if(player.hasPermission("betterlife.eco.give"))
-                                        for(OfflinePlayer p : Bukkit.getServer().getOfflinePlayers())
-                                            if(Arrays.stream(args).anyMatch(Objects.requireNonNull(p.getName())::contains))
+                                    if (player.hasPermission("betterlife.eco.give"))
+                                        for (OfflinePlayer p : Bukkit.getServer().getOfflinePlayers())
+                                            if (Arrays.stream(args).anyMatch(Objects.requireNonNull(p.getName())::contains))
                                                 subCommands.add(p.getName());
                                 default:
                                     break;
@@ -125,6 +126,28 @@ public class TabCompleterHelper implements TabCompleter {
                         default:
                             break;
                     }
+                case "home":
+                    switch (args.length) {
+                        case 1:
+                            if (player.hasPermission("betterlife.home.set"))
+                                if (Arrays.stream(args).anyMatch("set"::contains))
+                                    subCommands.add("set");
+                            if (player.hasPermission("betterlife.home.del"))
+                                if (Arrays.stream(args).anyMatch("del"::contains))
+                                    subCommands.add("del");
+                            if (player.hasPermission("betterlife.home.list"))
+                                if (Arrays.stream(args).anyMatch("list"::contains))
+                                    subCommands.add("list");
+                            if (player.hasPermission("betterlife.home.home")) {
+                                LinkedHashMap<String, Location> homes = Main.bl_home.getHomes(player.getUniqueId());
+                                for (String homeName : homes.keySet())
+                                    if (Arrays.stream(args).anyMatch(homeName::contains))
+                                        subCommands.add(homeName);
+
+                            }
+                            break;
+                    }
+
             }
             return subCommands;
         }
