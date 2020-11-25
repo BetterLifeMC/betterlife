@@ -66,10 +66,16 @@ public class BL_HOME {
         Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
     }
 
-    public void delHome(Player p, String home) {
-        String query = "DELETE FROM BL_HOME WHERE `UUID` = '" + p.getUniqueId() + "' AND `Home` = ?;";
-        sql.modifyHome(query, home);
-        Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
-        homesPerPlayer.get(p.getUniqueId()).remove(home);
+    public boolean delHome(Player p, String home) {
+        if (homesPerPlayer.containsKey(p.getUniqueId()))
+            if (homesPerPlayer.get(p.getUniqueId()).containsKey(home)) {
+                String query = "DELETE FROM BL_HOME WHERE `UUID` = '" + p.getUniqueId() + "' AND `Home` = ?;";
+                sql.modifyHome(query, home);
+                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+                homesPerPlayer.get(p.getUniqueId()).remove(home);
+                return true;
+            }
+
+        return false;
     }
 }
