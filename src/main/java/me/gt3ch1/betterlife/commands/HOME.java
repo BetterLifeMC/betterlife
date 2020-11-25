@@ -1,6 +1,7 @@
 package me.gt3ch1.betterlife.commands;
 
 import java.util.LinkedHashMap;
+
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.data.BL_HOME;
@@ -138,7 +139,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
         minZ = initial.getZ() - 0.5;
 
         return !(cur.getX() >= minX && cur.getX() <= maxX
-            && cur.getZ() >= minZ && cur.getZ() <= maxZ);
+                && cur.getZ() >= minZ && cur.getZ() <= maxZ);
     }
 
     private void sendListOfHomes(Player player) {
@@ -148,7 +149,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < listOfHomes.length; i++) {
             sb.append(listOfHomes[i]);
-            if (i < listOfHomes.length -1) {
+            if (i < listOfHomes.length - 1) {
                 sb.append(", ");
             }
         }
