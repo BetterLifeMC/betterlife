@@ -35,12 +35,12 @@ public class BL_HOME {
             rs = sql.executeQuery(query);
             while (rs.next()) {
                 homeList.put(rs.getNString("Home"), new Location(
-                    Bukkit.getWorld(rs.getString("World")),
-                    rs.getDouble("X"),
-                    rs.getDouble("Y"),
-                    rs.getDouble("Z"),
-                    rs.getFloat("Pitch"),
-                    rs.getFloat("Yaw")));
+                        Bukkit.getWorld(rs.getString("World")),
+                        rs.getDouble("X"),
+                        rs.getDouble("Y"),
+                        rs.getDouble("Z"),
+                        rs.getFloat("Pitch"),
+                        rs.getFloat("Yaw")));
             }
             return homeList;
         } catch (SQLException e) {
@@ -50,16 +50,18 @@ public class BL_HOME {
     }
 
     public void addHome(Player player, String home) {
+
         String query = "INSERT INTO BL_HOME VALUES ("
-            + "'" + player.getUniqueId() + "',"
-            + "?,"
-            + player.getLocation().getX() + ","
-            + player.getLocation().getY() + ","
-            + player.getLocation().getZ() + ","
-            + "'" + player.getLocation().getWorld().getName() + "',"
-            + player.getLocation().getYaw() + ","
-            + player.getLocation().getPitch()
-            + ")";
+                + "'" + player.getUniqueId() + "',"
+                + "?,"
+                + player.getLocation().getX() + ","
+                + player.getLocation().getY() + ","
+                + player.getLocation().getZ() + ","
+                + "'" + player.getLocation().getWorld().getName() + "',"
+                + player.getLocation().getYaw() + ","
+                + player.getLocation().getPitch()
+                + ")";
+        homesPerPlayer.get(player.getUniqueId()).put(home, player.getLocation());
         sql.modifyHome(query, home);
     }
 
