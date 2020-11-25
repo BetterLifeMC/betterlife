@@ -63,6 +63,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                 }
                 teleportPlayer(player, home, args[0]);
                 break;
+                //TODO: Maybe we should add a /home info {home name} ?
             case 2:
                 switch (args[0]) {
                     case "set":
