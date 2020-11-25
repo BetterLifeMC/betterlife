@@ -70,7 +70,6 @@ public class BL_HOME {
         String query = "DELETE FROM BL_HOME WHERE `UUID` = '" + p.getUniqueId() + "' AND `Home` = ?;";
         sql.modifyHome(query, home);
         Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
-        homesPerPlayer.get(p.getUniqueId()).remove(homesPerPlayer.get(p.getUniqueId()).get(home));
-        getHomes(p.getUniqueId());
+        homesPerPlayer.get(p.getUniqueId()).remove(home);
     }
 }
