@@ -47,10 +47,14 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                     return false;
                 } else {
                     sendListOfHomes(player);
-                    return false;
+                    return true;
                 }
                 break;
             case 1:
+                if(args[0].equalsIgnoreCase("list")){
+                    sendListOfHomes(player);
+                    return false;
+                }
                 home = homeList.get(args[0]);
                 if (home == null) {
                     sendMessage(player, "&4Home not found!", true);
