@@ -68,7 +68,11 @@ public class Sql {
         runnable.runTaskAsynchronously(m);
     }
 
-    public void setup() {
+    /**
+     * Sets up the SQL database for BetterLife's use.
+     * This will check to see if all the necessary tables exist, and if they don't, it will create them.
+     */
+    private void setup() {
         String query;
 
         query = "SELECT `UUID` FROM `BL_PLAYER` LIMIT 1";
@@ -177,6 +181,11 @@ public class Sql {
         return false;
     }
 
+    /**
+     * Modifies the given home.
+     * @param query Query to execute.
+     * @param home Name of the home to update.
+     */
     public void modifyHome(String query, String home) {
         BukkitRunnable runnable = new BukkitRunnable() {
             @Override
