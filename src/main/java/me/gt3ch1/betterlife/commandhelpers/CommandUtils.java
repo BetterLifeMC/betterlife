@@ -41,6 +41,10 @@ public class CommandUtils {
         }
     }
 
+    /**
+     * Sets a message to the sender saying that they do not have permissions.
+     * @param sender Sender to send the permission error message to.
+     */
     public static void sendPermissionErrorMessage(CommandSender sender) {
         sendMessage(sender, "&4You do not have permissions!", false);
     }
@@ -48,9 +52,9 @@ public class CommandUtils {
     /**
      * Sends a help header
      *
-     * @param sender
-     * @param commandName
-     * @param args
+     * @param sender Who sent the message.
+     * @param commandName The name of the command.
+     * @param args Arguments of the command.
      */
     public static void sendHelpMessage(CommandSender sender, String commandName, LinkedHashMap<String, String> args) {
         sendMessage(sender, "&b&lby GT3CH1 & Starmism", true);

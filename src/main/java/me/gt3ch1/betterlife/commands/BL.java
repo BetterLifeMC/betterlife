@@ -15,11 +15,11 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
     /**
      * Handles the /bl command
      *
-     * @param permission
-     * @param cs
-     * @param c
-     * @param label
-     * @param args
+     * @param permission Permission required for the /bl command.
+     * @param cs         The command sender.
+     * @param c          The command.
+     * @param label      The String version of the command.
+     * @param args       The arguments to the command.
      */
     public BL(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
@@ -29,7 +29,7 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
     /**
      * Sends the current version of the plugin to the sender.
      *
-     * @param sender
+     * @param sender Who sent the command.
      */
     private static void sendVersion(CommandSender sender) {
         sendMessage(sender, "&7Version &6" + m.getDescription().getVersion() + " &7of BetterLife installed.", true);
@@ -38,7 +38,7 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
     /**
      * Reloads the configuration and sends messages to the sender.
      *
-     * @param sender
+     * @param sender Who sent the commmand.
      */
     private static void reloadConfig(CommandSender sender) {
         sendMessage(sender, "&eConfiguration file reloading...", true);
