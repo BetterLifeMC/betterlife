@@ -14,16 +14,37 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
+/**
+ * This class represents the /home command for BetterLife.
+ */
 public class HOME extends BetterLifeCommands implements CommandExecutor {
     private int checkerID;
     private int taskID;
     BL_HOME homeGetter = Main.bl_home;
 
+    /**
+     * Initializes the home command.
+     *
+     * @param permission Permission required to use /home
+     * @param cs         Sender of the command.
+     * @param c          The command itself.
+     * @param label      The string version of the command.
+     * @param args       The arguments of the command.
+     */
     public HOME(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
         this.onCommand(cs, c, label, args);
     }
 
+    /**
+     * Runs the command.
+     *
+     * @param sender  Sender of the command.
+     * @param c       The command itself.
+     * @param command The string version of the command.
+     * @param args    The arguments of the command.
+     * @return True if the command executed successfully.
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         if (!(sender instanceof Player)) {
@@ -64,7 +85,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                 }
                 teleportPlayer(player, home, args[0]);
                 break;
-                //TODO: Maybe we should add a /home info {home name} ?
+            //TODO: Maybe we should add a /home info {home name} ?
             case 2:
                 switch (args[0]) {
                     case "set":
@@ -89,6 +110,13 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
         return true;
     }
 
+    /**
+     * Teleports the given player to the location.
+     *
+     * @param player   Player to teleport.
+     * @param location Location to teleport player.
+     * @param home     The name of the home (used for command output).
+     */
     private void teleportPlayer(Player player, Location location, String home) {
         int ticks = ch.getCustomConfig().getInt("home-countdown") * 20;
 
@@ -110,7 +138,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
 
             if (checkPlayerHasMoved(initial, cur)) {
                 if (scheduler.isQueued(task.getTaskId())) {
-                    cancelTask(player);
+                    cancelTask();
                     cancelChecker();
                     sendMessage(player, "&4Teleportation cancelled.", true);
                 }
@@ -121,14 +149,27 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
         this.taskID = task.getTaskId();
     }
 
+    /**
+     * Cancels the teleport player checker.
+     */
     private void cancelChecker() {
         Bukkit.getServer().getScheduler().cancelTask(this.checkerID);
     }
 
-    private void cancelTask(Player player) {
+    /**
+     * Cancels the current task.
+     */
+    private void cancelTask() {
         Bukkit.getServer().getScheduler().cancelTask(this.taskID);
     }
 
+    /**
+     * Checks whether or not the player has moved.
+     *
+     * @param initial Initial location of the player.
+     * @param cur     Current location of the player.
+     * @return True if the player has moved, false otherwise.
+     */
     private boolean checkPlayerHasMoved(Location initial, Location cur) {
         double maxX, maxZ, minX, minZ;
 
@@ -142,6 +183,11 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                 && cur.getZ() >= minZ && cur.getZ() <= maxZ);
     }
 
+    /**
+     * Sends the given player a list of all their homes.
+     *
+     * @param player Player to send a list of homes to.
+     */
     private void sendListOfHomes(Player player) {
         LinkedHashMap<String, Location> homeList = homeGetter.getHomes(player.getUniqueId());
         String[] listOfHomes = homeList.keySet().toArray(new String[0]);

@@ -14,11 +14,11 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
     /**
      * Handles the /eco command.
      *
-     * @param permission
-     * @param cs
-     * @param c
-     * @param label
-     * @param args
+     * @param permission Permission required for the /eco command.
+     * @param cs         The command sender.
+     * @param c          The command.
+     * @param label      The String version of the command.
+     * @param args       The arguments to the command.
      */
     public ECO(String permission, CommandSender cs, Command c, String label, String[] args) {
 
@@ -27,6 +27,14 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
 
     }
 
+    /**
+     * Runs the given command.
+     * @param sender  Sender of the command.
+     * @param c       The command itself.
+     * @param command The string version of the command.
+     * @param args    The arguments of the command.
+     * @return True if the command was successful.
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         if (sender instanceof Player) {
