@@ -14,7 +14,7 @@ public class HelpHelper {
     /**
      * Returns the help commands for the given command
      * @param hash What help message is to be sent.
-     * @return
+     * @return The help message.
      */
     public static LinkedHashMap<String, String> getAHelpHash(String hash) {
         switch(hash) {

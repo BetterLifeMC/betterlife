@@ -199,8 +199,12 @@ public class BL_PLAYER {
         }
     }
 
-    public void insertNewPlayer(UUID playerUUID) {
-        String query = "INSERT INTO `BL_PLAYER` (`UUID`) VALUES ('" + playerUUID.toString() + "')";
+    /**
+     * Inserts a new player into BL_PLAYER
+     * @param playerUUID
+     */
+    private void insertNewPlayer(UUID playerUUID) {
+        String query = "INSERT INTO `"+BL_PLAYER_ENUM.HOME_PER_PLAYER.getTable()+"` (`UUID`) VALUES ('" + playerUUID.toString() + "')";
 
         Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
         sql.executeUpdate(query);
