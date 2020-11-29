@@ -70,7 +70,8 @@ public class Sql {
     }
 
     /**
-     * Checks if all columns in BL_PLAYER exist.
+     * Checks if all columns in BL_PLAYER exist.  This is just to ensure that if the user updates the plugin,
+     * that all of the needed sql columns exist.
      *
      * @throws SQLException If for some reason the connection fails.
      */
@@ -78,14 +79,18 @@ public class Sql {
         for (BL_PLAYER_ENUM entry : BL_PLAYER_ENUM.values()) {
             DatabaseMetaData meta;
             meta = con.getMetaData();
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Checking : " + entry.getColumn());
             try {
                 rs = meta.getColumns(null, null, entry.getTable(), entry.getColumn());
             } catch (SQLException e) {
-                if (!rs.next()) {
-                    String query = "ALTER TABLE " + entry.getTable() + " ADD " + entry.getColumn() + " " + entry.getSqlType();
-                    stmt.executeUpdate(query);
-                    Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
-                }
+                Main.doBukkitLog(ChatColor.DARK_RED + "Get columns failed!");
+
+            }
+            if (!rs.next()) {
+                String query = "ALTER TABLE " + entry.getTable() + " ADD " + entry.getColumn() + " "
+                        + entry.getSqlType() + " DEFAULT " + entry.getDefault();
+                stmt.execute(query);
+                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             }
 
         }
