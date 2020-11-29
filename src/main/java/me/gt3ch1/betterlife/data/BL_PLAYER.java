@@ -118,12 +118,12 @@ public class BL_PLAYER {
         boolean currentVal;
         switch (type) {
             case TRAIL_ENABLED_PER_PLAYER:
-                currentVal = trailEnabledPerPlayer.get(playerUUID);
+                currentVal = getPlayerToggle(playerUUID,type);
                 trailEnabledPerPlayer.put(playerUUID, !currentVal);
                 setPlayerToggleSQL(playerUUID, type);
                 break;
             case ROADBOOST_PER_PLAYER:
-                currentVal = roadboostPerPlayer.get(playerUUID);
+                currentVal = getPlayerToggle(playerUUID,type);
                 roadboostPerPlayer.put(playerUUID, !currentVal);
                 setPlayerToggleSQL(playerUUID, type);
                 break;
