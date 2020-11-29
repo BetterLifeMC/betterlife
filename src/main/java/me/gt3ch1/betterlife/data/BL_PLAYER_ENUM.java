@@ -9,11 +9,16 @@ package me.gt3ch1.betterlife.data;
  */
 public enum BL_PLAYER_ENUM {
 
-    TRAIL_ENABLED_PER_PLAYER("TrailToggle","BL_PLAYER","BOOL"),
-    TRAIL_PER_PLAYER("Trail","BL_PLAYER","NVCHAR(30)"),
-    ROADBOOST_PER_PLAYER("RoadBoostToggle","BL_PLAYER","BOOL"),
-    MUTE_PER_PLAYER("Mute","BL_PLAYER","BOOL"),
-    HOME_PER_PLAYER("Home","BL_HOME");
+    // BL_PLAYER toggles
+    MUTE_PER_PLAYER("MuteToggle", "BL_PLAYER", "BOOL"),
+    ROADBOOST_PER_PLAYER("RoadBoostToggle", "BL_PLAYER", "BOOL"),
+    TRAIL_ENABLED_PER_PLAYER("TrailToggle", "BL_PLAYER", "BOOL"),
+
+    // BL_PLAYER Strings
+    TRAIL_PER_PLAYER("Trail", "BL_PLAYER", "NVCHAR(30)"),
+
+    // BL_HOME
+    HOME_PER_PLAYER("Home", "BL_HOME");
 
     private String column;
     private String table;
