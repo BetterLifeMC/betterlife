@@ -59,6 +59,10 @@ public enum BL_PLAYER_ENUM {
         return sqlType;
     }
 
+    /**
+     * Gets the default SQL value for the enum.
+     * @return The default SQL value.
+     */
     public String getDefault() {
         switch (getSqlType()) {
             case "BOOL":
