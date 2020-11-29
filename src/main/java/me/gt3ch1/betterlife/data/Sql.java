@@ -1,12 +1,12 @@
 package me.gt3ch1.betterlife.data;
 
-import static me.gt3ch1.betterlife.Main.Main.m;
-
 import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.ChatColor;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
-import org.bukkit.scheduler.BukkitRunnable;
+
+import static me.gt3ch1.betterlife.Main.Main.m;
 
 /**
  * This class contains methods needed to provided SQL support for the BetterLife plugin.
