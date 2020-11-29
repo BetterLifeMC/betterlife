@@ -16,9 +16,17 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+/**
+ * This class contains all of the listeners and events for BetterLife's player movement-based modifications.
+ */
 public class PlayerMove implements Listener {
     BL_PLAYER playerGetter = Main.bl_player;
 
+    /**
+     * Checks to even to see if the player has roadboost enabled.
+     *
+     * @param e Move event to check to see if the player move event.
+     */
     @EventHandler
     public void roadBoostEvents(PlayerMoveEvent e) {
 
@@ -34,6 +42,11 @@ public class PlayerMove implements Listener {
 
     }
 
+    /**
+     * Checks to see if the player has a trail enabled.
+     *
+     * @param e Move event to check for trails.
+     */
     @EventHandler
     public void trailsEvents(PlayerMoveEvent e) {
         UUID playerUUID = e.getPlayer().getUniqueId();
