@@ -127,6 +127,11 @@ public class BL_PLAYER {
                 roadboostPerPlayer.put(playerUUID, !currentVal);
                 setPlayerToggleSQL(playerUUID, type);
                 break;
+            case MUTE_PER_PLAYER:
+                currentVal = getPlayerToggle(playerUUID,type);
+                mutePerPlayer.put(playerUUID, !currentVal);
+                setPlayerToggleSQL(playerUUID, type);
+                break;
             default:
                 break;
         }
