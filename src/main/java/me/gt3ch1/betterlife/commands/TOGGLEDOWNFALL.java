@@ -14,11 +14,11 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
     /**
      * Handles the command /toggledownfall
      *
-     * @param permission
-     * @param cs
-     * @param c
-     * @param label
-     * @param args
+     * @param permission Permission required to use /home
+     * @param cs         Sender of the command.
+     * @param c          The command itself.
+     * @param label      The string version of the command.
+     * @param args       The arguments of the command.
      */
     public TOGGLEDOWNFALL(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
@@ -26,7 +26,12 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
     }
 
     /**
-     * Toggles the rain
+     * Runs the /toggledownfall command
+     * @param sender  Sender of the command.
+     * @param c       The command itself.
+     * @param command The string version of the command.
+     * @param args    The arguments of the command.
+     * @return True if the command was successful.
      */
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
@@ -66,8 +71,8 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
     /**
      * Toggles the weather in @world
      *
-     * @param world
-     * @param sender
+     * @param world World to change the weather of.
+     * @param sender Who sent the command
      */
     private void toggleWeather(World world, CommandSender sender) {
 
