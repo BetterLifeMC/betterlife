@@ -41,22 +41,25 @@ public enum BL_PLAYER_ENUM {
 
     /**
      * Gets the column that corresponds to the SQL table.
+     *
      * @return SQL Column.
      */
-    public String getColumn(){
+    public String getColumn() {
         return column;
     }
 
     /**
      * Gets the table name.
-     * @return  SQL table name.
+     *
+     * @return SQL table name.
      */
-    public String getTable(){
+    public String getTable() {
         return table;
     }
 
     /**
      * Gets the SQL data type.
+     *
      * @return SQL data type.
      */
     public String getSqlType() {
