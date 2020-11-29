@@ -29,6 +29,10 @@ commands:
         description: Allows users to go home!
         usage: "Usage: /home [ home ] or /home [ set / del ] [ home ]"
         permission: betterlife.home
+    mute:
+        description: Mutes a player
+        usage: "Usage: /mute [ player ]"
+        permission: betterlife.mute
 permissions:
     betterlife.trail.set:
         description: Allows the trail to be set per-player
