@@ -55,5 +55,16 @@ public enum BL_PLAYER_ENUM {
      * Gets the SQL data type.
      * @return SQL data type.
      */
-    public String getSqlType(){ return sqlType; }
+    public String getSqlType() {
+        return sqlType;
+    }
+
+    public String getDefault() {
+        switch (getSqlType()) {
+            case "BOOL":
+                return "false";
+            default:
+                return null;
+        }
+    }
 }
