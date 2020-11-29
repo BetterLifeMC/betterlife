@@ -59,6 +59,7 @@ public class Sql {
                     Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
                     setupTables();
                     checkIfColumnsExists();
+                    Main.setupOnlinePlayers();
                 } catch (ClassNotFoundException | SQLException e) {
                     Main.doBukkitLog(e.toString());
                     Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
