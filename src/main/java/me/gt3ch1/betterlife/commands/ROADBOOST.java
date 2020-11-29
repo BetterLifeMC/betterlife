@@ -17,11 +17,11 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
     /**
      * Handles the command /roadboost
      *
-     * @param permission
-     * @param cs
-     * @param c
-     * @param label
-     * @param args
+     * @param permission Permission required to use /home
+     * @param cs         Sender of the command.
+     * @param c          The command itself.
+     * @param label      The string version of the command.
+     * @param args       The arguments of the command.
      */
     public ROADBOOST(String permission, CommandSender cs, Command c, String label, String[] args) {
 
