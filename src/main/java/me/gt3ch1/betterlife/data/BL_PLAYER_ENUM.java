@@ -2,10 +2,14 @@ package me.gt3ch1.betterlife.data;
 
 /**
  * Represents all the enums for betterlife.
- * TRAIL_ENABLED_PER_PLAYER - SQL column: TrailToggle, Table: BL_PLAYER
- * TRAIL_PER_PLAYER - SQL column: Trail, Table: BL_PLAYER
- * ROADBOOST_PER_PLAYER - SQL column: RoadBoostToggle, Table: BL_PLAYER
- * HOME_PER_PLAYER - SQL column: Home, Table: BL_HOME
+ * <p>
+ * MUTE_PER_PLAYER  -   SQL column: MuteToggle, Table: BL_PLAYER, sqlType: BOOL
+ * ROADBOOST_PER_PLAYER - SQL column: RoadBoostToggle, Table: BL_PLAYER, sqlType: BOOL
+ * TRAIL_ENABLED_PER_PLAYER - SQL column: TrailToggle, Table: BL_PLAYER, sqlType: BOOL
+ * <p>
+ * TRAIL_PER_PLAYER - SQL column: Trail, Table: BL_PLAYER, sqlType: NVCHAR
+ * <p>
+ * HOME_PER_PLAYER - SQL column: Home, Table: BL_HOME, sqlType: none
  */
 public enum BL_PLAYER_ENUM {
 
