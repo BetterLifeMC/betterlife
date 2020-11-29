@@ -11,6 +11,11 @@ import org.bukkit.event.block.BlockFadeEvent;
  */
 public class BlockFade implements Listener {
 
+    /**
+     * Checks to see if the block was a crop.
+     *
+     * @param e Block that was faded
+     */
     @EventHandler
     public void onCropTrample(BlockFadeEvent e) {
 
