@@ -84,6 +84,7 @@ public class Sql {
                 if (!rs.next()) {
                     String query = "ALTER TABLE " + entry.getTable() + " ADD " + entry.getColumn() + " " + entry.getSqlType();
                     stmt.executeUpdate(query);
+                    Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 }
             }
 
