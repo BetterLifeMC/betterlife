@@ -13,6 +13,7 @@ public class BL_PLAYER {
     public HashMap<UUID, Boolean> trailEnabledPerPlayer = new HashMap<>();
     public HashMap<UUID, String> trailPerPlayer = new HashMap<>();
     public HashMap<UUID, Boolean> roadboostPerPlayer = new HashMap<>();
+    public HashMap<UUID,Boolean> mutePerPlayer = new HashMap<>();
     private ResultSet rs;
 
     /**
@@ -32,6 +33,11 @@ public class BL_PLAYER {
                     roadboostPerPlayer.put(playerUUID, getPlayerToggleSQL(playerUUID, type));
                 }
                 return roadboostPerPlayer.get(playerUUID);
+            case MUTE_PER_PLAYER:
+                if(!mutePerPlayer.containsKey(playerUUID)){
+                    mutePerPlayer.put(playerUUID, getPlayerToggleSQL(playerUUID, type));
+                }
+                return mutePerPlayer.get(playerUUID);
             default:
                 return false;
         }
