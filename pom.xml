@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>me.gtc3ch1.betterlife</groupId>
-  <artifactId>betterlife</artifactId>
+  <artifactId>betterlife-playermutecommand</artifactId>
   <version>0.4</version>
   <packaging>jar</packaging>
 
