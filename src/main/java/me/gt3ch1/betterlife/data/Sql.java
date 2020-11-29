@@ -69,10 +69,31 @@ public class Sql {
     }
 
     /**
-     * Sets up the SQL database for BetterLife's use.
+     * Checks if all columns in BL_PLAYER exist.
+     *
+     * @throws SQLException If for some reason the connection fails.
+     */
+    private void checkIfColumnsExists() throws SQLException {
+        for (BL_PLAYER_ENUM entry : BL_PLAYER_ENUM.values()) {
+            DatabaseMetaData meta;
+            meta = con.getMetaData();
+            try {
+                rs = meta.getColumns(null, null, entry.getTable(), entry.getColumn());
+            } catch (SQLException e) {
+                if (!rs.next()) {
+                    String query = "ALTER TABLE " + entry.getTable() + " ADD " + entry.getColumn() + " " + entry.getSqlType();
+                    stmt.executeUpdate(query);
+                }
+            }
+
+        }
+    }
+
+    /**
+     * Sets up the SQL tables for BetterLife's use.
      * This will check to see if all the necessary tables exist, and if they don't, it will create them.
      */
-    private void setup() {
+    private void setupTables() {
         String query;
 
         query = "SELECT `UUID` FROM `BL_PLAYER` LIMIT 1";
