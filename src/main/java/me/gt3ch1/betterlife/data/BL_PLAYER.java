@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
+
 import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.ChatColor;
 
@@ -46,9 +47,9 @@ public class BL_PLAYER {
      */
     private boolean getPlayerToggleSQL(UUID playerUUID, BL_PLAYER_ENUM toggle) {
         String query =
-            "SELECT `" + toggle.getColumn() + "` FROM `" + toggle.getTable() + "` WHERE `UUID` = '"
-                + playerUUID.toString()
-                + "'";
+                "SELECT `" + toggle.getColumn() + "` FROM `" + toggle.getTable() + "` WHERE `UUID` = '"
+                        + playerUUID.toString()
+                        + "'";
 
         try {
             rs = sql.executeQuery(query);
@@ -74,7 +75,7 @@ public class BL_PLAYER {
             case TRAIL_PER_PLAYER:
                 if (!trailPerPlayer.containsKey(playerUUID)) {
                     trailPerPlayer
-                        .put(playerUUID, getPlayerStringSQL(playerUUID, type.getColumn()));
+                            .put(playerUUID, getPlayerStringSQL(playerUUID, type.getColumn()));
                 }
                 return trailPerPlayer.get(playerUUID);
             default:
@@ -91,8 +92,8 @@ public class BL_PLAYER {
      */
     private String getPlayerStringSQL(UUID playerUUID, String string) {
         String query =
-            "SELECT `" + string + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
-                + "'";
+                "SELECT `" + string + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
+                        + "'";
 
         try {
             rs = sql.executeQuery(query);
@@ -108,6 +109,12 @@ public class BL_PLAYER {
         return null;
     }
 
+    /**
+     * Sets the given BetterLife player boolean toggle.
+     *
+     * @param playerUUID Player UUID to set the toggle of.
+     * @param type       The toggle to switch.
+     */
     public void setPlayerToggle(UUID playerUUID, BL_PLAYER_ENUM type) {
         boolean currentVal;
         switch (type) {
@@ -137,13 +144,13 @@ public class BL_PLAYER {
 
         try {
             rs = sql.executeQuery(
-                "SELECT * FROM `" + toggle.getTable() + "` WHERE `UUID` = '" + playerUUID.toString()
-                    + "'");
+                    "SELECT * FROM `" + toggle.getTable() + "` WHERE `UUID` = '" + playerUUID.toString()
+                            + "'");
 
             if (rs.next()) {
                 query = "UPDATE `" + toggle.getTable() + "` SET `" + toggle.getColumn() + "` = '"
-                    + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
-                    + playerUUID.toString() + "'";
+                        + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
+                        + playerUUID.toString() + "'";
 
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
@@ -187,12 +194,12 @@ public class BL_PLAYER {
 
         try {
             rs = sql.executeQuery(
-                "SELECT * FROM `" + type.getTable() + "` WHERE `UUID` = '" + playerUUID.toString()
-                    + "'");
+                    "SELECT * FROM `" + type.getTable() + "` WHERE `UUID` = '" + playerUUID.toString()
+                            + "'");
 
             if (rs.next()) {
                 query = "UPDATE `" + type.getTable() + "` SET `" + type.getColumn() + "` = '"
-                    + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
+                        + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
 
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
@@ -212,8 +219,8 @@ public class BL_PLAYER {
      */
     private void insertNewPlayer(UUID playerUUID) {
         String query =
-            "INSERT INTO `" + BL_PLAYER_ENUM.HOME_PER_PLAYER.getTable() + "` (`UUID`) VALUES ('"
-                + playerUUID.toString() + "')";
+                "INSERT INTO `" + BL_PLAYER_ENUM.HOME_PER_PLAYER.getTable() + "` (`UUID`) VALUES ('"
+                        + playerUUID.toString() + "')";
 
         Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
         sql.executeUpdate(query);
