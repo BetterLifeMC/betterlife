@@ -57,7 +57,8 @@ public class Sql {
                             username, password);
                     stmt = con.createStatement();
                     Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
-                    setup();
+                    setupTables();
+                    checkIfColumnsExists();
                 } catch (ClassNotFoundException | SQLException e) {
                     Main.doBukkitLog(e.toString());
                     Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
