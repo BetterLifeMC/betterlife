@@ -19,11 +19,11 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
     /**
      * Handles the command /trail
      *
-     * @param permission
-     * @param cs
-     * @param c
-     * @param label
-     * @param args
+     * @param permission Permission required to use /home
+     * @param cs         Sender of the command.
+     * @param c          The command itself.
+     * @param label      The string version of the command.
+     * @param args       The arguments of the command.
      */
     public TRAIL(String permission, CommandSender cs, Command c, String label, String[] args) {
 
@@ -32,6 +32,14 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 
     }
 
+    /**
+     * Runs the /trail command
+     * @param sender  Sender of the command.
+     * @param c       The command itself.
+     * @param command The string version of the command.
+     * @param args    The arguments of the command.
+     * @return True if the command was successful.
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
 
