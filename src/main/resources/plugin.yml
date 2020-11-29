@@ -57,4 +57,10 @@ permissions:
     betterlife.eco.bal.others:
         description: Allows player to see other players' current balance
         default: op
+    betterlife.mute:
+        description: Allows muting of players.
+        default: op
+    betterlife.mute.bypass:
+        description: Bypasses muting.
+        default: op
     
