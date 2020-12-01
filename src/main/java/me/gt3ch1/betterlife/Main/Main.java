@@ -3,17 +3,14 @@ package me.gt3ch1.betterlife.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
-import me.gt3ch1.betterlife.data.BL_HOME;
-import me.gt3ch1.betterlife.data.BL_PLAYER;
-import me.gt3ch1.betterlife.data.BL_ZONE;
-import me.gt3ch1.betterlife.data.BL_ZONE_MEMBER;
-import me.gt3ch1.betterlife.data.Sql;
+import me.gt3ch1.betterlife.data.*;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -21,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Main class for BetterLife. It enables all of the listeners, economy, and tab completion.
@@ -139,4 +137,26 @@ public class Main extends JavaPlugin {
         economy = economyProvider.getProvider();
         doBukkitLog("Using economy provider: " + economy.toString());
     }
+
+    /**
+     * Sets up and caches all of the currently online players.
+     */
+    public static void setupOnlinePlayers() {
+        doBukkitLog("Setting up all online (" + Bukkit.getOnlinePlayers().size() + ") players...");
+        for (Player p : Bukkit.getOnlinePlayers())
+            setupPlayerConfig(p.getUniqueId());
+        doBukkitLog("Done.");
+    }
+
+    /**
+     * Sets up the cache for the given player uuid.
+     * @param playerUUID Player's UUID to cache.
+     */
+    public static void setupPlayerConfig(UUID playerUUID) {
+        bl_player.trailEnabledPerPlayer.put(playerUUID, bl_player.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER));
+        bl_player.trailPerPlayer.put(playerUUID, bl_player.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
+        bl_player.roadboostPerPlayer.put(playerUUID, bl_player.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER));
+        bl_player.mutePerPlayer.put(playerUUID, bl_player.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.MUTE_PER_PLAYER));
+    }
+
 }

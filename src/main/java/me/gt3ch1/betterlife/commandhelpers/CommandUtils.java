@@ -37,7 +37,7 @@ public class CommandUtils {
                 sender.sendMessage(coloredMessage);
             }
         } else {
-            sender.sendMessage(ChatColor.stripColor(coloredMessage));
+            sender.sendMessage(betterLifeBanner + (coloredMessage));
         }
     }
 
