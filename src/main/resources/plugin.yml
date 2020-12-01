@@ -9,18 +9,6 @@ commands:
     bl:
         description: The primary command for BetterLife
         usage: "Usage: /bl [args]"
-    toggledownfall:
-        description: Toggles whether or not it is storming
-        usage: "Usage: /toggledownfall"
-        permission: betterlife.toggledownfall
-    roadboost:
-        description: Toggles if you get speed 1 when you are over a defined road.
-        usage: "Usage: /roadboost"
-        permission: betterlife.roadboost
-    trail:
-        description: Sets a fancy trail behind your player
-        usage: "Usage: /trail [ list | help | set ]"
-        permission: betterlife.trail
     eco:
         description: Various economy-related commands
         usage: "Usage: /eco [ bal ]"
@@ -33,11 +21,43 @@ commands:
         description: Mutes a player
         usage: "Usage: /mute [ player ]"
         permission: betterlife.mute
+    roadboost:
+        description: Toggles if you get speed 1 when you are over a defined road.
+        usage: "Usage: /roadboost"
+        permission: betterlife.roadboost
+    toggledownfall:
+        description: Toggles whether or not it is storming
+        usage: "Usage: /toggledownfall"
+        permission: betterlife.toggledownfall
+    trail:
+        description: Sets a fancy trail behind your player
+        usage: "Usage: /trail [ list | help | set ]"
+        permission: betterlife.trail
     unmute:
         description: Unmutes a player
         usage: "Usage: /unmute [ player ]"
         permission: betterlife.unmute
 permissions:
+    betterlife.eco.bal:
+        description: Allows player to see their current balance
+    betterlife.eco.bal.others:
+        description: Allows player to see other players' current balance
+        default: op
+    betterlife.home:
+        description: Allows player to set a home
+        default: op
+    betterlife.mute:
+        description: Allows muting of players.
+        default: op
+    betterlife.mute.bypass:
+        description: Bypasses muting.
+        default: op
+    betterlife.roadboost:
+        description: Gain a speed 1 boost over paths.
+        default: op
+    betterlife.toggledownfall:
+        description: Toggles the weather
+        default: op
     betterlife.trail.set:
         description: Allows the trail to be set per-player
         default: op
@@ -47,27 +67,10 @@ permissions:
     betterlife.trail.particle.*:
         description: Allows access to every trail particle.
         default: op
-    betterlife.toggledownfall:
-        description: Toggles the weather
-        default: op
-    betterlife.roadboost:
-        description: Gain a speed 1 boost over paths.
-        default: op
     betterlife.reload:
         description: Reloads the configuration files of betterlife
         default: op
-    betterlife.eco.bal:
-        description: Allows player to see their current balance
-    betterlife.eco.bal.others:
-        description: Allows player to see other players' current balance
-        default: op
-    betterlife.mute:
-        description: Allows muting of players.
-        default: op
     betterlife.unmute:
         description: Allows unmuting of players.
-        default: op
-    betterlife.mute.bypass:
-        description: Bypasses muting.
         default: op
     
