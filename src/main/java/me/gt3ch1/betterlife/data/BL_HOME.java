@@ -51,8 +51,8 @@ public class BL_HOME {
                         rs.getDouble("X"),
                         rs.getDouble("Y"),
                         rs.getDouble("Z"),
-                        rs.getFloat("Pitch"),
-                        rs.getFloat("Yaw")));
+                        rs.getFloat("Yaw"),
+                        rs.getFloat("Pitch")));
             }
             return homeList;
         } catch (SQLException e) {
