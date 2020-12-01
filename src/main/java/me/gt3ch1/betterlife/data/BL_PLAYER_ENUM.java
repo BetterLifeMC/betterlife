@@ -20,7 +20,7 @@ public enum BL_PLAYER_ENUM {
 
     // BL_PLAYER Strings
     TRAIL_PER_PLAYER("Trail", "BL_PLAYER", "NVCHAR(30)"),
-
+  
     // BL_HOME
     HOME_PER_PLAYER("Home", "BL_HOME");
 
@@ -34,7 +34,13 @@ public enum BL_PLAYER_ENUM {
         this.sqlType = sqlType;
     }
 
-    BL_PLAYER_ENUM(String column, String table){
+    /**
+     * Creates a BetterLife player type.
+     *
+     * @param column Column in the given SQL table.
+     * @param table  Table that contains column.
+     */
+    BL_PLAYER_ENUM(String column, String table) {
         this.column = column;
         this.table = table;
     }
