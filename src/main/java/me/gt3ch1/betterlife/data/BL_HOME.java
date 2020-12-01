@@ -20,6 +20,12 @@ public class BL_HOME {
 
     public HashMap<UUID, LinkedHashMap<String, Location>> homesPerPlayer = new HashMap<>();
 
+    /**
+     * Gets all of the homes belonging to player UUID.
+     *
+     * @param playerUUID Player UUID to find all the homes for.
+     * @return All of the homes belonging to the given UUID.
+     */
     public LinkedHashMap<String, Location> getHomes(UUID playerUUID) {
         if (!homesPerPlayer.containsKey(playerUUID)) {
             homesPerPlayer.put(playerUUID, getHomesSql(playerUUID));
@@ -27,6 +33,12 @@ public class BL_HOME {
         return homesPerPlayer.get(playerUUID);
     }
 
+    /**
+     * Gets all of the homes for the given UUID from the SQL backend.
+     *
+     * @param playerUUID Player UUID to fetch all homes for.
+     * @return All of the homes from the SQL backend.
+     */
     private LinkedHashMap<String, Location> getHomesSql(UUID playerUUID) {
         String query = "SELECT * FROM `BL_HOME` WHERE `UUID` = '" + playerUUID.toString() + "'";
         LinkedHashMap<String, Location> homeList = new LinkedHashMap<>();
@@ -49,6 +61,12 @@ public class BL_HOME {
         return null;
     }
 
+    /**
+     * Adds a new home for the player at the players location with the given home name.
+     *
+     * @param player Player who owns the home.
+     * @param home   Name of the home.
+     */
     public void addHome(Player player, String home) {
 
         String query = "INSERT INTO BL_HOME VALUES ("
@@ -66,13 +84,20 @@ public class BL_HOME {
         Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
     }
 
-    public boolean delHome(Player p, String home) {
-        if (homesPerPlayer.containsKey(p.getUniqueId()))
-            if (homesPerPlayer.get(p.getUniqueId()).containsKey(home)) {
-                String query = "DELETE FROM BL_HOME WHERE `UUID` = '" + p.getUniqueId() + "' AND `Home` = ?;";
+    /**
+     * Deletes the given home from the player.
+     *
+     * @param player Player to remove the home from.
+     * @param home   Home to remove from the player.
+     * @return True if the given home exists and was deleted.
+     */
+    public boolean delHome(Player player, String home) {
+        if (homesPerPlayer.containsKey(player.getUniqueId()))
+            if (homesPerPlayer.get(player.getUniqueId()).containsKey(home)) {
+                String query = "DELETE FROM BL_HOME WHERE `UUID` = '" + player.getUniqueId() + "' AND `Home` = ?;";
                 sql.modifyHome(query, home);
                 Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
-                homesPerPlayer.get(p.getUniqueId()).remove(home);
+                homesPerPlayer.get(player.getUniqueId()).remove(home);
                 return true;
             }
 
