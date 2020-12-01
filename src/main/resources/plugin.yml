@@ -33,6 +33,10 @@ commands:
         description: Mutes a player
         usage: "Usage: /mute [ player ]"
         permission: betterlife.mute
+    unmute:
+        description: Unmutes a player
+        usage: "Usage: /unmute [ player ]"
+        permission: betterlife.unmute
 permissions:
     betterlife.trail.set:
         description: Allows the trail to be set per-player
@@ -59,6 +63,9 @@ permissions:
         default: op
     betterlife.mute:
         description: Allows muting of players.
+        default: op
+    betterlife.unmute:
+        description: Allows unmuting of players.
         default: op
     betterlife.mute.bypass:
         description: Bypasses muting.
