@@ -14,3 +14,5 @@ Current commands:
   - /trail set <trail> - Sets what trail the current player is using.
   - /trail list - Lists all available trails.
   - /trial toggle - Toggles whether your trail is on or not.
+- mute
+  - /mute <player> - Mutes the player.
