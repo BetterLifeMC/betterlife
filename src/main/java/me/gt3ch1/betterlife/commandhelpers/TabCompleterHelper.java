@@ -155,6 +155,8 @@ public class TabCompleterHelper implements TabCompleter {
                             }
                             break;
                     }
+                default:
+                    break;
 
             }
             return subCommands;
