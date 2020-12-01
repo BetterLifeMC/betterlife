@@ -29,8 +29,8 @@ public class PlayerJoin implements Listener {
         UUID playerUUID = p.getUniqueId();
 
         Particle newPlayerParticle = Particle.valueOf(
-                CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
-        setupPlayerConfig(playerUUID);
+            CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
+        Main.setupPlayerConfig(playerUUID);
         if (playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
             playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, newPlayerParticle.toString());
         }
