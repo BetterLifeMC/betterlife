@@ -147,6 +147,16 @@ public class TestBetterLife {
         player.performCommand("home set test_home");
         player.teleport(new Location(server.getWorld("world"),0,5,0));
         assertEquals(testLocation,plugin.getBlHomes().getHomes(mockUUID).get("test_home"));
+
+        player.performCommand("home del test_home");
+    }
+
+    @Test
+    public void testHomeTeleport(){
+        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+        player.teleport(testLocation);
+        player.performCommand("home set test_home");
+        player.teleport(new Location(server.getWorld("world"),0,5,0));
         player.performCommand("home test_home");
         assertEquals(testLocation,player.getLocation());
         player.performCommand("home del test_home");
