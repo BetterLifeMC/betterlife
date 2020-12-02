@@ -50,6 +50,7 @@ public class Main extends JavaPlugin {
         super(loader, description, dataFolder, file);
         setSql("mysql",System.getenv("BL_SQL_HOST"),System.getenv("BL_SQL_DB")
                 ,System.getenv("BL_SQL_USER"),System.getenv("BL_SQL_PASS"));
+        System.out.println("Connecting to sql host: " + System.getenv("BL_SQL_HOST"));
         onEnable();
     }
 
