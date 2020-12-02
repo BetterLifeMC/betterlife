@@ -37,7 +37,7 @@ public class TestBetterLife {
         boolean previousRoadBoostState = plugin.getBlPlayer().getPlayerToggle(mockUUID, type);
         assertTrue(player.performCommand("roadboost"));
         boolean currentRoadboostState = plugin.getBlPlayer().getPlayerToggle(mockUUID, type);
-        assertTrue(!previousRoadBoostState != currentRoadboostState);
+        assertTrue(previousRoadBoostState != currentRoadboostState);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class TestBetterLife {
         BL_PLAYER_ENUM type = BL_PLAYER_ENUM.TRAIL_PER_PLAYER;
         player.performCommand("trail set note");
         String currentTrail = plugin.getBlPlayer().getPlayerString(mockUUID,type);
-        assertEquals("note",currentTrail);
+        assertEquals("NOTE",currentTrail);
     }
 
     @Test
@@ -112,10 +112,12 @@ public class TestBetterLife {
     public void createHome(){
         player.performCommand("home set test_home");
         assertEquals(1,plugin.getBlHomes().getHomes(mockUUID).size());
+        player.performCommand("home del test_home");
     }
 
     @Test
     public void deleteHome(){
+        player.performCommand("home set test_home");
         player.performCommand("home del test_home");
         assertEquals(0,plugin.getBlHomes().getHomes(mockUUID).size());
     }
@@ -125,10 +127,14 @@ public class TestBetterLife {
         player.performCommand("home set test_home_1");
         player.performCommand("home set test_home_2");
         assertEquals(2,plugin.getBlHomes().getHomes(mockUUID).size());
+        player.performCommand("home del test_home_1");
+        player.performCommand("home del test_home_2");
     }
 
     @Test
     public void deleteMultipleHomes(){
+        player.performCommand("home set test_home_1");
+        player.performCommand("home set test_home_2");
         player.performCommand("home del test_home_1");
         player.performCommand("home del test_home_2");
         assertEquals(0,plugin.getBlHomes().getHomes(mockUUID).size());
