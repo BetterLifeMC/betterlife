@@ -22,7 +22,7 @@ public class BL_PLAYER {
      * @param type       The Type of the toggle
      * @return Varies, depending on the context that the player sat.
      */
-    public boolean getPlayerToggle(UUID playerUUID, BL_PLAYER_ENUM type) {
+    public boolean getPlayerToggle (UUID playerUUID, BL_PLAYER_ENUM type) {
         switch (type) {
             case TRAIL_ENABLED_PER_PLAYER:
                 if (!trailEnabledPerPlayer.containsKey(playerUUID)) {
