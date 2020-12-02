@@ -17,13 +17,14 @@ public class TestBetterLife {
     private ServerMock server;
     private Main plugin;
     private UUID mockUUID = UUID.fromString("ed275ae9-e765-408b-b056-3d5a5d540626");
-    private PlayerMock player = new PlayerMock(server, "gt3ch1", mockUUID);
+    private PlayerMock player;
 
     @Before
     public void setUp() {
         server = MockBukkit.mock();
         plugin = (Main) MockBukkit.load(Main.class);
         plugin.onLoad();
+        player = new PlayerMock(server, "gt3ch1", mockUUID);
         server.addPlayer(player);
         player.setOp(true);
     }
