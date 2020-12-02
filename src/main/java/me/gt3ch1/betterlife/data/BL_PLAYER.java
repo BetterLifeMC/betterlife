@@ -230,7 +230,7 @@ public class BL_PLAYER {
      */
     private void insertNewPlayer(UUID playerUUID) {
         String query =
-                "INSERT INTO `" + BL_PLAYER_ENUM.HOME_PER_PLAYER.getTable() + "` (`UUID`) VALUES ('"
+                "INSERT INTO `BL_PLAYER` (`UUID`) VALUES ('"
                         + playerUUID.toString() + "')";
 
         Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
