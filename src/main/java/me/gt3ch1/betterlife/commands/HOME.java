@@ -124,6 +124,12 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
 
         final Location initial = player.getLocation();
 
+        //BL-Test
+        if(m.isTesting()) {
+            player.teleport(location);
+            return;
+        }
+
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         BukkitTask task = scheduler.runTaskLater(m, () -> {
             player.teleport(location);
