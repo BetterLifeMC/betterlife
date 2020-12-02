@@ -53,7 +53,9 @@ public class Main extends JavaPlugin {
                 ,System.getenv("BL_SQL_USER"),System.getenv("BL_SQL_PASS"));
         onEnable();
     }
-
+    public boolean isTesting(){
+        return isTesting;
+    }
     /**
      * Get's the BL_PLAYER.
      * @return BL_PLAYER
