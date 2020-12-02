@@ -45,29 +45,31 @@ public class Sql {
      * Connects to the SQL database.
      */
     private void connectAndSetup() {
-        BukkitRunnable runnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
+//        BukkitRunnable runnable = new BukkitRunnable() {
+//            @Override
+//            public void run() {
+        try {
 
-                    Class.forName("com.mysql.jdbc.Driver");
-                    Class.forName("org.mariadb.jdbc.Driver");
-                    con = DriverManager
-                        .getConnection("jdbc:" + dbType + "://" + host + ":3306/" + database,
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.mariadb.jdbc.Driver");
+            con = DriverManager
+                    .getConnection("jdbc:" + dbType + "://" + host + ":3306/" + database,
                             username, password);
-                    stmt = con.createStatement();
-                    Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
-                    setupTables();
-                    checkIfColumnsExists();
-                    Main.setupOnlinePlayers();
-                } catch (ClassNotFoundException | SQLException e) {
-                    Main.doBukkitLog(e.toString());
-                    Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
-                }
-            }
-        };
-
-        runnable.runTaskAsynchronously(m);
+            stmt = con.createStatement();
+            Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
+            System.out.println("Connected");
+            setupTables();
+            checkIfColumnsExists();
+            Main.setupOnlinePlayers();
+        } catch (ClassNotFoundException | SQLException e) {
+            Main.doBukkitLog(e.toString());
+            Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
+            e.printStackTrace();
+        }
+//            }
+//        };
+//
+//        runnable.run();
     }
 
     /**
@@ -110,11 +112,11 @@ public class Sql {
             stmt.executeQuery(query);
         } catch (SQLException e) {
             query = "CREATE TABLE IF NOT EXISTS `BL_PLAYER` ("
-                + "`UUID` VARCHAR(36) PRIMARY KEY,"
-                + "`TrailToggle` BOOL DEFAULT false,"
-                + "`Trail` NVARCHAR(30),"
-                + "`RoadBoostToggle` BOOL DEFAULT false"
-                + ")";
+                    + "`UUID` VARCHAR(36) PRIMARY KEY,"
+                    + "`TrailToggle` BOOL DEFAULT false,"
+                    + "`Trail` NVARCHAR(30),"
+                    + "`RoadBoostToggle` BOOL DEFAULT false"
+                    + ")";
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Player table.");
             executeUpdate(query);
         }
@@ -125,17 +127,17 @@ public class Sql {
             stmt.executeQuery(query);
         } catch (SQLException e) {
             query = "CREATE TABLE IF NOT EXISTS `BL_HOME` ("
-                + "`UUID` VARCHAR(36),"
-                + "`Home` NVARCHAR(30),"
-                + "`X` DOUBLE,"
-                + "`Y` DOUBLE,"
-                + "`Z` DOUBLE,"
-                + "`World` NVARCHAR(30),"
-                + "`Yaw` FLOAT,"
-                + "`Pitch` FLOAT,"
-                + "PRIMARY KEY (UUID,Home),"
-                + "FOREIGN KEY (UUID) REFERENCES BL_PLAYER (UUID)"
-                + ")";
+                    + "`UUID` VARCHAR(36),"
+                    + "`Home` NVARCHAR(30),"
+                    + "`X` DOUBLE,"
+                    + "`Y` DOUBLE,"
+                    + "`Z` DOUBLE,"
+                    + "`World` NVARCHAR(30),"
+                    + "`Yaw` FLOAT,"
+                    + "`Pitch` FLOAT,"
+                    + "PRIMARY KEY (UUID,Home),"
+                    + "FOREIGN KEY (UUID) REFERENCES BL_PLAYER (UUID)"
+                    + ")";
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Home table.");
             executeUpdate(query);
         }
@@ -146,17 +148,17 @@ public class Sql {
             stmt.executeQuery(query);
         } catch (SQLException e) {
             query = "CREATE TABLE IF NOT EXISTS `BL_ZONE` ("
-                + "`ZoneID` INT PRIMARY KEY AUTO_INCREMENT,"
-                + "`AX` DOUBLE,"
-                + "`AY` DOUBLE,"
-                + "`AZ` DOUBLE,"
-                + "`BX` DOUBLE,"
-                + "`BY` DOUBLE,"
-                + "`BZ` DOUBLE,"
-                + "`World` NVARCHAR(30),"
-                + "`OwnerUUID` VARCHAR(36),"
-                + "FOREIGN KEY (OwnerUUID) REFERENCES BL_PLAYER (UUID)"
-                + ")";
+                    + "`ZoneID` INT PRIMARY KEY AUTO_INCREMENT,"
+                    + "`AX` DOUBLE,"
+                    + "`AY` DOUBLE,"
+                    + "`AZ` DOUBLE,"
+                    + "`BX` DOUBLE,"
+                    + "`BY` DOUBLE,"
+                    + "`BZ` DOUBLE,"
+                    + "`World` NVARCHAR(30),"
+                    + "`OwnerUUID` VARCHAR(36),"
+                    + "FOREIGN KEY (OwnerUUID) REFERENCES BL_PLAYER (UUID)"
+                    + ")";
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Zone table.");
             executeUpdate(query);
         }
@@ -167,11 +169,11 @@ public class Sql {
             stmt.executeQuery(query);
         } catch (SQLException e) {
             query = "CREATE TABLE IF NOT EXISTS `BL_ZONE_MEMBER` ("
-                + "`ZoneID` INT,"
-                + "`MemberUUID` VARCHAR(36),"
-                + "PRIMARY KEY (ZoneID, MemberUUID),"
-                + "FOREIGN KEY (MemberUUID) REFERENCES BL_PLAYER (UUID)"
-                + ")";
+                    + "`ZoneID` INT,"
+                    + "`MemberUUID` VARCHAR(36),"
+                    + "PRIMARY KEY (ZoneID, MemberUUID),"
+                    + "FOREIGN KEY (MemberUUID) REFERENCES BL_PLAYER (UUID)"
+                    + ")";
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Zone Members table.");
             executeUpdate(query);
         }
@@ -212,8 +214,9 @@ public class Sql {
 
     /**
      * Modifies the given home.
+     *
      * @param query Query to execute.
-     * @param home Name of the home to update.
+     * @param home  Name of the home to update.
      */
     public void modifyHome(String query, String home) {
         BukkitRunnable runnable = new BukkitRunnable() {

@@ -13,9 +13,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -37,6 +40,19 @@ public class Main extends JavaPlugin {
     public static BL_ZONE bl_zone;
     public static BL_ZONE_MEMBER bl_zone_member;
 
+    public Main()
+    {
+        super();
+    }
+
+    protected Main(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file)
+    {
+        super(loader, description, dataFolder, file);
+        setSql("mysql",System.getenv("BL_SQL_HOST"),System.getenv("BL_SQL_DB")
+                ,System.getenv("BL_SQL_USER"),System.getenv("BL_SQL_PASS"));
+        onEnable();
+    }
+
     /**
      * Logs to the bukkit console.
      *
@@ -44,6 +60,10 @@ public class Main extends JavaPlugin {
      */
     public static void doBukkitLog(String log) {
         Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
+    }
+
+    public void setSql(String dbType, String host, String database, String username, String password){
+        sql = new Sql(dbType, host, database, username, password);
     }
 
     /**
@@ -59,8 +79,8 @@ public class Main extends JavaPlugin {
         String database = CommandUtils.ch.getCustomConfig().getString("sql.database");
         String username = CommandUtils.ch.getCustomConfig().getString("sql.username");
         String password = CommandUtils.ch.getCustomConfig().getString("sql.password");
-
-        sql = new Sql(dbType, host, database, username, password);
+        if(sql == null)
+            sql = new Sql(dbType, host, database, username, password);
 
         bl_home = new BL_HOME();
         bl_player = new BL_PLAYER();
@@ -69,8 +89,8 @@ public class Main extends JavaPlugin {
 
         new ListenersSetup(m);
 
-        for (String command : CommandUtils.getEnabledTabCommands())
-            getCommand(command).setTabCompleter(new TabCompleterHelper());
+//        for (String command : CommandUtils.getEnabledTabCommands())
+//            getCommand(command).setTabCompleter(new TabCompleterHelper());
 
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
