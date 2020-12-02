@@ -54,6 +54,22 @@ public class Main extends JavaPlugin {
     }
 
     /**
+     * Get's the BL_PLAYER.
+     * @return BL_PLAYER
+     */
+    public BL_PLAYER getBlPlayer(){
+        return bl_player;
+    }
+
+    /**
+     * Get's the BL_HOME
+     * @return bl_home
+     */
+    public BL_HOME getBlHomes(){
+        return bl_home;
+    }
+
+    /**
      * Logs to the bukkit console.
      *
      * @param log
