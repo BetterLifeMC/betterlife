@@ -6,6 +6,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
 
+import static me.gt3ch1.betterlife.Main.Main.isTesting;
 import static me.gt3ch1.betterlife.Main.Main.m;
 
 /**
@@ -20,6 +21,8 @@ public class Sql {
     private Connection con;
     private Statement stmt;
     private ResultSet rs;
+
+    private boolean isSqlConnected = false;
 
     /**
      * Initializes support for an SQL database.
@@ -37,39 +40,60 @@ public class Sql {
         this.password = password;
 
         Main.doBukkitLog(ChatColor.YELLOW + "Connecting to SQL database...");
-        connectAndSetup();
+        if (isTesting)
+            setupTestSql();
+        else
+            connectAndSetup();
     }
 
-
     /**
-     * Connects to the SQL database.
+     * Sets up the SQL database in a way we can test it.
      */
-    private void connectAndSetup() {
-//        BukkitRunnable runnable = new BukkitRunnable() {
-//            @Override
-//            public void run() {
+    private void setupTestSql() {
         try {
-
             Class.forName("com.mysql.cj.jdbc.Driver");
             Class.forName("org.mariadb.jdbc.Driver");
             con = DriverManager
                     .getConnection("jdbc:" + dbType + "://" + host + ":3306/" + database,
                             username, password);
             stmt = con.createStatement();
-            Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
-            System.out.println("Connected");
             setupTables();
             checkIfColumnsExists();
             Main.setupOnlinePlayers();
+            isSqlConnected = true;
         } catch (ClassNotFoundException | SQLException e) {
-            Main.doBukkitLog(e.toString());
-            Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
             e.printStackTrace();
         }
-//            }
-//        };
-//
-//        runnable.run();
+    }
+
+    /**
+     * Connects to the SQL database.
+     */
+    private void connectAndSetup() {
+        BukkitRunnable runnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Class.forName("org.mariadb.jdbc.Driver");
+                    con = DriverManager
+                            .getConnection("jdbc:" + dbType + "://" + host + ":3306/" + database,
+                                    username, password);
+                    stmt = con.createStatement();
+                    Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
+                    setupTables();
+                    checkIfColumnsExists();
+                    Main.setupOnlinePlayers();
+                    isSqlConnected = true;
+                } catch (ClassNotFoundException | SQLException e) {
+                    Main.doBukkitLog(e.toString());
+                    Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
+                    e.printStackTrace();
+                }
+            }
+        };
+        runnable.runTaskAsynchronously(m);
     }
 
     /**
@@ -233,5 +257,9 @@ public class Sql {
         };
 
         runnable.runTaskAsynchronously(m);
+    }
+
+    public boolean isSqlConnected(){
+        return isSqlConnected;
     }
 }
