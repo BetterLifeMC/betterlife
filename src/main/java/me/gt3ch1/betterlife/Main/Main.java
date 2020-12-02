@@ -39,7 +39,7 @@ public class Main extends JavaPlugin {
     public static BL_HOME bl_home;
     public static BL_ZONE bl_zone;
     public static BL_ZONE_MEMBER bl_zone_member;
-
+    public static boolean isTesting = false;
     public Main()
     {
         super();
@@ -48,9 +48,9 @@ public class Main extends JavaPlugin {
     protected Main(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file)
     {
         super(loader, description, dataFolder, file);
+        isTesting = true;
         setSql("mysql",System.getenv("BL_SQL_HOST"),System.getenv("BL_SQL_DB")
                 ,System.getenv("BL_SQL_USER"),System.getenv("BL_SQL_PASS"));
-        System.out.println("Connecting to sql host: " + System.getenv("BL_SQL_HOST"));
         onEnable();
     }
 
@@ -194,6 +194,14 @@ public class Main extends JavaPlugin {
         bl_player.trailPerPlayer.put(playerUUID, bl_player.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
         bl_player.roadboostPerPlayer.put(playerUUID, bl_player.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER));
         bl_player.mutePerPlayer.put(playerUUID, bl_player.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.MUTE_PER_PLAYER));
+    }
+
+    /**
+     * Get's the plugin's sql connection.
+     * @return Current sql connection.
+     */
+    public Sql getSql(){
+        return sql;
     }
 
 }
