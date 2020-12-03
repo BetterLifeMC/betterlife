@@ -109,9 +109,9 @@ public class Main extends JavaPlugin {
         bl_warp = new BL_WARP();
 
         new ListenersSetup(m);
-
-//        for (String command : CommandUtils.getEnabledTabCommands())
-//            getCommand(command).setTabCompleter(new TabCompleterHelper());
+        if(!isTesting())
+            for (String command : CommandUtils.getEnabledTabCommands())
+                getCommand(command).setTabCompleter(new TabCompleterHelper());
 
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
