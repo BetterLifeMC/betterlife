@@ -176,11 +176,11 @@ public class TabCompleterHelper implements TabCompleter {
                             }
                             break;
                         case 2:
-                            if(player.hasPermission("betterlife.home.del")){
-                                LinkedHashMap<String, Location> homes = Main.bl_home.getHomes(player.getUniqueId());
-                                for (String homeName : homes.keySet())
-                                    if (Arrays.stream(args).anyMatch(homeName::contains))
-                                        subCommands.add(homeName);
+                            if(player.hasPermission("betterlife.warp.del")){
+                                LinkedHashMap<String, Location> warps = Main.bl_warp.getWarps();
+                                for (String warpName : warps.keySet())
+                                    if (Arrays.stream(args).anyMatch(warpName::contains))
+                                        subCommands.add(warpName);
                             }
                             break;
                     }
