@@ -39,6 +39,7 @@ public class Main extends JavaPlugin {
     public static BL_HOME bl_home;
     public static BL_ZONE bl_zone;
     public static BL_ZONE_MEMBER bl_zone_member;
+    public static BL_WARP bl_warp;
     public static boolean isTesting = false;
     public Main()
     {
@@ -105,6 +106,7 @@ public class Main extends JavaPlugin {
         bl_player = new BL_PLAYER();
         bl_zone = new BL_ZONE();
         bl_zone_member = new BL_ZONE_MEMBER();
+        bl_warp = new BL_WARP();
 
         new ListenersSetup(m);
 
