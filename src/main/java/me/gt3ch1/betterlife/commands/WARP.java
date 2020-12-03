@@ -38,13 +38,12 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
                 sendMessage(sender, "Invalid usage!", true);
                 return false;
             case 1:
-                if(args[0].equalsIgnoreCase("list")){
-                    sendMessage((Player)sender,"Available warps:",true);
-                    for(String names: Main.bl_warp.getWarps().keySet()){
-                        if(sender.hasPermission("betterlife.warps." + names.toLowerCase())){
-                            sendMessage((Player)sender,names,false);
-                        }
-                    }
+                if (args[0].equalsIgnoreCase("list")) {
+                    sendMessage(player, ChatColor.LIGHT_PURPLE + "Available warps:", true);
+                    for (String names : Main.bl_warp.getWarps().keySet())
+                        if (sender.hasPermission("betterlife.warps." + names.toLowerCase()))
+                            sendMessage(player, ChatColor.AQUA + names, false);
+
                     return true;
                 }
                 if (warps.getWarps().size() > 0 && warps.getWarps().containsKey(args[0])) {
