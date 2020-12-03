@@ -22,7 +22,6 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
 
     BL_HOME homeGetter = Main.bl_home;
 
-    private PlayerTeleportHelper tpHelper = new PlayerTeleportHelper();
     /**
      * Initializes the home command.
      *
@@ -64,7 +63,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
             case 0:
                 if (homeList.size() == 1) {
                     home = homeList.get(listOfHomes[0]);
-                    tpHelper.teleportPlayer(player, home, listOfHomes[0]);
+                    teleportHelper.teleportPlayer(player, home, listOfHomes[0]);
                 } else if (homeList.size() == 0) {
                     sendMessage(player, "&4You don't have any homes!", true);
                     return false;
@@ -84,7 +83,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                     sendListOfHomes(player);
                     return false;
                 }
-                tpHelper.teleportPlayer(player, home, args[0]);
+                teleportHelper.teleportPlayer(player, home, args[0]);
                 break;
             //TODO: Maybe we should add a /home info {home name} ?
             case 2:
