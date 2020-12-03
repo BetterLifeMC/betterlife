@@ -41,36 +41,47 @@ public class Main extends JavaPlugin {
     public static BL_ZONE_MEMBER bl_zone_member;
     public static BL_WARP bl_warp;
     public static boolean isTesting = false;
-    public Main()
-    {
+
+    public Main() {
         super();
     }
 
-    protected Main(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file)
-    {
+    protected Main(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
         isTesting = true;
-        setSql("mysql",System.getenv("BL_SQL_HOST"),System.getenv("BL_SQL_DB")
-                ,System.getenv("BL_SQL_USER"),System.getenv("BL_SQL_PASS"));
+        setSql("mysql", System.getenv("BL_SQL_HOST"), System.getenv("BL_SQL_DB")
+                , System.getenv("BL_SQL_USER"), System.getenv("BL_SQL_PASS"));
         onEnable();
     }
-    public boolean isTesting(){
+
+    public boolean isTesting() {
         return isTesting;
     }
+
     /**
      * Get's the BL_PLAYER.
+     *
      * @return BL_PLAYER
      */
-    public BL_PLAYER getBlPlayer(){
+    public BL_PLAYER getBlPlayer() {
         return bl_player;
     }
 
     /**
      * Get's the BL_HOME
+     *
      * @return bl_home
      */
-    public BL_HOME getBlHomes(){
+    public BL_HOME getBlHomes() {
         return bl_home;
+    }
+
+    /**
+     * Get's the BL_WARP
+     * @return bl_warp
+     */
+    public BL_WARP getBlWarps() {
+        return bl_warp;
     }
 
     /**
@@ -82,7 +93,7 @@ public class Main extends JavaPlugin {
         Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
     }
 
-    public void setSql(String dbType, String host, String database, String username, String password){
+    public void setSql(String dbType, String host, String database, String username, String password) {
         sql = new Sql(dbType, host, database, username, password);
     }
 
@@ -99,7 +110,7 @@ public class Main extends JavaPlugin {
         String database = CommandUtils.ch.getCustomConfig().getString("sql.database");
         String username = CommandUtils.ch.getCustomConfig().getString("sql.username");
         String password = CommandUtils.ch.getCustomConfig().getString("sql.password");
-        if(sql == null)
+        if (sql == null)
             sql = new Sql(dbType, host, database, username, password);
 
         bl_home = new BL_HOME();
@@ -109,13 +120,12 @@ public class Main extends JavaPlugin {
         bl_warp = new BL_WARP();
 
         new ListenersSetup(m);
-        if(!isTesting())
+        if (!isTesting())
             for (String command : CommandUtils.getEnabledTabCommands())
                 getCommand(command).setTabCompleter(new TabCompleterHelper());
 
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
-
 
 
         doBukkitLog(ChatColor.DARK_GREEN + "Enabled!");
@@ -191,6 +201,7 @@ public class Main extends JavaPlugin {
 
     /**
      * Sets up the cache for the given player uuid.
+     *
      * @param playerUUID Player's UUID to cache.
      */
     public static void setupPlayerConfig(UUID playerUUID) {
@@ -202,9 +213,10 @@ public class Main extends JavaPlugin {
 
     /**
      * Get's the plugin's sql connection.
+     *
      * @return Current sql connection.
      */
-    public Sql getSql(){
+    public Sql getSql() {
         return sql;
     }
 
