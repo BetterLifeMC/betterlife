@@ -124,6 +124,27 @@ public class TestBetterLife {
     }
 
     @Test
+    public void createMultipleWarps(){
+        int previousSize = plugin.getBlWarps().getWarps().size();
+        player.performCommand("warp set test_warp_1");
+        player.performCommand("warp set test_warp_2");
+        assertEquals(previousSize+2,plugin.getBlWarps().getWarps().size());
+        player.performCommand("warp del test_warp_1");
+        player.performCommand("warp del test_warp_2");
+    }
+
+    @Test
+    public void deleteMultipleWarps(){
+        int previousSize = plugin.getBlWarps().getWarps().size();
+        player.performCommand("warp set test_warp_1");
+        player.performCommand("warp set test_warp_2");
+        player.performCommand("warp del test_warp_1");
+        player.performCommand("warp del test_warp_2");
+        assertEquals(previousSize,plugin.getBlWarps().getWarps().size());
+
+    }
+
+    @Test
     public void createHome(){
         player.performCommand("home set test_home");
         assertEquals(1,plugin.getBlHomes().getHomes(mockUUID).size());
