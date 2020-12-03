@@ -201,6 +201,25 @@ public class Sql {
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Zone Members table.");
             executeUpdate(query);
         }
+
+        query = "SELECT `Name` FROM `BL_WARP` LIMIT 1";
+
+        try {
+            stmt.executeQuery(query);
+        } catch (SQLException e) {
+            query = "CREATE TABLE IF NOT EXISTS `BL_WARP` ("
+                    + "`Name` NVARCHAR(30),"
+                    + "`X` DOUBLE,"
+                    + "`Y` DOUBLE,"
+                    + "`Z` DOUBLE,"
+                    + "`World` NVARCHAR(30),"
+                    + "`Yaw` FLOAT,"
+                    + "`Pitch` FLOAT,"
+                    + "PRIMARY KEY (Name)"
+                    + ")";
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Player table.");
+            executeUpdate(query);
+        }
     }
 
     /**
