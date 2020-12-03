@@ -33,6 +33,7 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
             sendMessage(sender, "You need to be a player!", true);
             return false;
         }
+        Player player = (Player) sender;
         switch (args.length) {
             case 0:
                 sendMessage(sender, "Invalid usage!", true);
