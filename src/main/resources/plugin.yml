@@ -39,7 +39,7 @@ commands:
         permission: betterlife.unmute
     warp:
         description: Teleports a player to a warp!
-        usage: "Usage: /warp [ location ]"
+        usage: "Usage: /warp <set, list, del> [ location ]"
         permission: betterlife.warp
 permissions:
     betterlife.eco.bal:
@@ -76,5 +76,17 @@ permissions:
         default: op
     betterlife.unmute:
         description: Allows unmuting of players.
+        default: op
+    betterlife.warp:
+        description: Allows access to the /warp command
+        default: op
+    betterlife.warp.set:
+        description: Sets a warp at the current location
+        default: op
+    betterlife.warp.del:
+        description: Deletes a warp
+        default: op
+    betterlife.warp.list:
+        description: Allows players to list warps
         default: op
     
