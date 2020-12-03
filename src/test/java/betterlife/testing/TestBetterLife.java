@@ -145,6 +145,27 @@ public class TestBetterLife {
     }
 
     @Test
+    public void testWarpTeleport(){
+        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+        player.teleport(testLocation);
+        player.performCommand("warp set test_warp");
+        player.teleport(new Location(server.getWorld("world"),0,5,0));
+        player.performCommand("warp test_warp");
+        assertEquals(testLocation,player.getLocation());
+        player.performCommand("warp del test_warp");
+    }
+
+    @Test
+    public void testWarpSetLocation(){
+        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+        player.teleport(testLocation);
+        player.performCommand("warp set test_warp");
+        player.teleport(new Location(server.getWorld("world"),0,5,0));
+        assertEquals(testLocation,plugin.getBlWarps().getWarps().get("test_warp"));
+        player.performCommand("warp del test_warp");
+    }
+
+    @Test
     public void createHome(){
         player.performCommand("home set test_home");
         assertEquals(1,plugin.getBlHomes().getHomes(mockUUID).size());
@@ -183,7 +204,6 @@ public class TestBetterLife {
         player.performCommand("home set test_home");
         player.teleport(new Location(server.getWorld("world"),0,5,0));
         assertEquals(testLocation,plugin.getBlHomes().getHomes(mockUUID).get("test_home"));
-
         player.performCommand("home del test_home");
     }
 
