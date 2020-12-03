@@ -14,9 +14,9 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
     private BL_WARP warps = Main.bl_warp;
 
     /**
-     * Initializes the home command.
+     * Initializes the warp command.
      *
-     * @param permission Permission required to use /home
+     * @param permission Permission required to use /warp
      * @param cs         Sender of the command.
      * @param c          The command itself.
      * @param label      The string version of the command.
@@ -27,6 +27,14 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
         this.onCommand(cs, c, label, args);
     }
 
+    /**
+     * Runs the /warp command
+     * @param sender  Sender of the command.
+     * @param c       The command itself.
+     * @param command The string version of the command.
+     * @param args    The arguments of the command.
+     * @return
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         if (!(sender instanceof Player)) {
@@ -64,7 +72,7 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
                 }
                 if (args[0].equalsIgnoreCase("del")) {
                     if (sender.hasPermission("betterlife.warps.del")) {
-                        Main.bl_warp.delWarp(player, args[1]);
+                        Main.bl_warp.delWarp(args[1]);
                         sendMessage(sender, ChatColor.AQUA + "Warp " + ChatColor.YELLOW + args[1] +
                                 ChatColor.AQUA + " has been deleted.", true);
                         return true;

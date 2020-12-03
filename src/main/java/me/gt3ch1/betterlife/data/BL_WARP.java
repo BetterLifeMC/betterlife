@@ -4,17 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 import me.gt3ch1.betterlife.Main.Main;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.UUID;
-
-import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendMessage;
 
 /**
  * @author gt3ch1
@@ -30,9 +24,9 @@ public class BL_WARP {
 
 
     /**
-     * Gets all of the homes belonging to player UUID.
+     * Gets all of the warps.
      *
-     * @return All of the homes belonging to the given UUID.
+     * @return All of the warps.
      */
     public LinkedHashMap<String, Location> getWarps() {
         if (warps.size() == 0)
@@ -41,9 +35,8 @@ public class BL_WARP {
     }
 
     /**
-     * Gets all of the homes for the given UUID from the SQL backend.
-     *
-     * @return All of the homes from the SQL backend.
+     * Gets all the warps from the SQL backend.
+     * @return All of the warps from the SQL backend.
      */
     private LinkedHashMap<String, Location> getWarpsSql() {
         String query = "SELECT * FROM `BL_WARP`;";
@@ -68,9 +61,9 @@ public class BL_WARP {
     }
 
     /**
-     * Adds a new warp for the player at the players location with the given warp name.
+     * Adds a new warp at the players location with the given warp name.
      *
-     * @param player Player who owns the warp.
+     * @param player Player who sat the warp.
      * @param warp   Name of the warp.
      */
     public void addWarp(Player player, String warp) {
@@ -90,13 +83,12 @@ public class BL_WARP {
     }
 
     /**
-     * Deletes the given home from the player.
+     * Deletes the given warp
      *
-     * @param player Player to remove the home from.
-     * @param home   Home to remove from the player.
-     * @return True if the given home exists and was deleted.
+     * @param home   Name of the warp to delete.
+     * @return True if the given warp exists and was deleted.
      */
-    public boolean delWarp(Player player, String home) {
+    public boolean delWarp(String home) {
         if (warps.containsKey(home))
             if (warps.containsKey(home)) {
                 String query = "DELETE FROM BL_WARP WHERE `Name` = '" + home + "' AND `Name` = ?;";
