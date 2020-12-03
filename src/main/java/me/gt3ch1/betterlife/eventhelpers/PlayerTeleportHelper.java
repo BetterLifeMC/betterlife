@@ -4,6 +4,7 @@ import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.configuration.ConfigurationHelper;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -34,12 +35,13 @@ public class PlayerTeleportHelper {
     public void teleportPlayer(Player player, Location location, String home) {
         int ticks = ch.getCustomConfig().getInt("home-countdown") * 20;
 
-        sendMessage(player, "Teleporting to " + home + " in " + ticks / 20 + " seconds...", true);
+        sendMessage(player, ChatColor.AQUA + "Teleporting to " + ChatColor.YELLOW +
+                home + ChatColor.AQUA + " in " + ChatColor.GREEN + ticks / 20 + ChatColor.AQUA + " seconds...", true);
 
         final Location initial = player.getLocation();
 
         //BL-Test
-        if(Main.isTesting) {
+        if (Main.isTesting) {
             player.teleport(location);
             return;
         }
@@ -47,7 +49,7 @@ public class PlayerTeleportHelper {
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         BukkitTask task = scheduler.runTaskLater(m, () -> {
             player.teleport(location);
-            sendMessage(player, "&cTeleportation successful!", true);
+            sendMessage(player, ChatColor.RED + "Teleportation successful!", true);
         }, ticks);
 
         BukkitTask checker = scheduler.runTaskTimer(m, () -> {
@@ -60,7 +62,7 @@ public class PlayerTeleportHelper {
                 if (scheduler.isQueued(task.getTaskId())) {
                     cancelTask();
                     cancelChecker();
-                    sendMessage(player, "&4Teleportation cancelled.", true);
+                    sendMessage(player, ChatColor.DARK_RED + "Teleportation cancelled.", true);
                 }
             }
         }, 10, 10);
