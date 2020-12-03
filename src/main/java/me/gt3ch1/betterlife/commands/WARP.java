@@ -24,7 +24,6 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
      */
     public WARP(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
-        Main.bl_warp.getWarps();
         this.onCommand(cs, c, label, args);
     }
 
