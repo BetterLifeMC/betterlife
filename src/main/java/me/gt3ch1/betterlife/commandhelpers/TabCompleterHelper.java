@@ -155,6 +155,35 @@ public class TabCompleterHelper implements TabCompleter {
                             }
                             break;
                     }
+                case "warp":
+                    switch (args.length) {
+                        case 1:
+                            if (player.hasPermission("betterlife.warp.set"))
+                                if (Arrays.stream(args).anyMatch("set"::contains))
+                                    subCommands.add("set");
+                            if (player.hasPermission("betterlife.warp.del"))
+                                if (Arrays.stream(args).anyMatch("del"::contains))
+                                    subCommands.add("del");
+                            if (player.hasPermission("betterlife.warp.list"))
+                                if (Arrays.stream(args).anyMatch("list"::contains))
+                                    subCommands.add("list");
+                            if (player.hasPermission("betterlife.warp.home")) {
+                                LinkedHashMap<String, Location> warps = Main.bl_warp.getWarps();
+                                for (String warpName : warps.keySet())
+                                    if (Arrays.stream(args).anyMatch(warpName::contains))
+                                        subCommands.add(warpName);
+
+                            }
+                            break;
+                        case 2:
+                            if(player.hasPermission("betterlife.home.del")){
+                                LinkedHashMap<String, Location> homes = Main.bl_home.getHomes(player.getUniqueId());
+                                for (String homeName : homes.keySet())
+                                    if (Arrays.stream(args).anyMatch(homeName::contains))
+                                        subCommands.add(homeName);
+                            }
+                            break;
+                    }
                 default:
                     break;
 
