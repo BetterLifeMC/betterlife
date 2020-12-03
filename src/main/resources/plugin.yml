@@ -37,6 +37,10 @@ commands:
         description: Unmutes a player
         usage: "Usage: /unmute [ player ]"
         permission: betterlife.unmute
+    warp:
+        description: Teleports a player to a warp!
+        usage: "Usage: /warp [ location ]"
+        permission: betterlife.warp
 permissions:
     betterlife.eco.bal:
         description: Allows player to see their current balance
