@@ -3,9 +3,11 @@ package me.gt3ch1.betterlife.commandhelpers;
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.ParticleConfigurationHandler;
+import me.gt3ch1.betterlife.eventhelpers.PlayerTeleportHelper;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 import java.util.LinkedHashMap;
 
 /**
@@ -18,14 +20,16 @@ public class CommandUtils {
     public static Main m = Main.m;
     public static MainConfigurationHandler ch;
     public static ParticleConfigurationHandler partch;
+    public static PlayerTeleportHelper teleportHelper;
     public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[&3BetterLife&c] ") + ChatColor.RESET;
     public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco", "home"};
 
     /**
      * Sends the sender a message.
-     * @param sender The user to send the message to.
+     *
+     * @param sender  The user to send the message to.
      * @param message The message to be sent, with color codes parsed.
-     * @param banner Whether or not to send the message with a BetterLife banner.
+     * @param banner  Whether or not to send the message with a BetterLife banner.
      */
     public static void sendMessage(CommandSender sender, String message, boolean banner) {
         String coloredMessage = ChatColor.translateAlternateColorCodes('&', message);
@@ -43,6 +47,7 @@ public class CommandUtils {
 
     /**
      * Sets a message to the sender saying that they do not have permissions.
+     *
      * @param sender Sender to send the permission error message to.
      */
     public static void sendPermissionErrorMessage(CommandSender sender) {
@@ -52,9 +57,9 @@ public class CommandUtils {
     /**
      * Sends a help header
      *
-     * @param sender Who sent the message.
+     * @param sender      Who sent the message.
      * @param commandName The name of the command.
-     * @param args Arguments of the command.
+     * @param args        Arguments of the command.
      */
     public static void sendHelpMessage(CommandSender sender, String commandName, LinkedHashMap<String, String> args) {
         sendMessage(sender, "&b&lby GT3CH1 & Starmism", true);
@@ -70,6 +75,7 @@ public class CommandUtils {
     public static void enableConfiguration() {
         ch = new MainConfigurationHandler();
         partch = new ParticleConfigurationHandler();
+        teleportHelper = new PlayerTeleportHelper();
         m.saveDefaultConfig();
         partch.saveDefaultConfig();
     }
