@@ -107,8 +107,6 @@ public class Main extends JavaPlugin {
         bl_zone = new BL_ZONE();
         bl_zone_member = new BL_ZONE_MEMBER();
         bl_warp = new BL_WARP();
-        bl_warp.getWarps();
-
 
         new ListenersSetup(m);
         if(!isTesting())
