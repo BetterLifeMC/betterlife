@@ -85,6 +85,7 @@ public class Sql {
                     setupTables();
                     checkIfColumnsExists();
                     Main.setupOnlinePlayers();
+                    Main.bl_warp.getWarps();
                     isSqlConnected = true;
                 } catch (ClassNotFoundException | SQLException e) {
                     Main.doBukkitLog(e.toString());
@@ -278,7 +279,7 @@ public class Sql {
         runnable.runTaskAsynchronously(m);
     }
 
-    public boolean isSqlConnected(){
+    public boolean isSqlConnected() {
         return isSqlConnected;
     }
 }
