@@ -43,7 +43,7 @@ commands:
         permission: betterlife.setspawn
     spawn:
         description: Teleport to the game's spawn point.
-        usage: "Usage: /spawn"
+        usage: "Usage: /spawn [ set ]"
         permission: betterlife.spawn
     unmute:
         description: Unmutes a player
