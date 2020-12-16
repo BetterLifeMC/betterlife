@@ -253,6 +253,24 @@ public class TestBetterLife {
     }
 
     @Test
+    public void testSpawnSetAndSetSpawn(){
+        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+        playerOne.teleport(testLocation);
+        playerOne.performCommand("spawn set");
+        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.performCommand("spawn");
+        assertEquals(testLocation, playerOne.getLocation());
+        testLocation = new Location(server.getWorld("world"),200,200,200);
+        playerOne.teleport(testLocation);
+        playerOne.performCommand("setspawn");
+        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.performCommand("spawn");
+        assertEquals(testLocation, playerOne.getLocation());
+        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+    }
+
+
+    @Test
     public void testResetSpawn(){
         Location testLocationOne = new Location(server.getWorld("world"),100,100,100);
         Location testLocationTwo = new Location(server.getWorld("world"),200,200,200);
