@@ -27,6 +27,15 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor  {
         this.onCommand(cs,c,label,args);
     }
 
+    /**
+     * Runs the /teleport command
+     *
+     * @param sender  Sender of the command.
+     * @param c       The command itself.
+     * @param command The string version of the command.
+     * @param args    The arguments of the command.
+     * @return True if the command was successful.
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         switch(args.length){
