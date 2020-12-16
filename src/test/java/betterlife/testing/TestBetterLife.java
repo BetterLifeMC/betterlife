@@ -232,6 +232,15 @@ public class TestBetterLife {
         playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
     }
 
+    @Test
+    public void testSecondPlayerArgTeleport(){
+        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+        playerTwo.teleport(testLocation);
+        playerTwo.performCommand("teleport playerone playertwo");
+        assertEquals(testLocation, playerOne.getLocation());
+        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+    }
+
     @After
     public void tearDown() {
         MockBukkit.unmock();
