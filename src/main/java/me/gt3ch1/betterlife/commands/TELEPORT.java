@@ -36,11 +36,24 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor  {
                     return false;
                 }
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
+                if(otherPlayer == null){
+                    sendMessage(sender, "You have teleported to someone that doesn't exist..?", false);
+                    return false;
+                }
                 if(otherPlayer.getName().equalsIgnoreCase(sender.getName())) {
                     sendMessage(sender, "You have teleported to yourself..?", false);
                     return false;
                 }
                 teleportHelper.teleportPlayer((Player)sender,otherPlayer);
+                return true;
+            case 2:
+                Player firstPlayer = Bukkit.getPlayer(args[0]);
+                Player secondPlayer = Bukkit.getPlayer(args[0]);
+                if(firstPlayer == null || secondPlayer == null){
+                    sendMessage(sender, "You have teleported to someone that doesn't exist..?", false);
+                    return false;
+                }
+                teleportHelper.teleportPlayer(firstPlayer,secondPlayer);
                 return true;
             default:
                 return false;
