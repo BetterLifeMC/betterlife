@@ -66,6 +66,9 @@ permissions:
     betterlife.teleport:
         description: Teleports a player.
         default: op
+    betterlife.teleport.others:
+        description: Teleports a player to other players.
+        default: op
     betterlife.toggledownfall:
         description: Toggles the weather
         default: op
