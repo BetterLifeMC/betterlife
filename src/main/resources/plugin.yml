@@ -37,6 +37,10 @@ commands:
         description: Sets a fancy trail behind your player
         usage: "Usage: /trail [ list | help | set ]"
         permission: betterlife.trail
+    spawn:
+        description: Teleport or set the game's spawn point.
+        usage: "Usage: /spawn [ set ]"
+        permission: betterlife.spawn
     unmute:
         description: Unmutes a player
         usage: "Usage: /unmute [ player ]"
