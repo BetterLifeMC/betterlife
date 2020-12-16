@@ -28,6 +28,7 @@ public class SPAWN extends BetterLifeCommands implements CommandExecutor {
      */
     public SPAWN(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
+        this.onCommand(cs,c,label,args);
     }
 
     /**
