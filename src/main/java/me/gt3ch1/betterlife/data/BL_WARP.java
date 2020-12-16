@@ -66,7 +66,7 @@ public class BL_WARP {
      * @param player Player who sat the warp.
      * @param warp   Name of the warp.
      */
-    public void addWarp(Player player, String warp) {
+    private void addWarp(Player player, String warp) {
 
         String query = "INSERT INTO BL_WARP VALUES ("
                 + "'" + warp + "',"
@@ -96,7 +96,8 @@ public class BL_WARP {
             warps.put(warp, player.getLocation());
             sql.executeUpdate(query);
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
-        }
+        }else
+            addWarp(player,warp);
     }
 
     /**
