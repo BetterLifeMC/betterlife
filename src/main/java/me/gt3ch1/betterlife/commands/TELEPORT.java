@@ -35,7 +35,7 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor  {
                     sendMessage(sender,"Console can't teleport!",true);
                     return false;
                 }
-                Player otherPlayer = Bukkit.getPlayer(args[1]);
+                Player otherPlayer = Bukkit.getPlayer(args[0]);
                 if(otherPlayer.getName().equalsIgnoreCase(sender.getName())) {
                     sendMessage(sender, "You have teleported to yourself..?", false);
                     return false;
