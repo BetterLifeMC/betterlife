@@ -252,6 +252,20 @@ public class TestBetterLife {
         playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
     }
 
+    @Test
+    public void testResetSpawn(){
+        Location testLocationOne = new Location(server.getWorld("world"),100,100,100);
+        Location testLocationTwo = new Location(server.getWorld("world"),200,200,200);
+        playerOne.teleport(testLocationOne);
+        playerOne.performCommand("setspawn");
+        playerOne.teleport(testLocationTwo);
+        playerOne.performCommand("setspawn");
+        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.performCommand("spawn");
+        assertEquals(testLocationTwo, playerOne.getLocation());
+        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+    }
+
     @After
     public void tearDown() {
         MockBukkit.unmock();
