@@ -82,6 +82,23 @@ public class BL_WARP {
         Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
     }
 
+    //TODO (@gt3ch1): Javadoc & proper SQL update. I have no idea if this syntax is right.
+    public void setWarp(Player player, String warp) {
+        if (getWarps().containsValue(warp)) {
+            String query = "UPDATE BL_WARP SET "
+                    + "'X'," + player.getLocation().getX() + ","
+                    + "'Y'," + player.getLocation().getY() + ","
+                    + "'Z'," + player.getLocation().getZ() + ","
+                    + "'World','" + player.getLocation().getWorld().getName() + "',"
+                    + "'Yaw'," + player.getLocation().getYaw() + ","
+                    + "'Pitch'," + player.getLocation().getPitch()
+                    + " WHERE `Name` = " + warp;
+            warps.put(warp, player.getLocation());
+            sql.executeUpdate(query);
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+        }
+    }
+
     /**
      * Deletes the given warp
      *
