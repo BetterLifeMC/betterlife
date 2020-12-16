@@ -27,6 +27,25 @@ public class PlayerTeleportHelper {
 
     /**
      * Teleports the given player to the location.
+     * @param player Player to teleport.
+     * @param location Location to teleport player.
+     */
+    public void teleportPlayer(Player player, Location location){
+        teleportPlayer(player,location,null);
+    }
+
+    /**
+     * Teleports the given player to the location.
+     * @param player Player to teleport.
+     * @param otherPlayer Other player to teleport to.
+     */
+    public void teleportPlayer(Player player, Player otherPlayer){
+        teleportPlayer(player,otherPlayer.getLocation(),otherPlayer.getName());
+    }
+
+
+    /**
+     * Teleports the given player to the location.
      *
      * @param player   Player to teleport.
      * @param location Location to teleport player.
@@ -34,8 +53,8 @@ public class PlayerTeleportHelper {
      */
     public void teleportPlayer(Player player, Location location, String home) {
         int ticks = ch.getCustomConfig().getInt("home-countdown") * 20;
-
-        sendMessage(player, ChatColor.AQUA + "Teleporting to " + ChatColor.YELLOW +
+        if (home != null)
+            sendMessage(player, ChatColor.AQUA + "Teleporting to " + ChatColor.YELLOW +
                 home + ChatColor.AQUA + " in " + ChatColor.GREEN + ticks / 20 + ChatColor.AQUA + " seconds...", true);
 
         final Location initial = player.getLocation();
