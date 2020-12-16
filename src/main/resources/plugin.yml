@@ -52,7 +52,16 @@ permissions:
         description: Allows player to see other players' current balance
         default: op
     betterlife.home:
-        description: Allows player to set a home
+        description: Allows player to go home
+        default: op
+    betterlife.home.set:
+        description: Allows player to go home, delete a home, and list homes.
+        default: op
+    betterlife.home.list.others:
+        description: Allows player to list others homes.
+        default: op
+    betterlife.home.*:
+        description: All betterlife home commands
         default: op
     betterlife.mute:
         description: Allows muting of players.
