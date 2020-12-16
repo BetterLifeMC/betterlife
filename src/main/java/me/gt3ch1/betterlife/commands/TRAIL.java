@@ -58,7 +58,8 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                             sendMessage(player, "&7The currently enabled trails are: ", true);
                             for (String allowedParticle : allowedParticles)
                                 if (player.hasPermission(
-                                    "betterlife.trails.particle." + allowedParticle.toLowerCase()))
+                                    "betterlife.trails.particle." + allowedParticle.toLowerCase())
+                                    || player.hasPermission("betterlife.trails.particle.*"))
                                     sendMessage(player, "&d" + allowedParticle, true);
                         } else {
                             sendMessage(sender, "&7The currently enabled trails are: ", true);
@@ -94,7 +95,10 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                     if (sender instanceof Player) {
                         Player player = (Player) sender;
                         UUID playerUUID = player.getUniqueId();
-                        if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()) || player.hasPermission("betterlife.trail.particle.*"))) {
+
+                        if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase())
+                                || player.hasPermission("betterlife.trail.particle.*"))) {
+
                             playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, args[1].toUpperCase());
                             sendMessage(player, "&7Your trail is now set to: &6" + args[1].toUpperCase(), true);
 
