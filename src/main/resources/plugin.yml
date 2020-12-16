@@ -25,6 +25,10 @@ commands:
         description: Toggles if you get speed 1 when you are over a defined road.
         usage: "Usage: /roadboost"
         permission: betterlife.roadboost
+    teleport:
+        description: Teleports a player to another player.
+        usage: "Usage: /teleport [player one] [player two]"
+        permission: betterlife.teleport
     toggledownfall:
         description: Toggles whether or not it is storming
         usage: "Usage: /toggledownfall"
@@ -58,6 +62,9 @@ permissions:
         default: op
     betterlife.roadboost:
         description: Gain a speed 1 boost over paths.
+        default: op
+    betterlife.teleport:
+        description: Teleports a player.
         default: op
     betterlife.toggledownfall:
         description: Toggles the weather
