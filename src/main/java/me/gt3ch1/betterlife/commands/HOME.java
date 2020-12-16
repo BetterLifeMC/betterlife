@@ -61,43 +61,55 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
 
         switch (args.length) {
             case 0:
-                if (homeList.size() == 1) {
-                    home = homeList.get(listOfHomes[0]);
-                    teleportHelper.teleportPlayer(player, home, listOfHomes[0]);
-                } else if (homeList.size() == 0) {
-                    sendMessage(player, "&4You don't have any homes!", true);
-                    return false;
-                } else {
-                    sendListOfHomes(player);
-                    return true;
-                }
+                if (sender.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
+                    if (homeList.size() == 1) {
+                        home = homeList.get(listOfHomes[0]);
+                        teleportHelper.teleportPlayer(player, home, listOfHomes[0]);
+                    } else if (homeList.size() == 0) {
+                        sendMessage(player, "&4You don't have any homes!", true);
+                        return false;
+                    } else {
+                        sendListOfHomes(player);
+                        return true;
+                    }
+                } else
+                    sendPermissionErrorMessage(sender);
                 break;
             case 1:
-                if (args[0].equalsIgnoreCase("list")) {
-                    sendListOfHomes(player);
-                    return true;
-                }
-                home = homeList.get(args[0]);
-                if (home == null) {
-                    sendMessage(player, "&4Home not found!", true);
-                    sendListOfHomes(player);
-                    return false;
-                }
-                teleportHelper.teleportPlayer(player, home, args[0]);
-                break;
-            //TODO: Maybe we should add a /home info {home name} ?
+                if (player.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
+                    if (args[0].equalsIgnoreCase("list")) {
+                        sendListOfHomes(player);
+                        return true;
+                    }
+                    home = homeList.get(args[0]);
+                    if (home == null) {
+                        sendMessage(player, "&4Home not found!", true);
+                        sendListOfHomes(player);
+                        return false;
+                    }
+                    teleportHelper.teleportPlayer(player, home, args[0]);
+                    break;
+                } else
+                    sendPermissionErrorMessage(sender);
             case 2:
                 switch (args[0]) {
                     case "set":
-                        homeGetter.addHome(player, args[1]);
-                        sendMessage(player, "&aHome &f" + args[1] + " &acreated!", true);
+                        if (player.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
+                            homeGetter.addHome(player, args[1]);
+                            sendMessage(player, "&aHome &f" + args[1] + " &acreated!", true);
+                        } else
+                            sendPermissionErrorMessage(player);
                         break;
                     case "del":
-                        if (homeGetter.delHome(player, args[1]))
-                            sendMessage(player, "&aHome &f" + args[1] + " &adeleted!", true);
-                        else
-                            sendMessage(player, "&4Home not found!", true);
-                        break;
+                        if (player.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
+
+                            if (homeGetter.delHome(player, args[1]))
+                                sendMessage(player, "&aHome &f" + args[1] + " &adeleted!", true);
+                            else
+                                sendMessage(player, "&4Home not found!", true);
+                            break;
+                        } else
+                            sendPermissionErrorMessage(sender);
                     default:
                         sendMessage(sender, "&4Invalid option.", true);
                         break;
