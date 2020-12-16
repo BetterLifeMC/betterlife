@@ -14,11 +14,11 @@ import org.bukkit.entity.Player;
  * @version 12/2/20
  * Project betterlife
  */
-public class SPAWN extends BetterLifeCommands implements CommandExecutor {
+public class SETSPAWN extends BetterLifeCommands implements CommandExecutor {
     private BL_WARP warps = Main.bl_warp;
 
     /**
-     * Handles the command /spawn
+     * Handles the command /setspawn
      *
      * @param permission Permission needed to run the command.
      * @param cs         Person who sent the command.
@@ -26,12 +26,13 @@ public class SPAWN extends BetterLifeCommands implements CommandExecutor {
      * @param label      The string version of command.
      * @param args       the arguments to the command.
      */
-    public SPAWN(String permission, CommandSender cs, Command c, String label, String[] args) {
+    public SETSPAWN(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
+        this.onCommand(cs, c, label, args);
     }
 
     /**
-     * Runs the /spawn command
+     * Runs the /setspawn command
      *
      * @param sender  Sender of the command.
      * @param c       The command itself.
@@ -46,23 +47,8 @@ public class SPAWN extends BetterLifeCommands implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        switch (args.length) {
-            case 0:
-                if (player.hasPermission(getPermission())) {
-                    teleportHelper.teleportPlayer(player, warps.getWarps().get("spawn"), "spawn");
-                    return true;
-                }
-                return false;
-            case 1:
-                if (args[0].equalsIgnoreCase("set")) {
-                    if (player.hasPermission(getPermission() + ".setspawn")) {
-                        warps.setWarp(player, "spawn");
-                        sendMessage(sender, "Spawn has been sat to your location!", true);
-                        return true;
-                    }
-                }
-                return false;
-        }
-        return false;
+        warps.setWarp(player, "spawn");
+        sendMessage(sender, "Spawn has been sat to your location!", true);
+        return true;
     }
 }

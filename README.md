@@ -18,6 +18,10 @@ Current commands:
   - /mute <player> - Mutes the player.
 - roadboost
   - /roadboost - Toggles whether the player gets Speed 1 when on path blocks.
+- setspawn
+  - /setspawn - Sets the games spawnpoint to your location.
+- spawn
+  - /spawn - Teleports you to the games spawnpoint.
 - toggledownfall
   - /toggledownfall - Toggles the weather from stormy -> clear and vice versa.
 - trail
