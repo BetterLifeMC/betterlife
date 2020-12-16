@@ -31,6 +31,8 @@ public class TestBetterLife {
         playerOne = new PlayerMock(server, "playerone", playerOneUUID);
         playerTwo = new PlayerMock(server, "playertwo", playerTwoUUID);
         server.addPlayer(playerOne);
+        server.addPlayer(playerTwo);
+        playerTwo.setOp(true);
         playerOne.setOp(true);
     }
 
