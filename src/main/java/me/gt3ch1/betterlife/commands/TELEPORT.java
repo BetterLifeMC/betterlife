@@ -40,7 +40,7 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor  {
                     sendMessage(sender, "You have teleported to yourself..?", false);
                     return false;
                 }
-                teleportHelper.teleportPlayer((Player)sender,otherPlayer.getLocation());
+                teleportHelper.teleportPlayer((Player)sender,otherPlayer);
                 return true;
             default:
                 return false;

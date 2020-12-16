@@ -36,6 +36,16 @@ public class PlayerTeleportHelper {
 
     /**
      * Teleports the given player to the location.
+     * @param player Player to teleport.
+     * @param otherPlayer Other player to teleport to.
+     */
+    public void teleportPlayer(Player player, Player otherPlayer){
+        teleportPlayer(player,otherPlayer.getLocation(),otherPlayer.getName());
+    }
+
+
+    /**
+     * Teleports the given player to the location.
      *
      * @param player   Player to teleport.
      * @param location Location to teleport player.
