@@ -52,13 +52,13 @@ public class TestBetterLife {
 
     @Test
     public void testPlayerMute(){
-        playerOne.performCommand("mute testplayer");
+        playerOne.performCommand("mute playerone");
         assertTrue(plugin.getBlPlayer().getPlayerToggle(playerOneUUID,BL_PLAYER_ENUM.MUTE_PER_PLAYER));
     }
 
     @Test
     public void testPlayerUnmute(){
-        playerOne.performCommand("unmute testplayer");
+        playerOne.performCommand("unmute playerone");
         assertFalse(plugin.getBlPlayer().getPlayerToggle(playerOneUUID,BL_PLAYER_ENUM.MUTE_PER_PLAYER));
     }
 
