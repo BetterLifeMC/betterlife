@@ -43,7 +43,7 @@ public class UNMUTE extends BetterLifeCommands implements CommandExecutor {
             case 1:
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
                 if (otherPlayer == null) {
-                    sendMessage(sender, otherPlayer.getName()  + " must be online to mute.", true);
+                    sendMessage(sender, "Player cannot exist!", true);
                     return false;
                 }
                 if (!otherPlayer.isOnline()) {
