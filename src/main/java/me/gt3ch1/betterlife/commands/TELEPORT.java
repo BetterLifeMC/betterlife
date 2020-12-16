@@ -62,7 +62,12 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor  {
                     sendMessage(sender, "You have teleported to someone that doesn't exist..?", false);
                     return false;
                 }
-                teleportHelper.teleportPlayer(firstPlayer,secondPlayer);
+                if(sender.hasPermission("betterlife.teleport.others"))
+                    teleportHelper.teleportPlayer(firstPlayer,secondPlayer);
+                else {
+                    sendPermissionErrorMessage(sender);
+                    return false;
+                }
                 return true;
             default:
                 return false;
