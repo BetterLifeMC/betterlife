@@ -21,7 +21,7 @@ Current commands:
 - setspawn
   - /setspawn - Sets the games spawnpoint to your location.
 - spawn
-  - /spawn - Teleports you to the games spawnpoint.
+  - /spawn [set] - Teleports you to the games spawnpoint.
 - toggledownfall
   - /toggledownfall - Toggles the weather from stormy -> clear and vice versa.
 - trail
