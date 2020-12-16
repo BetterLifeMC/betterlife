@@ -93,6 +93,12 @@ permissions:
     betterlife.reload:
         description: Reloads the configuration files of betterlife
         default: op
+    betterlife.spawn:
+        description: Allows players to teleport to spawn
+        default: op
+    betterlife.spawn.set:
+        description: Allows a player to set the spawnpoint
+        default: op
     betterlife.unmute:
         description: Allows unmuting of players.
         default: op
