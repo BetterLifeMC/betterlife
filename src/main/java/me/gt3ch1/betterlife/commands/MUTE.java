@@ -41,10 +41,9 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         switch (args.length) {
             case 1:
-                Player otherPlayer = null;
-                try {
-                    otherPlayer = Bukkit.getPlayer(args[0]);
-                }catch(NullPointerException npe){
+                Player otherPlayer = Bukkit.getPlayer(args[0]);
+                if (otherPlayer == null) {
+                    sendMessage(sender, otherPlayer.getName()  + " must be online to mute.", true);
                     return false;
                 }
                 if (!otherPlayer.isOnline()) {
