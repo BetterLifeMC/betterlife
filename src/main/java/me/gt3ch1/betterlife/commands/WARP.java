@@ -51,20 +51,20 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("list")) {
                     sendMessage(player, ChatColor.LIGHT_PURPLE + "Available warps:", true);
                     for (String names : Main.bl_warp.getWarps().keySet())
-                        if (sender.hasPermission("betterlife.warps." + names.toLowerCase()) || sender.hasPermission("betterlife.warps.*"))
+                        if (sender.hasPermission("betterlife.warp." + names.toLowerCase()) || sender.hasPermission("betterlife.warp.*"))
                             sendMessage(player, ChatColor.AQUA + names, false);
 
                     return true;
                 }
                 if (warps.getWarps().size() > 0 && warps.getWarps().containsKey(args[0])) {
-                    if (sender.hasPermission("betterlife.warps." + args[0]) || sender.hasPermission("betterlife.warps.*")) {
+                    if (sender.hasPermission("betterlife.warp." + args[0]) || sender.hasPermission("betterlife.warp.*")) {
                         teleportHelper.teleportPlayer(player, warps.getWarps().get(args[0]), args[0]);
                         return true;
                     }
                 }
             case 2:
                 if (args[0].equalsIgnoreCase("set")) {
-                    if (sender.hasPermission("betterlife.warps.set") || sender.hasPermission("betterlife.warps.*")) {
+                    if (sender.hasPermission("betterlife.warp.set") || sender.hasPermission("betterlife.warp.*")) {
                         Main.bl_warp.setWarp(player, args[1]);
                         sendMessage(sender, ChatColor.AQUA + "Warp " + ChatColor.YELLOW + args[1] +
                                 ChatColor.AQUA + " sat to your location", true);
@@ -72,7 +72,7 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
                     }
                 }
                 if (args[0].equalsIgnoreCase("del")) {
-                    if (sender.hasPermission("betterlife.warps.del") || sender.hasPermission("betterlife.warps.*")) {
+                    if (sender.hasPermission("betterlife.warp.del") || sender.hasPermission("betterlife.warp.*")) {
                         Main.bl_warp.delWarp(args[1]);
                         sendMessage(sender, ChatColor.AQUA + "Warp " + ChatColor.YELLOW + args[1] +
                                 ChatColor.AQUA + " has been deleted.", true);
