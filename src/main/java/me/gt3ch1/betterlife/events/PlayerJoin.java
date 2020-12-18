@@ -29,13 +29,13 @@ public class PlayerJoin implements Listener {
         UUID playerUUID = p.getUniqueId();
 
         Particle newPlayerParticle = Particle.valueOf(
-            CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
+        CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
         Main.setupPlayerConfig(playerUUID);
         if (playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
             playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, newPlayerParticle.toString());
         }
-        if(!p.hasPlayedBefore()){
-            CommandUtils.teleportHelper.teleportPlayer(p,Main.bl_warp.getWarps().get("spawn"),"spawn",true);
+        if (!p.hasPlayedBefore() && Main.bl_warp.getWarps().containsKey("spawn") && !Main.isTesting) {
+            CommandUtils.teleportHelper.teleportPlayer(p, Main.bl_warp.getWarps().get("spawn"), "spawn", true);
         }
 
     }
