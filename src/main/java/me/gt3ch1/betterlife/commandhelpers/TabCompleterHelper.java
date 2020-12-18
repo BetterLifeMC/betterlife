@@ -167,11 +167,13 @@ public class TabCompleterHelper implements TabCompleter {
                             if (player.hasPermission("betterlife.warp.list"))
                                 if (Arrays.stream(args).anyMatch("list"::contains))
                                     subCommands.add("list");
-                            if (player.hasPermission("betterlife.warp.home")) {
+                            if (player.hasPermission("betterlife.warp")) {
                                 LinkedHashMap<String, Location> warps = Main.bl_warp.getWarps();
                                 for (String warpName : warps.keySet())
-                                    if (Arrays.stream(args).anyMatch(warpName::contains))
-                                        subCommands.add(warpName);
+                                    if(player.hasPermission("betterlife.warp." + warpName))
+                                        if (Arrays.stream(args).anyMatch(warpName::contains))
+                                            subCommands.add(warpName);
+
 
                             }
                             break;
