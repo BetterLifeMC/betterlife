@@ -34,6 +34,9 @@ public class PlayerJoin implements Listener {
         if (playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
             playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, newPlayerParticle.toString());
         }
+        if(!p.hasPlayedBefore()){
+            CommandUtils.teleportHelper.teleportPlayer(p,Main.bl_warp.getWarps().get("spawn"),"spawn",true);
+        }
 
     }
 
