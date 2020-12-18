@@ -65,7 +65,7 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
             case 2:
                 if (args[0].equalsIgnoreCase("set")) {
                     if (sender.hasPermission("betterlife.warp.set") || sender.hasPermission("betterlife.warp.*")) {
-                        Main.bl_warp.addWarp(player, args[1]);
+                        Main.bl_warp.setWarp(player, args[1]);
                         sendMessage(sender, ChatColor.AQUA + "Warp " + ChatColor.YELLOW + args[1] +
                                 ChatColor.AQUA + " sat to your location", true);
                         return true;

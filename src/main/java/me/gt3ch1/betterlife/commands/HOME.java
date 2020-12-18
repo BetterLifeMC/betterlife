@@ -64,7 +64,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                 if (sender.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
                     if (homeList.size() == 1) {
                         home = homeList.get(listOfHomes[0]);
-                        teleportHelper.teleportPlayer(player, home, listOfHomes[0]);
+                        teleportHelper.teleportPlayer(player, home, listOfHomes[0],false);
                     } else if (homeList.size() == 0) {
                         sendMessage(player, "&4You don't have any homes!", true);
                         return false;
@@ -87,7 +87,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                         sendListOfHomes(player);
                         return false;
                     }
-                    teleportHelper.teleportPlayer(player, home, args[0]);
+                    teleportHelper.teleportPlayer(player, home, args[0],false);
                     break;
                 } else
                     sendPermissionErrorMessage(sender);

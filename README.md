@@ -18,6 +18,10 @@ Current commands:
   - /mute <player> - Mutes the player.
 - roadboost
   - /roadboost - Toggles whether the player gets Speed 1 when on path blocks.
+- setspawn
+  - /setspawn - Sets the games spawnpoint to your location.
+- spawn
+  - /spawn [set] - Teleports you to the games spawnpoint.
 - teleport
   - /teleport <playerone> [playertwo] - Teleports a player to another player.
 - toggledownfall
@@ -26,8 +30,5 @@ Current commands:
   - /trail set <trail> - Sets what trail the current player is using.
   - /trail list - Lists all available trails.
   - /trial toggle - Toggles whether your trail is on or not.
-- spawn
-  - /spawn - Teleports a player to the games spawn point.
-  - /spawn set - Sets the world spawn to the players current location.
 - unmute
   - /unmute <player> - Unmutes the player.
