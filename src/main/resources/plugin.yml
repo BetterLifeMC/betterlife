@@ -108,4 +108,6 @@ permissions:
     betterlife.warp.list:
         description: Allows players to list warps
         default: op
-    
+    betterlife.warp.*:
+        description: Allows access to all warps.
+        default: op
