@@ -27,20 +27,27 @@ public class PlayerTeleportHelper {
 
     /**
      * Teleports the given player to the location.
-     * @param player Player to teleport.
+     *
+     * @param player   Player to teleport.
      * @param location Location to teleport player.
+     * @param home     "Home" to display.
      */
-    public void teleportPlayer(Player player, Location location){
-        teleportPlayer(player,location,null);
+    public void teleportPlayer(Player player, Location location, String home) {
+        teleportPlayerHelper(player, location, home, false);
+    }
+
+    public void teleportPlayer(Player player, Player otherPlayer) {
+        teleportPlayerHelper(player, otherPlayer.getLocation(), otherPlayer.getName(),false);
     }
 
     /**
      * Teleports the given player to the location.
-     * @param player Player to teleport.
-     * @param otherPlayer Other player to teleport to.
+     *
+     * @param player   Player to teleport.
+     * @param location Location we want to teleport to.
      */
-    public void teleportPlayer(Player player, Player otherPlayer){
-        teleportPlayer(player,otherPlayer.getLocation(),otherPlayer.getName());
+    public void teleportPlayer(Player player, Location location, String home, boolean forceTeleport) {
+        teleportPlayerHelper(player, location, home, forceTeleport);
     }
 
 
@@ -51,16 +58,16 @@ public class PlayerTeleportHelper {
      * @param location Location to teleport player.
      * @param home     The name of the home (used for command output).
      */
-    public void teleportPlayer(Player player, Location location, String home) {
+    private void teleportPlayerHelper(Player player, Location location, String home, boolean forceTeleport) {
         int ticks = ch.getCustomConfig().getInt("home-countdown") * 20;
         if (home != null)
             sendMessage(player, ChatColor.AQUA + "Teleporting to " + ChatColor.YELLOW +
-                home + ChatColor.AQUA + " in " + ChatColor.GREEN + ticks / 20 + ChatColor.AQUA + " seconds...", true);
+                    home + ChatColor.AQUA + " in " + ChatColor.GREEN + ticks / 20 + ChatColor.AQUA + " seconds...", true);
 
         final Location initial = player.getLocation();
 
         //BL-Test
-        if (Main.isTesting) {
+        if (Main.isTesting || forceTeleport) {
             player.teleport(location);
             return;
         }
