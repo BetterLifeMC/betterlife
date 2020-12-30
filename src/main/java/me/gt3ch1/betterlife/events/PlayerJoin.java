@@ -4,6 +4,7 @@ import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
+import me.gt3ch1.betterlife.data.Sql;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,6 +18,7 @@ import java.util.UUID;
  */
 public class PlayerJoin implements Listener {
     private static final BL_PLAYER playerGetter = Main.bl_player;
+    private final Sql sql = Main.sql;
 
     /**
      * Sets up the player configuration for the player that has joined.
@@ -25,6 +27,10 @@ public class PlayerJoin implements Listener {
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
+        if(!sql.isSqlConnected()) {
+            return;
+        }
+
         Player p = e.getPlayer();
         UUID playerUUID = p.getUniqueId();
 
