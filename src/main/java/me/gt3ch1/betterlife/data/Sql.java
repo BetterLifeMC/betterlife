@@ -276,28 +276,32 @@ public class Sql {
             return;
         }
         if (isTesting) {
-            try {
-                PreparedStatement pstmt = con.prepareStatement(query);
-                pstmt.setNString(1, home);
-                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                Main.doBukkitLog(e.toString());
-            }
-        }
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    PreparedStatement pstmt = con.prepareStatement(query);
-                    pstmt.setNString(1, home);
-                    Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
-                    pstmt.executeUpdate();
-                } catch (SQLException e) {
-                    Main.doBukkitLog(e.toString());
+            modifyHomeHelper(query, home);
+        } else {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    modifyHomeHelper(query, home);
                 }
-            }
-        }.runTaskAsynchronously(m);
+            }.runTaskAsynchronously(m);
+        }
+    }
+
+    /**
+     * Helper method for modifyHome
+     *
+     * @param query Query to execute.
+     * @param home  Name of the home to update.
+     */
+    private void modifyHomeHelper(String query, String home) {
+        try {
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setNString(1, home);
+            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            Main.doBukkitLog(e.toString());
+        }
     }
 
     public boolean isSqlConnected() {
