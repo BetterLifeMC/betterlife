@@ -304,6 +304,10 @@ public class Sql {
         }
     }
 
+    /**
+     * Returns whether or not sql is connected
+     * @return True if SQL is connected.
+     */
     public boolean isSqlConnected() {
         return isSqlConnected;
     }
