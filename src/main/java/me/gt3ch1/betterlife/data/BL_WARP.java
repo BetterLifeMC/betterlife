@@ -112,15 +112,12 @@ public class BL_WARP {
      * @return True if the given warp exists and was deleted.
      */
     public boolean delWarp(String home) {
-        if (warps.containsKey(home))
             if (warps.containsKey(home)) {
-                String query = "DELETE FROM BL_WARP WHERE `Name` = '" + home + "' AND `Name` = ?;";
+                String query = "DELETE FROM BL_WARP WHERE `Name` = ?;";
                 sql.modifyHome(query, home);
-                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 warps.remove(home);
                 return true;
             }
-
         return false;
     }
 }
