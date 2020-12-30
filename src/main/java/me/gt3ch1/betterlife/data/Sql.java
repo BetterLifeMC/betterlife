@@ -275,7 +275,16 @@ public class Sql {
             doBukkitLog(ChatColor.RED + "SQL isn't connected.");
             return;
         }
-
+        if (isTesting) {
+            try {
+                PreparedStatement pstmt = con.prepareStatement(query);
+                pstmt.setNString(1, home);
+                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                Main.doBukkitLog(e.toString());
+            }
+        }
         new BukkitRunnable() {
             @Override
             public void run() {
