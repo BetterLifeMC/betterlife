@@ -114,101 +114,113 @@ public class TestBetterLife {
     }
 
     @Test
-    public void testSingleWarp() throws InterruptedException {
+    public void createWarp(){
         playerOne.performCommand("warp set test_warp");
-        Thread.sleep(100);
-        assertTrue(plugin.getBlWarps().getWarps().containsKey("test_warp"));
+        assertTrue(plugin.getBlWarps().getWarps().size() > 0);
         playerOne.performCommand("warp del test_warp");
-        Thread.sleep(100);
-        assertFalse(plugin.getBlWarps().getWarps().containsKey("test_warp"));
     }
 
     @Test
-    public void testMultipleWarps() throws InterruptedException {
+    public void deleteWarp(){
+        playerOne.performCommand("warp set test_warp");
+        int previousSize = plugin.getBlWarps().getWarps().size();
+        playerOne.performCommand("warp del test_warp");
+        assertEquals(previousSize-1,plugin.getBlWarps().getWarps().size());
+    }
+
+    @Test
+    public void createMultipleWarps(){
+        int previousSize = plugin.getBlWarps().getWarps().size();
         playerOne.performCommand("warp set test_warp_1");
         playerOne.performCommand("warp set test_warp_2");
-        Thread.sleep(100);
-        assertTrue(plugin.getBlWarps().getWarps().containsKey("test_warp_1"));
-        assertTrue(plugin.getBlWarps().getWarps().containsKey("test_warp_2"));
+        assertEquals(previousSize+2,plugin.getBlWarps().getWarps().size());
         playerOne.performCommand("warp del test_warp_1");
         playerOne.performCommand("warp del test_warp_2");
-        Thread.sleep(100);
-        assertFalse(plugin.getBlWarps().getWarps().containsKey("test_warp_1"));
-        assertFalse(plugin.getBlWarps().getWarps().containsKey("test_warp_2"));
     }
 
     @Test
-    public void testWarpTeleport() throws InterruptedException {
+    public void deleteMultipleWarps(){
+        int previousSize = plugin.getBlWarps().getWarps().size();
+        playerOne.performCommand("warp set test_warp_1");
+        playerOne.performCommand("warp set test_warp_2");
+        playerOne.performCommand("warp del test_warp_1");
+        playerOne.performCommand("warp del test_warp_2");
+        assertEquals(previousSize,plugin.getBlWarps().getWarps().size());
+
+    }
+
+    @Test
+    public void testWarpTeleport(){
         Location testLocation = new Location(server.getWorld("world"),100,100,100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("warp set test_warp");
-        Thread.sleep(100);
         playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
         playerOne.performCommand("warp test_warp");
         assertEquals(testLocation, playerOne.getLocation());
         playerOne.performCommand("warp del test_warp");
-        Thread.sleep(100);
     }
 
     @Test
-    public void testWarpSetLocation() throws InterruptedException {
+    public void testWarpSetLocation(){
         Location testLocation = new Location(server.getWorld("world"),100,100,100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("warp set test_warp");
-        Thread.sleep(100);
         playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
         assertEquals(testLocation,plugin.getBlWarps().getWarps().get("test_warp"));
         playerOne.performCommand("warp del test_warp");
-        Thread.sleep(100);
     }
 
     @Test
-    public void testSingleHome() throws InterruptedException {
+    public void createHome(){
         playerOne.performCommand("home set test_home");
-        Thread.sleep(100);
-        assertTrue(plugin.getBlHomes().getHomes(playerOneUUID).containsKey("test_home"));
+        assertEquals(1,plugin.getBlHomes().getHomes(playerOneUUID).size());
         playerOne.performCommand("home del test_home");
-        Thread.sleep(100);
-        assertFalse(plugin.getBlHomes().getHomes(playerOneUUID).containsKey("test_home"));
     }
 
     @Test
-    public void testMultipleHomes() throws InterruptedException {
+    public void deleteHome(){
+        playerOne.performCommand("home set test_home");
+        playerOne.performCommand("home del test_home");
+        assertEquals(0,plugin.getBlHomes().getHomes(playerOneUUID).size());
+    }
+
+    @Test
+    public void createMultipleHomes(){
         playerOne.performCommand("home set test_home_1");
         playerOne.performCommand("home set test_home_2");
-        Thread.sleep(100);
-        assertTrue(plugin.getBlHomes().getHomes(playerOneUUID).containsKey("test_home_1"));
-        assertTrue(plugin.getBlHomes().getHomes(playerOneUUID).containsKey("test_home_2"));
+        assertEquals(2,plugin.getBlHomes().getHomes(playerOneUUID).size());
         playerOne.performCommand("home del test_home_1");
         playerOne.performCommand("home del test_home_2");
-        Thread.sleep(100);
-        assertFalse(plugin.getBlHomes().getHomes(playerOneUUID).containsKey("test_home_1"));
-        assertFalse(plugin.getBlHomes().getHomes(playerOneUUID).containsKey("test_home_2"));
     }
 
     @Test
-    public void testHomeSetLocation() throws InterruptedException {
+    public void deleteMultipleHomes(){
+        playerOne.performCommand("home set test_home_1");
+        playerOne.performCommand("home set test_home_2");
+        playerOne.performCommand("home del test_home_1");
+        playerOne.performCommand("home del test_home_2");
+        assertEquals(0,plugin.getBlHomes().getHomes(playerOneUUID).size());
+    }
+
+    @Test
+    public void testHomeSetLocation(){
         Location testLocation = new Location(server.getWorld("world"),100,100,100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("home set test_home");
-        Thread.sleep(100);
         playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
         assertEquals(testLocation,plugin.getBlHomes().getHomes(playerOneUUID).get("test_home"));
         playerOne.performCommand("home del test_home");
-        Thread.sleep(100);
     }
 
     @Test
-    public void testHomeTeleport() throws InterruptedException {
+    public void testHomeTeleport(){
         Location testLocation = new Location(server.getWorld("world"),100,100,100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("home set test_home");
-        Thread.sleep(100);
         playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
         playerOne.performCommand("home test_home");
         assertEquals(testLocation, playerOne.getLocation());
         playerOne.performCommand("home del test_home");
-        Thread.sleep(100);
     }
 
     @Test
