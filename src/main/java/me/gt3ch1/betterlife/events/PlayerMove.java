@@ -6,6 +6,7 @@ import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
+import me.gt3ch1.betterlife.data.Sql;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -21,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class PlayerMove implements Listener {
     BL_PLAYER playerGetter = Main.bl_player;
+    private final Sql sql = Main.sql;
 
     /**
      * Checks to even to see if the player has roadboost enabled.
@@ -29,6 +31,9 @@ public class PlayerMove implements Listener {
      */
     @EventHandler
     public void roadBoostEvents(PlayerMoveEvent e) {
+        if(!sql.isSqlConnected()) {
+            return;
+        }
 
         UUID playerUUID = e.getPlayer().getUniqueId();
         boolean boostEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
@@ -49,6 +54,10 @@ public class PlayerMove implements Listener {
      */
     @EventHandler
     public void trailsEvents(PlayerMoveEvent e) {
+        if(!sql.isSqlConnected()) {
+            return;
+        }
+
         UUID playerUUID = e.getPlayer().getUniqueId();
         boolean trailEnabled;
         Location location = e.getPlayer().getLocation();
