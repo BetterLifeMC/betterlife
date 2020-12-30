@@ -6,6 +6,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
 
+import static me.gt3ch1.betterlife.Main.Main.doBukkitLog;
 import static me.gt3ch1.betterlife.Main.Main.isTesting;
 import static me.gt3ch1.betterlife.Main.Main.m;
 
@@ -57,10 +58,10 @@ public class Sql {
                     .getConnection("jdbc:" + dbType + "://" + host + ":3306/" + database,
                             username, password);
             stmt = con.createStatement();
+            isSqlConnected = true;
             setupTables();
             checkIfColumnsExists();
             Main.setupOnlinePlayers();
-            isSqlConnected = true;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -70,11 +71,10 @@ public class Sql {
      * Connects to the SQL database.
      */
     private void connectAndSetup() {
-        BukkitRunnable runnable = new BukkitRunnable() {
+        new BukkitRunnable() {
             @Override
             public void run() {
                 try {
-
                     Class.forName("com.mysql.cj.jdbc.Driver");
                     Class.forName("org.mariadb.jdbc.Driver");
                     con = DriverManager
@@ -82,19 +82,17 @@ public class Sql {
                                     username, password);
                     stmt = con.createStatement();
                     Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
+                    isSqlConnected = true;
                     setupTables();
                     checkIfColumnsExists();
                     Main.setupOnlinePlayers();
                     Main.bl_warp.getWarps();
-                    isSqlConnected = true;
                 } catch (ClassNotFoundException | SQLException e) {
-                    Main.doBukkitLog(e.toString());
                     Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
                     e.printStackTrace();
                 }
             }
-        };
-        runnable.runTaskAsynchronously(m);
+        }.runTaskAsynchronously(m);
     }
 
     /**
@@ -230,6 +228,11 @@ public class Sql {
      * @return Results of the query
      */
     public ResultSet executeQuery(String query) {
+        if (!isSqlConnected) {
+            doBukkitLog(ChatColor.RED + "SQL isn't connected.");
+            return null;
+        }
+
         try {
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             return stmt.executeQuery(query);
@@ -246,6 +249,11 @@ public class Sql {
      * @return Success of the update
      */
     public boolean executeUpdate(String query) {
+        if (!isSqlConnected) {
+            doBukkitLog(ChatColor.RED + "SQL isn't connected.");
+            return false;
+        }
+
         try {
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             stmt.executeUpdate(query);
@@ -263,20 +271,24 @@ public class Sql {
      * @param home  Name of the home to update.
      */
     public void modifyHome(String query, String home) {
-        BukkitRunnable runnable = new BukkitRunnable() {
+        if (!isSqlConnected) {
+            doBukkitLog(ChatColor.RED + "SQL isn't connected.");
+            return;
+        }
+
+        new BukkitRunnable() {
             @Override
             public void run() {
                 try {
                     PreparedStatement pstmt = con.prepareStatement(query);
                     pstmt.setNString(1, home);
+                    Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                     pstmt.executeUpdate();
                 } catch (SQLException e) {
                     Main.doBukkitLog(e.toString());
                 }
             }
-        };
-
-        runnable.runTaskAsynchronously(m);
+        }.runTaskAsynchronously(m);
     }
 
     public boolean isSqlConnected() {
