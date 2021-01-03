@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class BL extends BetterLifeCommands implements CommandExecutor {
+
     // Get the plugin from Main
     private static Main m = Main.m;
 
@@ -62,12 +63,14 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
                         if (sender instanceof Player) {
                             Player p = (Player) sender;
 
-                            if (p.hasPermission("betterlife.reload"))
+                            if (p.hasPermission("betterlife.reload")) {
                                 reloadConfig(p);
-                            else
+                            } else {
                                 sendPermissionErrorMessage(p);
-                        } else
+                            }
+                        } else {
                             reloadConfig(sender);
+                        }
                         break;
 
                     case "version":

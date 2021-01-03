@@ -50,7 +50,7 @@ public class Main extends JavaPlugin {
         super(loader, description, dataFolder, file);
         isTesting = true;
         setSql("mysql", System.getenv("BL_SQL_HOST"), System.getenv("BL_SQL_DB")
-                , System.getenv("BL_SQL_USER"), System.getenv("BL_SQL_PASS"));
+            , System.getenv("BL_SQL_USER"), System.getenv("BL_SQL_PASS"));
         onEnable();
     }
 
@@ -78,6 +78,7 @@ public class Main extends JavaPlugin {
 
     /**
      * Get's the BL_WARP
+     *
      * @return bl_warp
      */
     public BL_WARP getBlWarps() {
@@ -90,7 +91,8 @@ public class Main extends JavaPlugin {
      * @param log
      */
     public static void doBukkitLog(String log) {
-        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] " + ChatColor.BLUE + log);
+        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + "[" + ChatColor.DARK_AQUA + "BetterLife" + ChatColor.RED + "] "
+            + ChatColor.BLUE + log);
     }
 
     public void setSql(String dbType, String host, String database, String username, String password) {
@@ -110,8 +112,9 @@ public class Main extends JavaPlugin {
         String database = CommandUtils.ch.getCustomConfig().getString("sql.database");
         String username = CommandUtils.ch.getCustomConfig().getString("sql.username");
         String password = CommandUtils.ch.getCustomConfig().getString("sql.password");
-        if (sql == null)
+        if (sql == null) {
             sql = new Sql(dbType, host, database, username, password);
+        }
 
         bl_home = new BL_HOME();
         bl_player = new BL_PLAYER();
@@ -120,13 +123,14 @@ public class Main extends JavaPlugin {
         bl_warp = new BL_WARP();
 
         new ListenersSetup(m);
-        if (!isTesting())
-            for (String command : CommandUtils.getEnabledTabCommands())
+        if (!isTesting()) {
+            for (String command : CommandUtils.getEnabledTabCommands()) {
                 getCommand(command).setTabCompleter(new TabCompleterHelper());
+            }
+        }
 
         HelpHelper.setupAllHelpHashes();
         setupEconomy();
-
 
         doBukkitLog(ChatColor.DARK_GREEN + "Enabled!");
     }
@@ -161,11 +165,11 @@ public class Main extends JavaPlugin {
              * where label is the name of the command in caps.
              */
             this.getCommand(label).setExecutor((CommandExecutor) Class
-                    .forName("me.gt3ch1.betterlife.commands." + label.toUpperCase())
-                    .getConstructor(String.class, CommandSender.class, Command.class, String.class, String[].class)
-                    .newInstance(label.toLowerCase(), cs, cmd, label, args));
+                .forName("me.gt3ch1.betterlife.commands." + label.toUpperCase())
+                .getConstructor(String.class, CommandSender.class, Command.class, String.class, String[].class)
+                .newInstance(label.toLowerCase(), cs, cmd, label, args));
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | IllegalArgumentException
-                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
         }
         return true;
@@ -194,8 +198,9 @@ public class Main extends JavaPlugin {
      */
     public static void setupOnlinePlayers() {
         doBukkitLog("Setting up all online (" + Bukkit.getOnlinePlayers().size() + ") players...");
-        for (Player p : Bukkit.getOnlinePlayers())
+        for (Player p : Bukkit.getOnlinePlayers()) {
             setupPlayerConfig(p.getUniqueId());
+        }
         doBukkitLog("Done.");
     }
 

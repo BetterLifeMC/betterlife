@@ -29,6 +29,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
 
     /**
      * Runs the given command.
+     *
      * @param sender  Sender of the command.
      * @param c       The command itself.
      * @param command The string version of the command.
@@ -46,10 +47,11 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                 case 1:
                     switch (args[0]) {
                         case "bal":
-                            if (player.hasPermission(getPermission() + ".bal"))
+                            if (player.hasPermission(getPermission() + ".bal")) {
                                 sendMessage(player, "&aBalance of &7" + player.getName() + "&7:&a " + economy.getBalance(player), false);
-                            else
+                            } else {
                                 sendPermissionErrorMessage(sender);
+                            }
                             return true;
                         case "give":
                         case "set":
@@ -71,13 +73,15 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                                 }
                                 double bal = economy.getBalance(commandReceiver);
                                 // This needs to be redone, but I can't care at the moment.
-                                if (commandReceiver != null || bal > 0)
+                                if (commandReceiver != null || bal > 0) {
                                     sendMessage(player, "&aBalance of&7 " + args[1] + "&7:&a " + bal, false);
-                                else
+                                } else {
                                     sendMessage(player, "&4Player not found!", false);
+                                }
                                 return true;
-                            } else
+                            } else {
                                 sendPermissionErrorMessage(sender);
+                            }
                         default:
                             return false;
                     }
@@ -97,7 +101,8 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                                     economy.withdrawPlayer(player, playerBalance);
                                     sendMessage(player, "&aYou sent &6$" + playerBalance + "&a to &7" + commandReceiver.getName(), false);
                                     try {
-                                        sendMessage(commandReceiver, "&aYou received &6 $" + playerBalance + "&a from &7" + commandReceiver.getName(), false);
+                                        sendMessage(commandReceiver, "&aYou received &6 $" + playerBalance + "&a from &7" + commandReceiver.getName(),
+                                            false);
                                     } catch (Exception e) {
                                         return false;
                                     }
@@ -113,14 +118,15 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                             return false;
                         case "set":
                             commandReceiver = Bukkit.getPlayer(args[1]);
-                            double balance = Double.valueOf(args[2]);
+                            double balance = Double.parseDouble(args[2]);
                             if (player.hasPermission(getPermission() + ".set")) {
                                 economy.withdrawPlayer(commandReceiver, economy.getBalance(commandReceiver));
                                 economy.depositPlayer(commandReceiver, balance);
                                 sendMessage(sender, "&aSetting player &7" + commandReceiver.getName() + "'s&a balance to &6" + balance, false);
                             }
-                            if (!player.hasPermission(getPermission() + ".set"))
+                            if (!player.hasPermission(getPermission() + ".set")) {
                                 sendPermissionErrorMessage(sender);
+                            }
                             return true;
                         default:
                             return false;

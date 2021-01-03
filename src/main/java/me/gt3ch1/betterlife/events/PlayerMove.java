@@ -21,6 +21,7 @@ import org.bukkit.potion.PotionEffectType;
  * This class contains all of the listeners and events for BetterLife's player movement-based modifications.
  */
 public class PlayerMove implements Listener {
+
     BL_PLAYER playerGetter = Main.bl_player;
     private final Sql sql = Main.sql;
 
@@ -31,7 +32,7 @@ public class PlayerMove implements Listener {
      */
     @EventHandler
     public void roadBoostEvents(PlayerMoveEvent e) {
-        if(!sql.isSqlConnected()) {
+        if (!sql.isSqlConnected()) {
             return;
         }
 
@@ -42,9 +43,9 @@ public class PlayerMove implements Listener {
         loc.setY(loc.getY() + 0.06250);
         Material currentBlock = loc.getWorld().getBlockAt(loc).getRelative(BlockFace.DOWN).getType();
 
-        if (currentBlock == Material.GRASS_PATH && e.getPlayer().isSprinting() && boostEnabled)
+        if (currentBlock == Material.GRASS_PATH && e.getPlayer().isSprinting() && boostEnabled) {
             e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 0));
-
+        }
     }
 
     /**
@@ -54,64 +55,47 @@ public class PlayerMove implements Listener {
      */
     @EventHandler
     public void trailsEvents(PlayerMoveEvent e) {
-        if(!sql.isSqlConnected()) {
+        if (!sql.isSqlConnected()) {
             return;
         }
 
         UUID playerUUID = e.getPlayer().getUniqueId();
         boolean trailEnabled;
         Location location = e.getPlayer().getLocation();
+
         try {
             trailEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
         } catch (NullPointerException npe) {
             trailEnabled = false;
         }
-        if (trailEnabled) {
 
+        if (trailEnabled) {
             int direction = (int) location.getYaw();
 
             if (direction < 0) {
-
                 direction += 360;
-                direction = (direction + 45) / 90;
-
-            } else {
-
-                direction = (direction + 45) / 90;
-
             }
+            direction = (direction + 45) / 90;
 
             if (direction == 1) {
-
                 location.setX(location.getX() + 1);
-
             } else if (direction == 2) {
-
                 location.setZ(location.getZ() + 1);
-
             } else if (direction == 3) {
-
                 location.setX(location.getX() - 1);
-
             } else {
-
                 location.setZ(location.getZ() - 1);
-
             }
 
             Particle p;
             location.setY(location.getY() + 1);
 
             try {
-
                 p = Particle.valueOf(playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
                 e.getPlayer().getWorld().spawnParticle(p, location, 1);
-
             } catch (Exception ex) {
-
                 p = Particle.valueOf(CommandUtils.ch.getCustomConfig().getString("defaultParticle"));
                 e.getPlayer().getWorld().spawnParticle(p, location, 1);
-
             }
         }
     }

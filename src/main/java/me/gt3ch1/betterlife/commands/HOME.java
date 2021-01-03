@@ -64,7 +64,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                 if (sender.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
                     if (homeList.size() == 1) {
                         home = homeList.get(listOfHomes[0]);
-                        teleportHelper.teleportPlayer(player, home, listOfHomes[0],false);
+                        teleportHelper.teleportPlayer(player, home, listOfHomes[0], false);
                     } else if (homeList.size() == 0) {
                         sendMessage(player, "&4You don't have any homes!", true);
                         return false;
@@ -72,8 +72,9 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                         sendListOfHomes(player);
                         return true;
                     }
-                } else
+                } else {
                     sendPermissionErrorMessage(sender);
+                }
                 break;
             case 1:
                 if (player.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
@@ -87,29 +88,33 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                         sendListOfHomes(player);
                         return false;
                     }
-                    teleportHelper.teleportPlayer(player, home, args[0],false);
+                    teleportHelper.teleportPlayer(player, home, args[0], false);
                     break;
-                } else
+                } else {
                     sendPermissionErrorMessage(sender);
+                }
             case 2:
                 switch (args[0]) {
                     case "set":
                         if (player.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
                             homeGetter.addHome(player, args[1]);
                             sendMessage(player, "&aHome &f" + args[1] + " &acreated!", true);
-                        } else
+                        } else {
                             sendPermissionErrorMessage(player);
+                        }
                         break;
                     case "del":
                         if (player.hasPermission(getPermission()) || player.hasPermission(getPermission() + ".*")) {
 
-                            if (homeGetter.delHome(player, args[1]))
+                            if (homeGetter.delHome(player, args[1])) {
                                 sendMessage(player, "&aHome &f" + args[1] + " &adeleted!", true);
-                            else
+                            } else {
                                 sendMessage(player, "&4Home not found!", true);
+                            }
                             break;
-                        } else
+                        } else {
                             sendPermissionErrorMessage(sender);
+                        }
                     default:
                         sendMessage(sender, "&4Invalid option.", true);
                         break;

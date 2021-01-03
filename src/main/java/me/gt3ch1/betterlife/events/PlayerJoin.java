@@ -17,6 +17,7 @@ import java.util.UUID;
  * Handles the events for players joining or quitting the game.
  */
 public class PlayerJoin implements Listener {
+
     private static final BL_PLAYER playerGetter = Main.bl_player;
     private final Sql sql = Main.sql;
 
@@ -27,7 +28,7 @@ public class PlayerJoin implements Listener {
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        if(!sql.isSqlConnected()) {
+        if (!sql.isSqlConnected()) {
             return;
         }
 
@@ -35,7 +36,7 @@ public class PlayerJoin implements Listener {
         UUID playerUUID = p.getUniqueId();
 
         Particle newPlayerParticle = Particle.valueOf(
-        CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
+            CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
         Main.setupPlayerConfig(playerUUID);
         if (playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
             playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, newPlayerParticle.toString());

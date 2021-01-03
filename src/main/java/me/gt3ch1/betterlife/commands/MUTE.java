@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
  * This class represents the /mute command for BetterLife.
  */
 public class MUTE extends BetterLifeCommands implements CommandExecutor {
+
     /**
      * Handles the command /mute
      *
@@ -47,7 +48,7 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
                     return false;
                 }
                 if (!otherPlayer.isOnline()) {
-                    sendMessage(sender, otherPlayer.getName()  + " must be online to mute.", true);
+                    sendMessage(sender, otherPlayer.getName() + " must be online to mute.", true);
                     return false;
                 }
                 boolean getCurrentMuteState = getPlayerMuteState(otherPlayer);
@@ -55,10 +56,8 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
                     sendMessage(sender, otherPlayer.getName() + " is already muted!", true);
                     return false;
                 }
-                sendMessage(sender, ChatColor.YELLOW + "Player " + ChatColor.LIGHT_PURPLE + otherPlayer.getName() +
-                        ChatColor.YELLOW + " has been " + ChatColor.AQUA + "muted" + ChatColor.YELLOW + ".", true);
-                sendMessage(otherPlayer, ChatColor.YELLOW + "You have been " + ChatColor.AQUA + "muted" +
-                        ChatColor.YELLOW + " by: " + ChatColor.LIGHT_PURPLE + sender.getName(), true);
+                sendMessage(sender, "&ePlayer &d" + otherPlayer.getName() + "&e has been &bmuted&e.", true);
+                sendMessage(otherPlayer, "&eYou have been &bmuted &eby: &d" + sender.getName(), true);
                 setPlayerMuteStateToTrue(otherPlayer);
                 return true;
             default:
@@ -80,11 +79,13 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
 
     /**
      * Sets the current player mute state to true.
+     *
      * @param p Player to mute.
      */
-    private void setPlayerMuteStateToTrue(Player p){
+    private void setPlayerMuteStateToTrue(Player p) {
         BL_PLAYER_ENUM type = BL_PLAYER_ENUM.MUTE_PER_PLAYER;
-        if(!getPlayerMuteState(p))
-            Main.bl_player.setPlayerToggle(p.getUniqueId(),type);
+        if (!getPlayerMuteState(p)) {
+            Main.bl_player.setPlayerToggle(p.getUniqueId(), type);
+        }
     }
 }
