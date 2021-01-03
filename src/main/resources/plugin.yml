@@ -3,55 +3,40 @@ name: BetterLife
 version: '0.5'
 description: "Making running a Minecraft server a little more humane."
 authors: [Starmism, GT3CH1]
-api-version: '1.13'
+api-version: '1.16'
 softdepend: [Vault]
 commands:
     bl:
         description: The primary command for BetterLife
-        usage: "Usage: /bl [args]"
     eco:
         description: Various economy-related commands
-        usage: "Usage: /eco [ bal ]"
         permission: betterlife.eco
     home:
         description: Allows users to go home!
-        usage: "Usage: /home [ home ] or /home [ set / del ] [ home ]"
         permission: betterlife.home
     mute:
         description: Mutes a player
-        usage: "Usage: /mute [ player ]"
         permission: betterlife.mute
     roadboost:
         description: Toggles if you get speed 1 when you are over a defined road.
-        usage: "Usage: /roadboost"
         permission: betterlife.roadboost
     teleport:
         description: Teleports a player to another player.
-        usage: "Usage: /teleport [player one] [player two]"
         permission: betterlife.teleport
     toggledownfall:
         description: Toggles whether or not it is storming
-        usage: "Usage: /toggledownfall"
         permission: betterlife.toggledownfall
     trail:
         description: Sets a fancy trail behind your player
-        usage: "Usage: /trail [ list | help | set ]"
         permission: betterlife.trail
     setspawn:
         description: Sets a the games spawnpoint to your location.
-        usage: "Usage: /setspawn"
         permission: betterlife.setspawn
     spawn:
         description: Teleport to the game's spawn point.
-        usage: "Usage: /spawn [ set ]"
         permission: betterlife.spawn
-    unmute:
-        description: Unmutes a player
-        usage: "Usage: /unmute [ player ]"
-        permission: betterlife.unmute
     warp:
         description: Teleports a player to a warp!
-        usage: "Usage: /warp <set, list, del> [ location ]"
         permission: betterlife.warp
 permissions:
     betterlife.eco.bal:
