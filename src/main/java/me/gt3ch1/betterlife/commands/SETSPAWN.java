@@ -11,10 +11,10 @@ import org.bukkit.entity.Player;
 /**
  * @author gt3ch1
  * @author starmism
- * @version 12/2/20
- * Project betterlife
+ * @version 12/2/20 Project betterlife
  */
 public class SETSPAWN extends BetterLifeCommands implements CommandExecutor {
+
     private BL_WARP warps = Main.bl_warp;
 
     /**

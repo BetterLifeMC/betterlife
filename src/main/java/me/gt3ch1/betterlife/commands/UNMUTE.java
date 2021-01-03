@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
  * This class represents the /mute command for BetterLife.
  */
 public class UNMUTE extends BetterLifeCommands implements CommandExecutor {
+
     /**
      * Handles the command /unmute
      *
@@ -55,10 +56,8 @@ public class UNMUTE extends BetterLifeCommands implements CommandExecutor {
                     sendMessage(sender, args[0] + " is already unmuted!", true);
                     return false;
                 }
-                sendMessage(sender, ChatColor.YELLOW + "Player " + ChatColor.LIGHT_PURPLE + args[0] +
-                        ChatColor.YELLOW + " has been " + ChatColor.AQUA + "unmuted" + ChatColor.YELLOW + ".", true);
-                sendMessage(otherPlayer, ChatColor.YELLOW + "You have been " + ChatColor.AQUA + "unmuted" +
-                        ChatColor.YELLOW + " by: " + ChatColor.LIGHT_PURPLE + sender.getName(), true);
+                sendMessage(sender, "&ePlayer &d" + args[0] + "&e has been &bunmuted&e.", true);
+                sendMessage(otherPlayer, "&eYou have been &bunmuted &eby: &d" + sender.getName(), true);
                 setPlayerMuteStateToFalse(otherPlayer);
                 return true;
             default:
@@ -80,11 +79,13 @@ public class UNMUTE extends BetterLifeCommands implements CommandExecutor {
 
     /**
      * Sets the current player mute state to false.
+     *
      * @param p Player to unmute
      */
-    private void setPlayerMuteStateToFalse(Player p){
+    private void setPlayerMuteStateToFalse(Player p) {
         BL_PLAYER_ENUM type = BL_PLAYER_ENUM.MUTE_PER_PLAYER;
-        if(getPlayerMuteState(p))
-            Main.bl_player.setPlayerToggle(p.getUniqueId(),type);
+        if (getPlayerMuteState(p)) {
+            Main.bl_player.setPlayerToggle(p.getUniqueId(), type);
+        }
     }
 }

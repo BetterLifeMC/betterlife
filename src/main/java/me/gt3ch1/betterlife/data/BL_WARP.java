@@ -13,10 +13,10 @@ import java.util.LinkedHashMap;
 /**
  * @author gt3ch1
  * @author starmism
- * @version 12/2/20
- * Project betterlife
+ * @version 12/2/20 Project betterlife
  */
 public class BL_WARP {
+
     private final Sql sql = Main.sql;
     private ResultSet rs;
     private boolean noWarps = true;
@@ -38,6 +38,7 @@ public class BL_WARP {
 
     /**
      * Gets all the warps from the SQL backend.
+     *
      * @return All of the warps from the SQL backend.
      */
     private LinkedHashMap<String, Location> getWarpsSql() {
@@ -48,12 +49,12 @@ public class BL_WARP {
             rs = sql.executeQuery(query);
             while (rs.next()) {
                 warpList.put(rs.getNString("Name"), new Location(
-                        Bukkit.getWorld(rs.getString("World")),
-                        rs.getDouble("X"),
-                        rs.getDouble("Y"),
-                        rs.getDouble("Z"),
-                        rs.getFloat("Yaw"),
-                        rs.getFloat("Pitch")));
+                    Bukkit.getWorld(rs.getString("World")),
+                    rs.getDouble("X"),
+                    rs.getDouble("Y"),
+                    rs.getDouble("Z"),
+                    rs.getFloat("Yaw"),
+                    rs.getFloat("Pitch")));
             }
 
             noWarps = warpList.isEmpty();
@@ -74,55 +75,56 @@ public class BL_WARP {
     private void addWarp(Player player, String warp) {
 
         String query = "INSERT INTO BL_WARP VALUES ("
-                + "'" + warp + "',"
-                + player.getLocation().getX() + ","
-                + player.getLocation().getY() + ","
-                + player.getLocation().getZ() + ","
-                + "'" + player.getLocation().getWorld().getName() + "',"
-                + player.getLocation().getYaw() + ","
-                + player.getLocation().getPitch()
-                + ")";
+            + "'" + warp + "',"
+            + player.getLocation().getX() + ","
+            + player.getLocation().getY() + ","
+            + player.getLocation().getZ() + ","
+            + "'" + player.getLocation().getWorld().getName() + "',"
+            + player.getLocation().getYaw() + ","
+            + player.getLocation().getPitch()
+            + ")";
         warps.put(warp, player.getLocation());
         sql.executeUpdate(query);
         Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
     }
 
     /**
-     * Sets the given warp to the current players location.  This will add a warp
-     * if it does not exist in the database.
+     * Sets the given warp to the current players location.  This will add a warp if it does not exist in the database.
+     *
      * @param player Player we are getting the location of.
-     * @param warp Warp name we are setting.
+     * @param warp   Warp name we are setting.
      */
     public void setWarp(Player player, String warp) {
         if (getWarps().containsKey(warp)) {
             String query = "UPDATE `BL_WARP` SET "
-                    + "`X`='" + player.getLocation().getX() + "',"
-                    + "`Y`='" + player.getLocation().getY() + "',"
-                    + "`Z`='" + player.getLocation().getZ() + "',"
-                    + "`World`='" + player.getLocation().getWorld().getName() + "',"
-                    + "`Yaw`='" + player.getLocation().getYaw() + "',"
-                    + "`Pitch`='" + player.getLocation().getPitch() + "'"
-                    + " WHERE `Name` = '" + warp + "'";
+                + "`X`='" + player.getLocation().getX() + "',"
+                + "`Y`='" + player.getLocation().getY() + "',"
+                + "`Z`='" + player.getLocation().getZ() + "',"
+                + "`World`='" + player.getLocation().getWorld().getName() + "',"
+                + "`Yaw`='" + player.getLocation().getYaw() + "',"
+                + "`Pitch`='" + player.getLocation().getPitch() + "'"
+                + " WHERE `Name` = '" + warp + "'";
             warps.put(warp, player.getLocation());
             sql.executeUpdate(query);
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
-        }else
-            addWarp(player,warp);
+        } else {
+            addWarp(player, warp);
+        }
     }
 
     /**
      * Deletes the given warp
      *
-     * @param home   Name of the warp to delete.
+     * @param home Name of the warp to delete.
      * @return True if the given warp exists and was deleted.
      */
     public boolean delWarp(String home) {
-            if (warps.containsKey(home)) {
-                String query = "DELETE FROM BL_WARP WHERE `Name` = ?;";
-                sql.modifyHome(query, home);
-                warps.remove(home);
-                return true;
-            }
+        if (warps.containsKey(home)) {
+            String query = "DELETE FROM BL_WARP WHERE `Name` = ?;";
+            sql.modifyHome(query, home);
+            warps.remove(home);
+            return true;
+        }
         return false;
     }
 }

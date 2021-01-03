@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class TRAIL extends BetterLifeCommands implements CommandExecutor {
+
     BL_PLAYER playerGetter = Main.bl_player;
 
     /**
@@ -34,6 +35,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
 
     /**
      * Runs the /trail command
+     *
      * @param sender  Sender of the command.
      * @param c       The command itself.
      * @param command The string version of the command.
@@ -56,15 +58,18 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                         if (sender instanceof Player) {
                             Player player = (Player) sender;
                             sendMessage(player, "&7The currently enabled trails are: ", true);
-                            for (String allowedParticle : allowedParticles)
+                            for (String allowedParticle : allowedParticles) {
                                 if (player.hasPermission(
                                     "betterlife.trails.particle." + allowedParticle.toLowerCase())
-                                    || player.hasPermission("betterlife.trails.particle.*"))
+                                    || player.hasPermission("betterlife.trails.particle.*")) {
                                     sendMessage(player, "&d" + allowedParticle, true);
+                                }
+                            }
                         } else {
                             sendMessage(sender, "&7The currently enabled trails are: ", true);
-                            for (String allowedParticle : allowedParticles)
+                            for (String allowedParticle : allowedParticles) {
                                 sendMessage(sender, "&d" + allowedParticle, true);
+                            }
                         }
                         return true;
                     case "toggle":
@@ -91,25 +96,29 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                         return false;
                 }
             case 2:
-                if (args[0].equalsIgnoreCase("set"))
+                if (args[0].equalsIgnoreCase("set")) {
                     if (sender instanceof Player) {
                         Player player = (Player) sender;
                         UUID playerUUID = player.getUniqueId();
 
-                        if (allowedParticles.contains(args[1].toUpperCase()) && (player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase())
+                        if (allowedParticles.contains(args[1].toUpperCase()) && (
+                            player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase())
                                 || player.hasPermission("betterlife.trail.particle.*"))) {
 
                             playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, args[1].toUpperCase());
                             sendMessage(player, "&7Your trail is now set to: &6" + args[1].toUpperCase(), true);
 
-                        } else if (!player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase()))
+                        } else if (!player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase())) {
                             sendMessage(player, "&4You need permission to use that trail!", true);
-                        else if (!allowedParticles.contains(args[1].toUpperCase()))
-                            sendMessage(player, "&4That particle is disabled on this server! Try /trail list to see the list of available trails.", true);
+                        } else if (!allowedParticles.contains(args[1].toUpperCase())) {
+                            sendMessage(player, "&4That particle is disabled on this server! Try /trail list to see the list of available trails.",
+                                true);
+                        }
                     } else {
                         // TODO: Add console support for attaching a username target as arg[2]
                         sendMessage(sender, "&4You must be a player to use this command!", true);
                     }
+                }
                 return true;
             default:
                 sendHelpMessage(sender, "trail", helpHash);

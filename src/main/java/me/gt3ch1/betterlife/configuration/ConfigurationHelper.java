@@ -22,12 +22,14 @@ public class ConfigurationHelper {
     private String table;
     private String filename;
     private Main m = Main.m;
+
     /**
      * Creates a new configuration helper
-     * @param table SQL table/
+     *
+     * @param table    SQL table/
      * @param filename File to be createad/writen to if not using SQL.
      */
-    public ConfigurationHelper(String table,String filename){
+    public ConfigurationHelper(String table, String filename) {
         this.table = table;
         this.filename = filename + ".yml";
     }
@@ -54,27 +56,27 @@ public class ConfigurationHelper {
     }
 
     /**
-     * Returns the current instance of the player configuration
-     * file.
+     * Returns the current instance of the player configuration file.
      *
      * @return PlayerConfiguration
      */
     public FileConfiguration getCustomConfig() {
 
-        if (customConfig == null)
+        if (customConfig == null) {
             reloadCustomConfig();
+        }
 
         return customConfig;
     }
 
     /**
-     * Save the current state of the player configuration in to
-     * it's file.
+     * Save the current state of the player configuration in to it's file.
      */
     public void saveCustomConfig() {
 
-        if (customConfig == null || customConfigFile == null)
+        if (customConfig == null || customConfigFile == null) {
             return;
+        }
 
         try {
             getCustomConfig().save(customConfigFile);

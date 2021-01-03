@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class BL_HOME {
+
     private final Sql sql = Main.sql;
     private ResultSet rs;
 
@@ -45,12 +46,12 @@ public class BL_HOME {
             rs = sql.executeQuery(query);
             while (rs.next()) {
                 homeList.put(rs.getNString("Home"), new Location(
-                        Bukkit.getWorld(rs.getString("World")),
-                        rs.getDouble("X"),
-                        rs.getDouble("Y"),
-                        rs.getDouble("Z"),
-                        rs.getFloat("Yaw"),
-                        rs.getFloat("Pitch")));
+                    Bukkit.getWorld(rs.getString("World")),
+                    rs.getDouble("X"),
+                    rs.getDouble("Y"),
+                    rs.getDouble("Z"),
+                    rs.getFloat("Yaw"),
+                    rs.getFloat("Pitch")));
             }
             return homeList;
         } catch (SQLException e) {
@@ -68,18 +69,17 @@ public class BL_HOME {
     public void addHome(Player player, String home) {
 
         String query = "INSERT INTO BL_HOME VALUES ("
-                + "'" + player.getUniqueId() + "',"
-                + "?,"
-                + player.getLocation().getX() + ","
-                + player.getLocation().getY() + ","
-                + player.getLocation().getZ() + ","
-                + "'" + player.getLocation().getWorld().getName() + "',"
-                + player.getLocation().getYaw() + ","
-                + player.getLocation().getPitch()
-                + ")";
+            + "'" + player.getUniqueId() + "',"
+            + "?,"
+            + player.getLocation().getX() + ","
+            + player.getLocation().getY() + ","
+            + player.getLocation().getZ() + ","
+            + "'" + player.getLocation().getWorld().getName() + "',"
+            + player.getLocation().getYaw() + ","
+            + player.getLocation().getPitch()
+            + ")";
         homesPerPlayer.get(player.getUniqueId()).put(home, player.getLocation());
         sql.modifyHome(query, home);
-        Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
     }
 
     /**
@@ -90,15 +90,14 @@ public class BL_HOME {
      * @return True if the given home exists and was deleted.
      */
     public boolean delHome(Player player, String home) {
-        if (homesPerPlayer.containsKey(player.getUniqueId()))
+        if (homesPerPlayer.containsKey(player.getUniqueId())) {
             if (homesPerPlayer.get(player.getUniqueId()).containsKey(home)) {
                 String query = "DELETE FROM BL_HOME WHERE `UUID` = '" + player.getUniqueId() + "' AND `Home` = ?;";
                 sql.modifyHome(query, home);
-                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 homesPerPlayer.get(player.getUniqueId()).remove(home);
                 return true;
             }
-
+        }
         return false;
     }
 }

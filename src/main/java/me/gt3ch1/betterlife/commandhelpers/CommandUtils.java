@@ -11,18 +11,18 @@ import org.bukkit.entity.Player;
 import java.util.LinkedHashMap;
 
 /**
- * Base class for BetterLifeCommands, and various other methods required to send messages to players,
- * or to add tab completion for certain commands.  This class also stores all of the configuration
- * data required to run the plugin.
+ * Base class for BetterLifeCommands, and various other methods required to send messages to players, or to add tab completion for certain commands.
+ * This class also stores all of the configuration data required to run the plugin.
  */
 public class CommandUtils {
+
     // Initializes some important variables.
     public static Main m = Main.m;
     public static MainConfigurationHandler ch;
     public static ParticleConfigurationHandler partch;
     public static PlayerTeleportHelper teleportHelper;
     public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[&3BetterLife&c] ") + ChatColor.RESET;
-    public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco", "home","warp"};
+    public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco", "home", "warp"};
 
     /**
      * Sends the sender a message.

@@ -12,7 +12,8 @@ import org.bukkit.entity.Player;
  * @author starmism
  * @version 12/15/20
  */
-public class TELEPORT extends BetterLifeCommands implements CommandExecutor  {
+public class TELEPORT extends BetterLifeCommands implements CommandExecutor {
+
     /**
      * Creates a new BetterLife command.
      *
@@ -24,7 +25,7 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor  {
      */
     public TELEPORT(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
-        this.onCommand(cs,c,label,args);
+        this.onCommand(cs, c, label, args);
     }
 
     /**
@@ -38,33 +39,33 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor  {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
-        switch(args.length){
+        switch (args.length) {
             case 1:
-                if(!(sender instanceof  Player)){
-                    sendMessage(sender,"Console can't teleport!",true);
+                if (!(sender instanceof Player)) {
+                    sendMessage(sender, "Console can't teleport!", true);
                     return false;
                 }
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
-                if(otherPlayer == null){
+                if (otherPlayer == null) {
                     sendMessage(sender, "You have teleported to someone that doesn't exist..?", false);
                     return false;
                 }
-                if(otherPlayer.getName().equalsIgnoreCase(sender.getName())) {
+                if (otherPlayer.getName().equalsIgnoreCase(sender.getName())) {
                     sendMessage(sender, "You have teleported to yourself..?", false);
                     return false;
                 }
-                teleportHelper.teleportPlayer((Player)sender,otherPlayer);
+                teleportHelper.teleportPlayer((Player) sender, otherPlayer);
                 return true;
             case 2:
                 Player firstPlayer = Bukkit.getPlayer(args[0]);
                 Player secondPlayer = Bukkit.getPlayer(args[1]);
-                if(firstPlayer == null || secondPlayer == null){
+                if (firstPlayer == null || secondPlayer == null) {
                     sendMessage(sender, "You have teleported to someone that doesn't exist..?", false);
                     return false;
                 }
-                if(sender.hasPermission("betterlife.teleport.others"))
-                    teleportHelper.teleportPlayer(firstPlayer,secondPlayer);
-                else {
+                if (sender.hasPermission("betterlife.teleport.others")) {
+                    teleportHelper.teleportPlayer(firstPlayer, secondPlayer);
+                } else {
                     sendPermissionErrorMessage(sender);
                     return false;
                 }

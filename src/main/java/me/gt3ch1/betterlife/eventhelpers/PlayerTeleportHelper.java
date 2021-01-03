@@ -15,8 +15,7 @@ import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendMessage;
 /**
  * @author gt3ch1
  * @author starmism
- * @version 12/2/20
- * Project betterlife
+ * @version 12/2/20 Project betterlife
  */
 public class PlayerTeleportHelper {
 
@@ -37,7 +36,7 @@ public class PlayerTeleportHelper {
     }
 
     public void teleportPlayer(Player player, Player otherPlayer) {
-        teleportPlayerHelper(player, otherPlayer.getLocation(), otherPlayer.getName(),false);
+        teleportPlayerHelper(player, otherPlayer.getLocation(), otherPlayer.getName(), false);
     }
 
     /**
@@ -60,9 +59,9 @@ public class PlayerTeleportHelper {
      */
     private void teleportPlayerHelper(Player player, Location location, String home, boolean forceTeleport) {
         int ticks = ch.getCustomConfig().getInt("home-countdown") * 20;
-        if (home != null)
-            sendMessage(player, ChatColor.AQUA + "Teleporting to " + ChatColor.YELLOW +
-                    home + ChatColor.AQUA + " in " + ChatColor.GREEN + ticks / 20 + ChatColor.AQUA + " seconds...", true);
+        if (home != null) {
+            sendMessage(player, "&bTeleporting to &e" + home + "&b in &a" + ticks / 20 + "&b seconds...", true);
+        }
 
         final Location initial = player.getLocation();
 
@@ -75,7 +74,7 @@ public class PlayerTeleportHelper {
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         BukkitTask task = scheduler.runTaskLater(m, () -> {
             player.teleport(location);
-            sendMessage(player, ChatColor.RED + "Teleportation successful!", true);
+            sendMessage(player, "&aTeleportation successful!", true);
         }, ticks);
 
         BukkitTask checker = scheduler.runTaskTimer(m, () -> {
@@ -88,7 +87,7 @@ public class PlayerTeleportHelper {
                 if (scheduler.isQueued(task.getTaskId())) {
                     cancelTask();
                     cancelChecker();
-                    sendMessage(player, ChatColor.DARK_RED + "Teleportation cancelled.", true);
+                    sendMessage(player, "&4Teleportation cancelled.", true);
                 }
             }
         }, 10, 10);
@@ -128,7 +127,6 @@ public class PlayerTeleportHelper {
         minZ = initial.getZ() - 0.5;
 
         return !(cur.getX() >= minX && cur.getX() <= maxX
-                && cur.getZ() >= minZ && cur.getZ() <= maxZ);
+            && cur.getZ() >= minZ && cur.getZ() <= maxZ);
     }
-
 }

@@ -11,10 +11,10 @@ import org.bukkit.entity.Player;
 /**
  * @author gt3ch1
  * @author starmism
- * @version 12/2/20
- * Project betterlife
+ * @version 12/2/20 Project betterlife
  */
 public class SPAWN extends BetterLifeCommands implements CommandExecutor {
+
     private BL_WARP warps = Main.bl_warp;
 
     /**
@@ -28,7 +28,7 @@ public class SPAWN extends BetterLifeCommands implements CommandExecutor {
      */
     public SPAWN(String permission, CommandSender cs, Command c, String label, String[] args) {
         super(permission, cs, c, label, args);
-        this.onCommand(cs,c,label,args);
+        this.onCommand(cs, c, label, args);
     }
 
     /**

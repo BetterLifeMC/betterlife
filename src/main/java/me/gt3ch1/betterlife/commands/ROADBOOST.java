@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
+
     BL_PLAYER playerGetter = Main.bl_player;
 
     /**
@@ -43,7 +44,7 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
             if (p.hasPermission(this.getPermission())) {
 
                 boolean hasToggleSprintEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
-                playerGetter.setPlayerToggle(playerUUID,BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
+                playerGetter.setPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
                 String toggleState = hasToggleSprintEnabled ? "&cdisabled" : "&aenabled";
                 sendMessage(p, "&7Roadboost has been " + toggleState + "&7!", true);
 

@@ -55,17 +55,17 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
         Player player = (Player) sender;
         switch (args.length) {
             case 0:
-                sendMessage(sender, ChatColor.RED + "Invalid usage!", true);
+                sendMessage(sender, "&4Invalid usage!", true);
                 return false;
             case 1:
                 if (args[0].equalsIgnoreCase("list")) {
                     if (availableWarps.size() == 0) {
-                        sendMessage(player, "&4No available warps", true);
+                        sendMessage(player, "&4No available warps.", true);
                         return true;
                     }
-                    sendMessage(player, ChatColor.LIGHT_PURPLE + "Available warps:", true);
+                    sendMessage(player, "&dAvailable warps:", true);
                     for (String warp : availableWarps) {
-                        sendMessage(player, ChatColor.AQUA + warp, false);
+                        sendMessage(player, "&b" + warp, false);
                     }
                     return true;
                 }
@@ -79,16 +79,14 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
                 if (args[0].equalsIgnoreCase("set")) {
                     if (sender.hasPermission("betterlife.warp.set") || sender.hasPermission("betterlife.warp.*")) {
                         Main.bl_warp.setWarp(player, args[1]);
-                        sendMessage(sender, ChatColor.AQUA + "Warp " + ChatColor.YELLOW + args[1] +
-                            ChatColor.AQUA + " sat to your location", true);
+                        sendMessage(sender, "&bWarp &e" + args[1] + "&b set to your current location!", true);
                         return true;
                     }
                 }
                 if (args[0].equalsIgnoreCase("del")) {
                     if (sender.hasPermission("betterlife.warp.del") || sender.hasPermission("betterlife.warp.*")) {
                         Main.bl_warp.delWarp(args[1]);
-                        sendMessage(sender, ChatColor.AQUA + "Warp " + ChatColor.YELLOW + args[1] +
-                            ChatColor.AQUA + " has been deleted.", true);
+                        sendMessage(sender, "&bWarp &e" + args[1] + "&b has been deleted.", true);
                         return true;
                     }
                 }

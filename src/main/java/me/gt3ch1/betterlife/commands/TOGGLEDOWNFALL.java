@@ -27,6 +27,7 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
 
     /**
      * Runs the /toggledownfall command
+     *
      * @param sender  Sender of the command.
      * @param c       The command itself.
      * @param command The string version of the command.
@@ -50,10 +51,11 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
                 try {
                     World world = Bukkit.getServer().getWorld(args[0]);
 
-                    if (world.getEnvironment() != Environment.NETHER && world.getEnvironment() != Environment.THE_END)
+                    if (world.getEnvironment() != Environment.NETHER && world.getEnvironment() != Environment.THE_END) {
                         toggleWeather(world, sender);
-                    else
+                    } else {
                         sendMessage(sender, "&4Can't change weather in that world!", true);
+                    }
                     break;
 
                 } catch (NullPointerException ex) {
@@ -71,7 +73,7 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
     /**
      * Toggles the weather in @world
      *
-     * @param world World to change the weather of.
+     * @param world  World to change the weather of.
      * @param sender Who sent the command
      */
     private void toggleWeather(World world, CommandSender sender) {
