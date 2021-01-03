@@ -1,5 +1,6 @@
 package me.gt3ch1.betterlife.Main;
 
+import java.util.List;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.commandhelpers.HelpHelper;
 import me.gt3ch1.betterlife.commandhelpers.TabCompleterHelper;
@@ -105,7 +106,10 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
         m = this;
-        CommandUtils.enableConfiguration();
+        if (!CommandUtils.enableConfiguration() && !isTesting()) {
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
 
         String host = CommandUtils.ch.getCustomConfig().getString("sql.host");
         String database = CommandUtils.ch.getCustomConfig().getString("sql.database");
@@ -122,7 +126,7 @@ public class Main extends JavaPlugin {
         bl_zone_member = new BL_ZONE_MEMBER();
         bl_warp = new BL_WARP();
 
-        new ListenersSetup(m);
+        ListenersSetup.setupListeners(this);
         if (!isTesting()) {
             for (String command : CommandUtils.getEnabledTabCommands()) {
                 getCommand(command).setTabCompleter(new TabCompleterHelper());
@@ -142,7 +146,7 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         CommandUtils.disableConfiguration();
 
-        HandlerList.unregisterAll(m);
+        ListenersSetup.disableListeners(this);
 
         doBukkitLog(ChatColor.DARK_PURPLE + "Goodbye!");
         sql = null;

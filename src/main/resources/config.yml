@@ -1,14 +1,17 @@
 # Main BetterLife Configuration File
 
+# Config version number. DO NOT CHANGE
+version: 2
+
 # SQL Database Connection
-# dbType: The type of database you're using. Must be: mysql or mariadb
 # host: IP to connect to
+# port: Port of the server
 # database: The name of the schema to use
 # username: Username of user. Recommended to create one specifically for Minecraft
 # password: Password of user. ^^
 sql:
-  dbType: mysql
   host: localhost
+  port: 3306
   database: BetterLife
   username: username
   password: password
