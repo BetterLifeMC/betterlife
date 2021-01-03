@@ -43,49 +43,27 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
         switch (args.length) {
             case 1:
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
+
                 if (otherPlayer == null) {
-                    sendMessage(sender, "Player cannot exist!", true);
+                    sendMessage(sender, "Player doesn't exist!", true);
                     return false;
                 }
+
                 if (!otherPlayer.isOnline()) {
-                    sendMessage(sender, otherPlayer.getName() + " must be online to mute.", true);
+                    sendMessage(sender, otherPlayer.getName() + " must be online to be muted.", true);
                     return false;
                 }
-                boolean getCurrentMuteState = getPlayerMuteState(otherPlayer);
-                if (getCurrentMuteState) {
-                    sendMessage(sender, otherPlayer.getName() + " is already muted!", true);
-                    return false;
-                }
-                sendMessage(sender, "&ePlayer &d" + otherPlayer.getName() + "&e has been &bmuted&e.", true);
-                sendMessage(otherPlayer, "&eYou have been &bmuted &eby: &d" + sender.getName(), true);
-                setPlayerMuteStateToTrue(otherPlayer);
+
+                boolean getCurrentMuteState = Main.bl_player.getPlayerToggle(otherPlayer.getUniqueId(), BL_PLAYER_ENUM.MUTE_PER_PLAYER);
+                String newMuteStatus = getCurrentMuteState ? "unmuted" : "muted";
+
+                sendMessage(sender, "&ePlayer &d" + otherPlayer.getName() + "&e has been &b" + newMuteStatus + "&e.", true);
+                sendMessage(otherPlayer, "&eYou have been &b" + newMuteStatus + "&e by: &d" + sender.getName(), true);
+                Main.bl_player.setPlayerToggle(otherPlayer.getUniqueId(), BL_PLAYER_ENUM.MUTE_PER_PLAYER);
                 return true;
             default:
                 sendMessage(sender, "Invalid usage!", true);
                 return false;
-        }
-    }
-
-    /**
-     * Gets the current state of the player mute.
-     *
-     * @param p Player to get their mute status of.
-     * @return The current status of players mute.
-     */
-    private boolean getPlayerMuteState(Player p) {
-        BL_PLAYER_ENUM type = BL_PLAYER_ENUM.MUTE_PER_PLAYER;
-        return Main.bl_player.getPlayerToggle(p.getUniqueId(), type);
-    }
-
-    /**
-     * Sets the current player mute state to true.
-     *
-     * @param p Player to mute.
-     */
-    private void setPlayerMuteStateToTrue(Player p) {
-        BL_PLAYER_ENUM type = BL_PLAYER_ENUM.MUTE_PER_PLAYER;
-        if (!getPlayerMuteState(p)) {
-            Main.bl_player.setPlayerToggle(p.getUniqueId(), type);
         }
     }
 }
