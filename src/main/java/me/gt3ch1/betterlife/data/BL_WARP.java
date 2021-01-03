@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 public class BL_WARP {
     private final Sql sql = Main.sql;
     private ResultSet rs;
+    private boolean noWarps = true;
 
     public static LinkedHashMap<String, Location> warps = new LinkedHashMap<>();
 
@@ -29,8 +30,9 @@ public class BL_WARP {
      * @return All of the warps.
      */
     public LinkedHashMap<String, Location> getWarps() {
-        if (warps.size() == 0)
+        if (noWarps) {
             warps = getWarpsSql();
+        }
         return warps;
     }
 
@@ -53,6 +55,9 @@ public class BL_WARP {
                         rs.getFloat("Yaw"),
                         rs.getFloat("Pitch")));
             }
+
+            noWarps = warpList.isEmpty();
+
             return warpList;
         } catch (SQLException e) {
             e.printStackTrace();
