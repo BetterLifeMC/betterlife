@@ -49,8 +49,8 @@ public class Main extends JavaPlugin {
     protected Main(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
         isTesting = true;
-        setSql("mysql", System.getenv("BL_SQL_HOST"), System.getenv("BL_SQL_DB")
-            , System.getenv("BL_SQL_USER"), System.getenv("BL_SQL_PASS"));
+        setSql(System.getenv("BL_SQL_HOST"), System.getenv("BL_SQL_DB"),
+            System.getenv("BL_SQL_USER"), System.getenv("BL_SQL_PASS"), Integer.parseInt(System.getenv("BL_SQL_PORT")));
         onEnable();
     }
 
@@ -95,8 +95,8 @@ public class Main extends JavaPlugin {
             + ChatColor.BLUE + log);
     }
 
-    public void setSql(String dbType, String host, String database, String username, String password) {
-        sql = new Sql(dbType, host, database, username, password);
+    public void setSql(String host, String database, String username, String password, int port) {
+        sql = new Sql(host, database, username, password, port);
     }
 
     /**
@@ -107,13 +107,13 @@ public class Main extends JavaPlugin {
         m = this;
         CommandUtils.enableConfiguration();
 
-        String dbType = CommandUtils.ch.getCustomConfig().getString("sql.dbType");
         String host = CommandUtils.ch.getCustomConfig().getString("sql.host");
         String database = CommandUtils.ch.getCustomConfig().getString("sql.database");
         String username = CommandUtils.ch.getCustomConfig().getString("sql.username");
         String password = CommandUtils.ch.getCustomConfig().getString("sql.password");
+        int port = CommandUtils.ch.getCustomConfig().getInt("sql.port");
         if (sql == null) {
-            sql = new Sql(dbType, host, database, username, password);
+            sql = new Sql(host, database, username, password, port);
         }
 
         bl_home = new BL_HOME();
