@@ -70,6 +70,17 @@ public class ConfigurationHelper {
     }
 
     /**
+     * Returns the file used for the config.
+     * @return Config file
+     */
+    public File getFile() {
+        if (customConfigFile != null) {
+            return customConfigFile;
+        }
+        return null;
+    }
+
+    /**
      * Save the current state of the player configuration in to it's file.
      */
     public void saveCustomConfig() {
