@@ -1,9 +1,12 @@
 package me.gt3ch1.betterlife.Main;
 
+import java.util.ArrayList;
 import me.gt3ch1.betterlife.events.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredListener;
 
 /**
  * Enabled the listeners needed for BetterLife to run properly.
@@ -20,6 +23,10 @@ public class ListenersSetup {
      */
     public ListenersSetup(Main plugin) {
 
+
+    }
+
+    public static void setupListeners(Main plugin) {
         plugin.listeners.add(new BlockFade());
         plugin.listeners.add(new PlayerMove());
         plugin.listeners.add(new PlayerJoin());
@@ -33,5 +40,10 @@ public class ListenersSetup {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
             Main.doBukkitLog("Enabling listener: " + ChatColor.GOLD + listener.toString());
         }
+    }
+
+    public static void disableListeners(Main plugin) {
+        HandlerList.unregisterAll(plugin);
+        Main.doBukkitLog("Unregistering event listeners.");
     }
 }
