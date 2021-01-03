@@ -1,5 +1,13 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import me.gt3ch1.betterlife.Main.Main;
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.ParticleConfigurationHandler;
@@ -23,6 +31,7 @@ public class CommandUtils {
     public static PlayerTeleportHelper teleportHelper;
     public static String betterLifeBanner = ChatColor.translateAlternateColorCodes('&', "&c[&3BetterLife&c] ") + ChatColor.RESET;
     public static String[] enabledTabCommands = {"trail", "toggledownfall", "bl", "eco", "home", "warp"};
+    public static final int currentConfigVersion = 2;
 
     /**
      * Sends the sender a message.
@@ -65,19 +74,44 @@ public class CommandUtils {
         sendMessage(sender, "&b&lby GT3CH1 & Starmism", true);
         sendMessage(sender, "&6--== [ Available commands ] ==--", true);
         args.forEach((cmd, desc) -> {
-            sendMessage(sender, "&d/" + commandName + " " + cmd + " &r| " + "&6" + desc, true);
+            sendMessage(sender, "&d/" + commandName + " " + cmd + " &r| " + "&6" + desc, false);
         });
     }
 
     /**
      * Enables & loads the configuration
      */
-    public static void enableConfiguration() {
+    public static boolean enableConfiguration() {
         ch = new MainConfigurationHandler();
         partch = new ParticleConfigurationHandler();
         teleportHelper = new PlayerTeleportHelper();
         m.saveDefaultConfig();
         partch.saveDefaultConfig();
+
+        int version;
+        if (ch.getCustomConfig().contains("version", true)) {
+            version = ch.getCustomConfig().getInt("version");
+        } else {
+            version = -1;
+        }
+
+        if (version != currentConfigVersion) {
+            Main.doBukkitLog(ChatColor.RED + "" + ChatColor.BOLD + "Config Version: " + version + " != " + currentConfigVersion);
+            Main.doBukkitLog(ChatColor.DARK_RED + "Config version outdated. Moving current config and saving a fresh config of the new version.");
+            Main.doBukkitLog(ChatColor.DARK_RED + "CONFIG SETTINGS WILL BE RESET. PLEASE TRANSLATE YOUR OLD CONFIG TO THE NEW FORMAT!!!");
+
+            Path oldConfig = ch.getFile().toPath();
+            try {
+                Files.move(oldConfig, new File(m.getDataFolder(), "old_config.yml").toPath(),
+                    REPLACE_EXISTING);
+                Files.deleteIfExists(oldConfig);
+            } catch (IOException e) {
+                Main.doBukkitLog(ChatColor.DARK_RED + "Failure moving old config. Rename it manually to get the latest version.");
+            }
+            m.saveDefaultConfig();
+            return false;
+        }
+        return true;
     }
 
     /**
