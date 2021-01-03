@@ -110,7 +110,6 @@ public class Sql {
                 rs = meta.getColumns(null, null, entry.getTable(), entry.getColumn());
             } catch (SQLException e) {
                 Main.doBukkitLog(ChatColor.DARK_RED + "Get columns failed!");
-
             }
             if (!rs.next()) {
                 String query = "ALTER TABLE " + entry.getTable() + " ADD " + entry.getColumn() + " "
@@ -232,7 +231,6 @@ public class Sql {
             doBukkitLog(ChatColor.RED + "SQL isn't connected.");
             return null;
         }
-
         try {
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             return stmt.executeQuery(query);
@@ -253,7 +251,6 @@ public class Sql {
             doBukkitLog(ChatColor.RED + "SQL isn't connected.");
             return false;
         }
-
         try {
             Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             stmt.executeUpdate(query);
@@ -304,6 +301,10 @@ public class Sql {
         }
     }
 
+    /**
+     * Returns whether or not sql is connected
+     * @return True if SQL is connected.
+     */
     public boolean isSqlConnected() {
         return isSqlConnected;
     }
