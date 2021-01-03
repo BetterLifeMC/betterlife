@@ -45,13 +45,13 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
 
                 if (otherPlayer == null) {
-                    sendMessage(sender, "Player doesn't exist!", true);
-                    return false;
+                    sendMessage(sender, "&4Player doesn't exist!", true);
+                    return true;
                 }
 
                 if (!otherPlayer.isOnline()) {
-                    sendMessage(sender, otherPlayer.getName() + " must be online to be muted.", true);
-                    return false;
+                    sendMessage(sender, "&e" + otherPlayer.getName() + " &4must be online to be muted.", true);
+                    return true;
                 }
 
                 boolean getCurrentMuteState = Main.bl_player.getPlayerToggle(otherPlayer.getUniqueId(), BL_PLAYER_ENUM.MUTE_PER_PLAYER);
