@@ -16,6 +16,7 @@ import java.util.UUID;
 import static org.junit.Assert.*;
 
 public class TestBetterLife {
+
     private ServerMock server;
     private Main plugin;
     private UUID playerOneUUID = UUID.fromString("ed275ae9-e765-408b-b056-3d5a5d540626");
@@ -46,24 +47,19 @@ public class TestBetterLife {
     }
 
     @Test
-    public void testSqlConnection(){
+    public void testSqlConnection() {
         assertTrue(plugin.getSql().isSqlConnected());
     }
 
     @Test
-    public void testPlayerMute(){
-        playerOne.performCommand("mute playerone");
-        assertTrue(plugin.getBlPlayer().getPlayerToggle(playerOneUUID,BL_PLAYER_ENUM.MUTE_PER_PLAYER));
+    public void testPlayerMute() {
+        boolean previousState = plugin.getBlPlayer().getPlayerToggle(playerTwoUUID, BL_PLAYER_ENUM.MUTE_PER_PLAYER);
+        playerOne.performCommand("mute playertwo");
+        assertTrue(plugin.getBlPlayer().getPlayerToggle(playerTwoUUID, BL_PLAYER_ENUM.MUTE_PER_PLAYER) != previousState);
     }
 
     @Test
-    public void testPlayerUnmute(){
-        playerOne.performCommand("unmute playerone");
-        assertFalse(plugin.getBlPlayer().getPlayerToggle(playerOneUUID,BL_PLAYER_ENUM.MUTE_PER_PLAYER));
-    }
-
-    @Test
-    public void testTrailToggle(){
+    public void testTrailToggle() {
         BL_PLAYER_ENUM type = BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER;
         boolean previousTrailState = plugin.getBlPlayer().getPlayerToggle(playerOneUUID, type);
         playerOne.performCommand("trail toggle");
@@ -72,40 +68,40 @@ public class TestBetterLife {
     }
 
     @Test
-    public void setTrailToCrit(){
+    public void setTrailToCrit() {
         BL_PLAYER_ENUM type = BL_PLAYER_ENUM.TRAIL_PER_PLAYER;
         playerOne.performCommand("trail set crit");
-        String currentTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID,type);
-        assertEquals("CRIT",currentTrail);
+        String currentTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID, type);
+        assertEquals("CRIT", currentTrail);
     }
 
     @Test
-    public void setTrailToNote(){
+    public void setTrailToNote() {
         BL_PLAYER_ENUM type = BL_PLAYER_ENUM.TRAIL_PER_PLAYER;
         playerOne.performCommand("trail set note");
-        String currentTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID,type);
-        assertEquals("NOTE",currentTrail);
+        String currentTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID, type);
+        assertEquals("NOTE", currentTrail);
     }
 
     @Test
-    public void setTrailToCloud(){
+    public void setTrailToCloud() {
         BL_PLAYER_ENUM type = BL_PLAYER_ENUM.TRAIL_PER_PLAYER;
         playerOne.performCommand("trail set cloud");
-        String currentTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID,type);
-        assertEquals("CLOUD",currentTrail);
+        String currentTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID, type);
+        assertEquals("CLOUD", currentTrail);
     }
 
     @Test
-    public void setTrailToInvalid(){
+    public void setTrailToInvalid() {
         BL_PLAYER_ENUM type = BL_PLAYER_ENUM.TRAIL_PER_PLAYER;
-        String previousTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID,type);
+        String previousTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID, type);
         playerOne.performCommand("trail set dinkleberg");
-        String currentTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID,type);
-        assertEquals(previousTrail,currentTrail);
+        String currentTrail = plugin.getBlPlayer().getPlayerString(playerOneUUID, type);
+        assertEquals(previousTrail, currentTrail);
     }
 
     @Test
-    public void testToggleDownfall(){
+    public void testToggleDownfall() {
         World w = server.getWorld("world");
         w.setStorm(false);
         assertFalse(w.hasStorm());
@@ -114,174 +110,174 @@ public class TestBetterLife {
     }
 
     @Test
-    public void createWarp(){
+    public void createWarp() {
         playerOne.performCommand("warp set test_warp");
         assertTrue(plugin.getBlWarps().getWarps().size() > 0);
         playerOne.performCommand("warp del test_warp");
     }
 
     @Test
-    public void deleteWarp(){
+    public void deleteWarp() {
         playerOne.performCommand("warp set test_warp");
         int previousSize = plugin.getBlWarps().getWarps().size();
         playerOne.performCommand("warp del test_warp");
-        assertEquals(previousSize-1,plugin.getBlWarps().getWarps().size());
+        assertEquals(previousSize - 1, plugin.getBlWarps().getWarps().size());
     }
 
     @Test
-    public void createMultipleWarps(){
+    public void createMultipleWarps() {
         int previousSize = plugin.getBlWarps().getWarps().size();
         playerOne.performCommand("warp set test_warp_1");
         playerOne.performCommand("warp set test_warp_2");
-        assertEquals(previousSize+2,plugin.getBlWarps().getWarps().size());
+        assertEquals(previousSize + 2, plugin.getBlWarps().getWarps().size());
         playerOne.performCommand("warp del test_warp_1");
         playerOne.performCommand("warp del test_warp_2");
     }
 
     @Test
-    public void deleteMultipleWarps(){
+    public void deleteMultipleWarps() {
         int previousSize = plugin.getBlWarps().getWarps().size();
         playerOne.performCommand("warp set test_warp_1");
         playerOne.performCommand("warp set test_warp_2");
         playerOne.performCommand("warp del test_warp_1");
         playerOne.performCommand("warp del test_warp_2");
-        assertEquals(previousSize,plugin.getBlWarps().getWarps().size());
+        assertEquals(previousSize, plugin.getBlWarps().getWarps().size());
 
     }
 
     @Test
-    public void testWarpTeleport(){
-        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+    public void testWarpTeleport() {
+        Location testLocation = new Location(server.getWorld("world"), 100, 100, 100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("warp set test_warp");
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
         playerOne.performCommand("warp test_warp");
         assertEquals(testLocation, playerOne.getLocation());
         playerOne.performCommand("warp del test_warp");
     }
 
     @Test
-    public void testWarpSetLocation(){
-        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+    public void testWarpSetLocation() {
+        Location testLocation = new Location(server.getWorld("world"), 100, 100, 100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("warp set test_warp");
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
-        assertEquals(testLocation,plugin.getBlWarps().getWarps().get("test_warp"));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
+        assertEquals(testLocation, plugin.getBlWarps().getWarps().get("test_warp"));
         playerOne.performCommand("warp del test_warp");
     }
 
     @Test
-    public void createHome(){
+    public void createHome() {
         playerOne.performCommand("home set test_home");
-        assertEquals(1,plugin.getBlHomes().getHomes(playerOneUUID).size());
+        assertEquals(1, plugin.getBlHomes().getHomes(playerOneUUID).size());
         playerOne.performCommand("home del test_home");
     }
 
     @Test
-    public void deleteHome(){
+    public void deleteHome() {
         playerOne.performCommand("home set test_home");
         playerOne.performCommand("home del test_home");
-        assertEquals(0,plugin.getBlHomes().getHomes(playerOneUUID).size());
+        assertEquals(0, plugin.getBlHomes().getHomes(playerOneUUID).size());
     }
 
     @Test
-    public void createMultipleHomes(){
+    public void createMultipleHomes() {
         playerOne.performCommand("home set test_home_1");
         playerOne.performCommand("home set test_home_2");
-        assertEquals(2,plugin.getBlHomes().getHomes(playerOneUUID).size());
+        assertEquals(2, plugin.getBlHomes().getHomes(playerOneUUID).size());
         playerOne.performCommand("home del test_home_1");
         playerOne.performCommand("home del test_home_2");
     }
 
     @Test
-    public void deleteMultipleHomes(){
+    public void deleteMultipleHomes() {
         playerOne.performCommand("home set test_home_1");
         playerOne.performCommand("home set test_home_2");
         playerOne.performCommand("home del test_home_1");
         playerOne.performCommand("home del test_home_2");
-        assertEquals(0,plugin.getBlHomes().getHomes(playerOneUUID).size());
+        assertEquals(0, plugin.getBlHomes().getHomes(playerOneUUID).size());
     }
 
     @Test
-    public void testHomeSetLocation(){
-        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+    public void testHomeSetLocation() {
+        Location testLocation = new Location(server.getWorld("world"), 100, 100, 100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("home set test_home");
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
-        assertEquals(testLocation,plugin.getBlHomes().getHomes(playerOneUUID).get("test_home"));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
+        assertEquals(testLocation, plugin.getBlHomes().getHomes(playerOneUUID).get("test_home"));
         playerOne.performCommand("home del test_home");
     }
 
     @Test
-    public void testHomeTeleport(){
-        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+    public void testHomeTeleport() {
+        Location testLocation = new Location(server.getWorld("world"), 100, 100, 100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("home set test_home");
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
         playerOne.performCommand("home test_home");
         assertEquals(testLocation, playerOne.getLocation());
         playerOne.performCommand("home del test_home");
     }
 
     @Test
-    public void testPlayerTeleport(){
-        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+    public void testPlayerTeleport() {
+        Location testLocation = new Location(server.getWorld("world"), 100, 100, 100);
         playerTwo.teleport(testLocation);
         playerOne.performCommand("teleport playertwo");
         assertEquals(testLocation, playerOne.getLocation());
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
     }
 
     @Test
-    public void testSecondPlayerArgTeleport(){
-        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+    public void testSecondPlayerArgTeleport() {
+        Location testLocation = new Location(server.getWorld("world"), 100, 100, 100);
         playerTwo.teleport(testLocation);
         playerTwo.performCommand("teleport playerone playertwo");
         assertEquals(testLocation, playerOne.getLocation());
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
     }
 
     @Test
-    public void testPlayerTeleportToSpawn(){
-        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+    public void testPlayerTeleportToSpawn() {
+        Location testLocation = new Location(server.getWorld("world"), 100, 100, 100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("setspawn");
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
         playerOne.performCommand("spawn");
         assertEquals(testLocation, playerOne.getLocation());
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
     }
 
     @Test
-    public void testSpawnSetAndSetSpawn(){
-        Location testLocation = new Location(server.getWorld("world"),100,100,100);
+    public void testSpawnSetAndSetSpawn() {
+        Location testLocation = new Location(server.getWorld("world"), 100, 100, 100);
         playerOne.teleport(testLocation);
         playerOne.performCommand("spawn set");
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
         playerOne.performCommand("spawn");
         assertEquals(testLocation, playerOne.getLocation());
-        testLocation = new Location(server.getWorld("world"),200,200,200);
+        testLocation = new Location(server.getWorld("world"), 200, 200, 200);
         playerOne.teleport(testLocation);
         playerOne.performCommand("setspawn");
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
         playerOne.performCommand("spawn");
         assertEquals(testLocation, playerOne.getLocation());
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
     }
 
 
     @Test
-    public void testResetSpawn(){
-        Location testLocationOne = new Location(server.getWorld("world"),100,100,100);
-        Location testLocationTwo = new Location(server.getWorld("world"),200,200,200);
+    public void testResetSpawn() {
+        Location testLocationOne = new Location(server.getWorld("world"), 100, 100, 100);
+        Location testLocationTwo = new Location(server.getWorld("world"), 200, 200, 200);
         playerOne.teleport(testLocationOne);
         playerOne.performCommand("setspawn");
         playerOne.teleport(testLocationTwo);
         playerOne.performCommand("setspawn");
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
         playerOne.performCommand("spawn");
         assertEquals(testLocationTwo, playerOne.getLocation());
-        playerOne.teleport(new Location(server.getWorld("world"),0,5,0));
+        playerOne.teleport(new Location(server.getWorld("world"), 0, 5, 0));
     }
 
     @After

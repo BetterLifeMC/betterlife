@@ -162,7 +162,6 @@ public class BL_PLAYER {
                     + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
                     + playerUUID.toString() + "'";
 
-                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
             } else {
                 insertNewPlayer(playerUUID);
