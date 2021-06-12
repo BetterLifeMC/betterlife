@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author gt3ch1
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
  */
 public class SPAWN extends BetterLifeCommands implements CommandExecutor {
 
-    private BL_WARP warps = BetterLife.bl_warp;
+    private final BL_WARP warps = BetterLife.bl_warp;
 
     /**
      * Handles the command /spawn
@@ -38,31 +39,32 @@ public class SPAWN extends BetterLifeCommands implements CommandExecutor {
      * @param c       The command itself.
      * @param command The string version of the command.
      * @param args    The arguments of the command.
-     * @return
      */
     @Override
-    public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
-        if (!(sender instanceof Player)) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
+        if (!(sender instanceof Player player)) {
             sendMessage(sender, "Console cannot set spawn!", true);
             return false;
         }
-        Player player = (Player) sender;
+
         switch (args.length) {
-            case 0:
+            case 0 -> {
                 if (player.hasPermission(getPermission())) {
                     teleportHelper.teleportPlayer(player, warps.getWarps().get("spawn"), "spawn");
                     return true;
                 }
                 return false;
-            case 1:
+            }
+            case 1 -> {
                 if (args[0].equalsIgnoreCase("set")) {
                     if (player.hasPermission(getPermission() + ".setspawn")) {
                         warps.setWarp(player, "spawn");
-                        sendMessage(sender, "Spawn has been sat to your location!", true);
+                        sendMessage(sender, "Spawn has been set to your location!", true);
                         return true;
                     }
                 }
                 return false;
+            }
         }
         return false;
     }
