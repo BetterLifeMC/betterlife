@@ -53,9 +53,6 @@ permissions:
     betterlife.home.list.others:
         description: Allows player to list others homes.
         default: op
-    betterlife.home.*:
-        description: All betterlife home commands
-        default: op
     betterlife.mute:
         description: Allows muting of players.
         default: op
@@ -80,9 +77,6 @@ permissions:
     betterlife.trail.toggle:
         description: Allows toggling of the trail.
         default: op
-    betterlife.trail.particle.*:
-        description: Allows access to every trail particle.
-        default: op
     betterlife.reload:
         description: Reloads the configuration files of betterlife
         default: op
@@ -91,9 +85,6 @@ permissions:
         default: op
     betterlife.setspawn:
         description: Allows a player to set the spawnpoint
-        default: op
-    betterlife.unmute:
-        description: Allows unmuting of players.
         default: op
     betterlife.warp:
         description: Allows access to the /warp command
@@ -106,7 +97,4 @@ permissions:
         default: op
     betterlife.warp.list:
         description: Allows players to list warps
-        default: op
-    betterlife.warp.*:
-        description: Allows access to all warps.
         default: op
