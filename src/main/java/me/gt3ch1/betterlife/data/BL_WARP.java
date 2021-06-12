@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +17,7 @@ import java.util.LinkedHashMap;
  */
 public class BL_WARP {
 
-    private final Sql sql = Main.sql;
+    private final Sql sql = BetterLife.sql;
     private ResultSet rs;
     private boolean noWarps = true;
 
@@ -85,7 +85,7 @@ public class BL_WARP {
             + ")";
         warps.put(warp, player.getLocation());
         sql.executeUpdate(query);
-        Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+        BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
     }
 
     /**
@@ -106,7 +106,7 @@ public class BL_WARP {
                 + " WHERE `Name` = '" + warp + "'";
             warps.put(warp, player.getLocation());
             sql.executeUpdate(query);
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
         } else {
             addWarp(player, warp);
         }

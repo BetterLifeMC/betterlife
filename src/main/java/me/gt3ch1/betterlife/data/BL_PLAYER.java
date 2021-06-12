@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import org.bukkit.ChatColor;
 
 public class BL_PLAYER {
 
-    private final Sql sql = Main.sql;
+    private final Sql sql = BetterLife.sql;
     public HashMap<UUID, Boolean> trailEnabledPerPlayer = new HashMap<>();
     public HashMap<UUID, String> trailPerPlayer = new HashMap<>();
     public HashMap<UUID, Boolean> roadboostPerPlayer = new HashMap<>();
@@ -209,7 +209,7 @@ public class BL_PLAYER {
                 query = "UPDATE `" + type.getTable() + "` SET `" + type.getColumn() + "` = '"
                     + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
 
-                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+                BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
             } else {
                 insertNewPlayer(playerUUID);
@@ -230,7 +230,7 @@ public class BL_PLAYER {
             "INSERT INTO `BL_PLAYER` (`UUID`) VALUES ('"
                 + playerUUID.toString() + "')";
 
-        Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+        BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
         sql.executeUpdate(query);
     }
 }

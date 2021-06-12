@@ -1,10 +1,9 @@
 package me.gt3ch1.betterlife.commands;
 
 import java.util.ArrayList;
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.data.BL_WARP;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class WARP extends BetterLifeCommands implements CommandExecutor {
 
-    private BL_WARP warps = Main.bl_warp;
+    private BL_WARP warps = BetterLife.bl_warp;
 
     /**
      * Initializes the warp command.
@@ -46,7 +45,7 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
 
         ArrayList<String> availableWarps = new ArrayList<>();
 
-        for (String names : Main.bl_warp.getWarps().keySet()) {
+        for (String names : BetterLife.bl_warp.getWarps().keySet()) {
             if (sender.hasPermission("betterlife.warp." + names.toLowerCase()) || sender.hasPermission("betterlife.warp.*")) {
                 availableWarps.add(names);
             }
@@ -78,14 +77,14 @@ public class WARP extends BetterLifeCommands implements CommandExecutor {
             case 2:
                 if (args[0].equalsIgnoreCase("set")) {
                     if (sender.hasPermission("betterlife.warp.set") || sender.hasPermission("betterlife.warp.*")) {
-                        Main.bl_warp.setWarp(player, args[1]);
+                        BetterLife.bl_warp.setWarp(player, args[1]);
                         sendMessage(sender, "&bWarp &e" + args[1] + "&b set to your current location!", true);
                         return true;
                     }
                 }
                 if (args[0].equalsIgnoreCase("del")) {
                     if (sender.hasPermission("betterlife.warp.del") || sender.hasPermission("betterlife.warp.*")) {
-                        Main.bl_warp.delWarp(args[1]);
+                        BetterLife.bl_warp.delWarp(args[1]);
                         sendMessage(sender, "&bWarp &e" + args[1] + "&b has been deleted.", true);
                         return true;
                     }

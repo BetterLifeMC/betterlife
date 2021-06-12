@@ -1,6 +1,6 @@
 package me.gt3ch1.betterlife.commands;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.data.BL_WARP;
 import org.bukkit.command.Command;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
  */
 public class SPAWN extends BetterLifeCommands implements CommandExecutor {
 
-    private BL_WARP warps = Main.bl_warp;
+    private BL_WARP warps = BetterLife.bl_warp;
 
     /**
      * Handles the command /spawn

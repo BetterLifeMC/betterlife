@@ -1,6 +1,6 @@
 package me.gt3ch1.betterlife.commandhelpers;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
@@ -74,7 +74,7 @@ public class TabCompleterHelper implements TabCompleter {
                     }
                 }
                 case "eco" -> {
-                    if (Main.economy == null) {
+                    if (BetterLife.economy == null) {
                         break;
                     }
 
@@ -103,7 +103,7 @@ public class TabCompleterHelper implements TabCompleter {
                     switch (args.length) {
                         case 1 -> {
                             if (player.hasPermission("betterlife.home")) {
-                                subCommands.addAll(Main.bl_home.getHomes(player.getUniqueId()).keySet());
+                                subCommands.addAll(BetterLife.bl_home.getHomes(player.getUniqueId()).keySet());
                             }
 
                             var homeCmds = Arrays.asList("set", "del", "list");
@@ -117,7 +117,7 @@ public class TabCompleterHelper implements TabCompleter {
                             switch (args[1]) {
                                 case "del" -> {
                                     if (player.hasPermission("betterlife.home.del")) {
-                                        subCommands.addAll(Main.bl_home.getHomes(player.getUniqueId()).keySet());
+                                        subCommands.addAll(BetterLife.bl_home.getHomes(player.getUniqueId()).keySet());
                                     }
                                 }
                                 case "list" -> {
@@ -135,7 +135,7 @@ public class TabCompleterHelper implements TabCompleter {
                     switch (args.length) {
                         case 1 -> {
                             if (player.hasPermission("betterlife.warp")) {
-                                for (String warpName : Main.bl_warp.getWarps().keySet()) {
+                                for (String warpName : BetterLife.bl_warp.getWarps().keySet()) {
                                     if (player.hasPermission("betterlife.warp." + warpName)) {
                                         subCommands.add(warpName);
                                     }
@@ -151,7 +151,7 @@ public class TabCompleterHelper implements TabCompleter {
                         }
                         case 2 -> {
                             if (player.hasPermission("betterlife.warp.del")) {
-                                for (String warpName : Main.bl_warp.getWarps().keySet()) {
+                                for (String warpName : BetterLife.bl_warp.getWarps().keySet()) {
                                     if (player.hasPermission("betterlife.warp." + warpName)) {
                                         subCommands.add(warpName);
                                     }

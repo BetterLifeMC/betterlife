@@ -1,6 +1,6 @@
 package me.gt3ch1.betterlife.commands;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import org.bukkit.command.Command;
@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class BL extends BetterLifeCommands implements CommandExecutor {
 
     // Get the plugin from Main
-    private static Main m = Main.m;
+    private static BetterLife m = BetterLife.m;
 
     /**
      * Handles the /bl command

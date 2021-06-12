@@ -1,10 +1,9 @@
 package me.gt3ch1.betterlife.eventhelpers;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.configuration.ConfigurationHelper;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -21,7 +20,7 @@ public class PlayerTeleportHelper {
 
     private int checkerID;
     private int taskID;
-    private Main m = Main.m;
+    private BetterLife m = BetterLife.m;
     private ConfigurationHelper ch = CommandUtils.ch;
 
     /**
@@ -66,7 +65,7 @@ public class PlayerTeleportHelper {
         final Location initial = player.getLocation();
 
         //BL-Test
-        if (Main.isTesting || forceTeleport) {
+        if (BetterLife.isTesting || forceTeleport) {
             player.teleport(location);
             return;
         }

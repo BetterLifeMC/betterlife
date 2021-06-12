@@ -1,6 +1,6 @@
 package me.gt3ch1.betterlife.commands;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
 
-    BL_PLAYER playerGetter = Main.bl_player;
+    BL_PLAYER playerGetter = BetterLife.bl_player;
 
     /**
      * Handles the command /roadboost

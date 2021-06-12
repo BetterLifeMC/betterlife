@@ -1,14 +1,14 @@
 package me.gt3ch1.betterlife.data;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
 
-import static me.gt3ch1.betterlife.Main.Main.doBukkitLog;
-import static me.gt3ch1.betterlife.Main.Main.isTesting;
-import static me.gt3ch1.betterlife.Main.Main.m;
+import static me.gt3ch1.betterlife.Main.BetterLife.doBukkitLog;
+import static me.gt3ch1.betterlife.Main.BetterLife.isTesting;
+import static me.gt3ch1.betterlife.Main.BetterLife.m;
 
 /**
  * This class contains methods needed to provided SQL support for the BetterLife plugin.
@@ -41,7 +41,7 @@ public class Sql {
         this.password = password;
         this.port = port;
 
-        Main.doBukkitLog(ChatColor.YELLOW + "Connecting to SQL database...");
+        BetterLife.doBukkitLog(ChatColor.YELLOW + "Connecting to SQL database...");
         if (isTesting) {
             setupTestSql();
         } else {
@@ -61,7 +61,7 @@ public class Sql {
             isSqlConnected = true;
             setupTables();
             checkIfColumnsExists();
-            Main.setupOnlinePlayers();
+            BetterLife.setupOnlinePlayers();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,14 +79,14 @@ public class Sql {
                         .getConnection("jdbc:mysql://" + host + ":" + port + "/" + database,
                             username, password);
                     stmt = con.createStatement();
-                    Main.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
+                    BetterLife.doBukkitLog(ChatColor.GREEN + "SQL Connected!");
                     isSqlConnected = true;
                     setupTables();
                     checkIfColumnsExists();
-                    Main.setupOnlinePlayers();
-                    Main.bl_warp.getWarps();
+                    BetterLife.setupOnlinePlayers();
+                    BetterLife.bl_warp.getWarps();
                 } catch (SQLException e) {
-                    Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
+                    BetterLife.doBukkitLog(ChatColor.RED + "SQL Failed!");
                     e.printStackTrace();
                 }
             }
@@ -103,17 +103,17 @@ public class Sql {
         for (BL_PLAYER_ENUM entry : BL_PLAYER_ENUM.values()) {
             DatabaseMetaData meta;
             meta = con.getMetaData();
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Checking : " + entry.getColumn());
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + "Checking : " + entry.getColumn());
             try {
                 rs = meta.getColumns(null, null, entry.getTable(), entry.getColumn());
             } catch (SQLException e) {
-                Main.doBukkitLog(ChatColor.DARK_RED + "Get columns failed!");
+                BetterLife.doBukkitLog(ChatColor.DARK_RED + "Get columns failed!");
             }
             if (!rs.next()) {
                 String query = "ALTER TABLE " + entry.getTable() + " ADD " + entry.getColumn() + " "
                     + entry.getSqlType() + " DEFAULT " + entry.getDefault();
                 stmt.execute(query);
-                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+                BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             }
 
         }
@@ -136,7 +136,7 @@ public class Sql {
                 + "`Trail` NVARCHAR(30),"
                 + "`RoadBoostToggle` BOOL DEFAULT false"
                 + ")";
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Player table.");
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Player table.");
             executeUpdate(query);
         }
 
@@ -157,7 +157,7 @@ public class Sql {
                 + "PRIMARY KEY (UUID,Home),"
                 + "FOREIGN KEY (UUID) REFERENCES BL_PLAYER (UUID)"
                 + ")";
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Home table.");
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Home table.");
             executeUpdate(query);
         }
 
@@ -178,7 +178,7 @@ public class Sql {
                 + "`OwnerUUID` VARCHAR(36),"
                 + "FOREIGN KEY (OwnerUUID) REFERENCES BL_PLAYER (UUID)"
                 + ")";
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Zone table.");
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Zone table.");
             executeUpdate(query);
         }
 
@@ -193,7 +193,7 @@ public class Sql {
                 + "PRIMARY KEY (ZoneID, MemberUUID),"
                 + "FOREIGN KEY (MemberUUID) REFERENCES BL_PLAYER (UUID)"
                 + ")";
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Zone Members table.");
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Zone Members table.");
             executeUpdate(query);
         }
 
@@ -212,7 +212,7 @@ public class Sql {
                 + "`Pitch` FLOAT,"
                 + "PRIMARY KEY (Name)"
                 + ")";
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Player table.");
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + "Creating Player table.");
             executeUpdate(query);
         }
     }
@@ -229,7 +229,7 @@ public class Sql {
             return null;
         }
         try {
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             return stmt.executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -249,7 +249,7 @@ public class Sql {
             return false;
         }
         try {
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             stmt.executeUpdate(query);
             return true;
         } catch (SQLException e) {
@@ -291,10 +291,10 @@ public class Sql {
         try {
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setNString(1, home);
-            Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+            BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            Main.doBukkitLog(e.toString());
+            BetterLife.doBukkitLog(e.toString());
         }
     }
 

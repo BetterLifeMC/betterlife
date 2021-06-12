@@ -3,7 +3,7 @@ package me.gt3ch1.betterlife.commands;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
 import me.gt3ch1.betterlife.data.BL_HOME;
 import org.bukkit.Bukkit;
@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
  */
 public class HOME extends BetterLifeCommands implements CommandExecutor {
 
-    BL_HOME homeGetter = Main.bl_home;
+    BL_HOME homeGetter = BetterLife.bl_home;
 
     /**
      * Initializes the home command.

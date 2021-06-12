@@ -4,11 +4,10 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import me.gt3ch1.betterlife.Main.Main;
+
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.configuration.ParticleConfigurationHandler;
 import me.gt3ch1.betterlife.eventhelpers.PlayerTeleportHelper;
@@ -25,7 +24,7 @@ import java.util.LinkedHashMap;
 public class CommandUtils {
 
     // Initializes some important variables.
-    public static Main m = Main.m;
+    public static BetterLife m = BetterLife.m;
     public static MainConfigurationHandler ch;
     public static ParticleConfigurationHandler partch;
     public static PlayerTeleportHelper teleportHelper;
@@ -96,9 +95,9 @@ public class CommandUtils {
         }
 
         if (version != currentConfigVersion) {
-            Main.doBukkitLog(ChatColor.RED + "" + ChatColor.BOLD + "Config Version: " + version + " != " + currentConfigVersion);
-            Main.doBukkitLog(ChatColor.DARK_RED + "Config version outdated. Moving current config and saving a fresh config of the new version.");
-            Main.doBukkitLog(ChatColor.DARK_RED + "CONFIG SETTINGS WILL BE RESET. PLEASE TRANSLATE YOUR OLD CONFIG TO THE NEW FORMAT!!!");
+            BetterLife.doBukkitLog(ChatColor.RED + "" + ChatColor.BOLD + "Config Version: " + version + " != " + currentConfigVersion);
+            BetterLife.doBukkitLog(ChatColor.DARK_RED + "Config version outdated. Moving current config and saving a fresh config of the new version.");
+            BetterLife.doBukkitLog(ChatColor.DARK_RED + "CONFIG SETTINGS WILL BE RESET. PLEASE TRANSLATE YOUR OLD CONFIG TO THE NEW FORMAT!!!");
 
             Path oldConfig = ch.getFile().toPath();
             try {
@@ -106,7 +105,7 @@ public class CommandUtils {
                     REPLACE_EXISTING);
                 Files.deleteIfExists(oldConfig);
             } catch (IOException e) {
-                Main.doBukkitLog(ChatColor.DARK_RED + "Failure moving old config. Rename it manually to get the latest version.");
+                BetterLife.doBukkitLog(ChatColor.DARK_RED + "Failure moving old config. Rename it manually to get the latest version.");
             }
             m.saveDefaultConfig();
             return false;

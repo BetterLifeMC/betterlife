@@ -1,4 +1,4 @@
-main: me.gt3ch1.betterlife.Main.Main
+main: me.gt3ch1.betterlife.Main.BetterLife
 name: BetterLife
 version: '0.5'
 description: "Making running a Minecraft server a little more humane."
