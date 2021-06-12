@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -36,18 +37,17 @@ public class ROADBOOST extends BetterLifeCommands implements CommandExecutor {
      * Toggles whether or not the player can be fast
      */
     @Override
-    public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
 
-        if (sender instanceof Player) {
-            Player p = (Player) sender;
+        if (sender instanceof Player p) {
             UUID playerUUID = p.getUniqueId();
-            if (p.hasPermission(this.getPermission())) {
 
+            if (p.hasPermission(this.getPermission())) {
                 boolean hasToggleSprintEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
                 playerGetter.setPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
+
                 String toggleState = hasToggleSprintEnabled ? "&cdisabled" : "&aenabled";
                 sendMessage(p, "&7Roadboost has been " + toggleState + "&7!", true);
-
             }
         } else {
             // TODO: Add second arg for targeting a player
