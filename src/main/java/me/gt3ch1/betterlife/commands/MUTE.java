@@ -41,7 +41,7 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         switch (args.length) {
-            case 1:
+            case 1 -> {
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
 
                 if (otherPlayer == null) {
@@ -61,9 +61,11 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
                 sendMessage(otherPlayer, "&eYou have been &b" + newMuteStatus + "&e by: &d" + sender.getName(), true);
                 Main.bl_player.setPlayerToggle(otherPlayer.getUniqueId(), BL_PLAYER_ENUM.MUTE_PER_PLAYER);
                 return true;
-            default:
+            }
+            default -> {
                 sendMessage(sender, "Invalid usage!", true);
                 return false;
+            }
         }
     }
 }
