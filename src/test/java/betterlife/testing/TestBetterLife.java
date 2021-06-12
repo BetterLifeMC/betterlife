@@ -3,7 +3,7 @@ package betterlife.testing;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 public class TestBetterLife {
 
     private ServerMock server;
-    private Main plugin;
+    private BetterLife plugin;
     private UUID playerOneUUID = UUID.fromString("ed275ae9-e765-408b-b056-3d5a5d540626");
     private UUID playerTwoUUID = UUID.fromString("ed275ae9-e765-408b-b056-3d5a5d540627");
     private PlayerMock playerOne;
@@ -27,7 +27,7 @@ public class TestBetterLife {
     @Before
     public void setUp() {
         server = MockBukkit.mock();
-        plugin = (Main) MockBukkit.load(Main.class);
+        plugin = (BetterLife) MockBukkit.load(BetterLife.class);
         plugin.onLoad();
         playerOne = new PlayerMock(server, "playerone", playerOneUUID);
         playerTwo = new PlayerMock(server, "playertwo", playerTwoUUID);

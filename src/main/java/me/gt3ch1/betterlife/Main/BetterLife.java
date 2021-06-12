@@ -28,9 +28,9 @@ import java.util.UUID;
  * @author gt3ch1
  * @author Starmism
  */
-public class Main extends JavaPlugin {
+public class BetterLife extends JavaPlugin {
 
-    public static Main m;
+    public static BetterLife m;
     public static Economy economy;
     public static Sql sql;
     protected ArrayList<Listener> listeners = new ArrayList<>();
@@ -41,11 +41,11 @@ public class Main extends JavaPlugin {
     public static BL_WARP bl_warp;
     public static boolean isTesting = false;
 
-    public Main() {
+    public BetterLife() {
         super();
     }
 
-    protected Main(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+    protected BetterLife(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
         super(loader, description, dataFolder, file);
         isTesting = true;
         setSql(System.getenv("BL_SQL_HOST"), System.getenv("BL_SQL_DB"),

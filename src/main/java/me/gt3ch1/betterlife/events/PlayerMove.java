@@ -2,7 +2,7 @@ package me.gt3ch1.betterlife.events;
 
 import java.util.UUID;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
@@ -22,8 +22,8 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class PlayerMove implements Listener {
 
-    BL_PLAYER playerGetter = Main.bl_player;
-    private final Sql sql = Main.sql;
+    BL_PLAYER playerGetter = BetterLife.bl_player;
+    private final Sql sql = BetterLife.sql;
 
     /**
      * Checks to even to see if the player has roadboost enabled.

@@ -6,15 +6,14 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class BL_HOME {
 
-    private final Sql sql = Main.sql;
+    private final Sql sql = BetterLife.sql;
     private ResultSet rs;
 
     public HashMap<UUID, LinkedHashMap<String, Location>> homesPerPlayer = new HashMap<>();

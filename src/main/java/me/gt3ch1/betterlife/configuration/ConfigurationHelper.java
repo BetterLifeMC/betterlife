@@ -1,6 +1,6 @@
 package me.gt3ch1.betterlife.configuration;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -21,7 +21,7 @@ public class ConfigurationHelper {
     private File customConfigFile = null;
     private String table;
     private String filename;
-    private Main m = Main.m;
+    private BetterLife m = BetterLife.m;
 
     /**
      * Creates a new configuration helper

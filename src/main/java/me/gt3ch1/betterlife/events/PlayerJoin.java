@@ -1,6 +1,6 @@
 package me.gt3ch1.betterlife.events;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.Main.BetterLife;
 import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
@@ -18,8 +18,8 @@ import java.util.UUID;
  */
 public class PlayerJoin implements Listener {
 
-    private static final BL_PLAYER playerGetter = Main.bl_player;
-    private final Sql sql = Main.sql;
+    private static final BL_PLAYER playerGetter = BetterLife.bl_player;
+    private final Sql sql = BetterLife.sql;
 
     /**
      * Sets up the player configuration for the player that has joined.
@@ -37,12 +37,12 @@ public class PlayerJoin implements Listener {
 
         Particle newPlayerParticle = Particle.valueOf(
             CommandUtils.ch.getCustomConfig().getString("defaultParticle").toUpperCase());
-        Main.setupPlayerConfig(playerUUID);
+        BetterLife.setupPlayerConfig(playerUUID);
         if (playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
             playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, newPlayerParticle.toString());
         }
-        if (!p.hasPlayedBefore() && Main.bl_warp.getWarps().containsKey("spawn") && !Main.isTesting) {
-            CommandUtils.teleportHelper.teleportPlayer(p, Main.bl_warp.getWarps().get("spawn"), "spawn", true);
+        if (!p.hasPlayedBefore() && BetterLife.bl_warp.getWarps().containsKey("spawn") && !BetterLife.isTesting) {
+            CommandUtils.teleportHelper.teleportPlayer(p, BetterLife.bl_warp.getWarps().get("spawn"), "spawn", true);
         }
 
     }
