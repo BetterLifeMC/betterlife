@@ -1,44 +1,44 @@
 package me.gt3ch1.betterlife.commands;
 
-import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
+import com.google.inject.Inject;
+import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommand;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ECO extends BetterLifeCommands implements CommandExecutor {
+import java.util.*;
 
-    Player commandReceiver;
+import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.*;
 
-    /**
-     * Handles the /eco command.
-     *
-     * @param permission Permission required for the /eco command.
-     * @param cs         The command sender.
-     * @param c          The command.
-     * @param label      The String version of the command.
-     * @param args       The arguments to the command.
-     */
-    public ECO(String permission, CommandSender cs, Command c, String label, String[] args) {
+public class EcoCommand implements BetterLifeCommand {
 
-        super(permission, cs, c, label, args);
-        this.onCommand(cs, c, label, args);
+    private final Economy economy;
 
+    @Inject
+    public EcoCommand(Economy economy) {
+        this.economy = economy;
     }
 
-    /**
-     * Runs the given command.
-     *
-     * @param sender  Sender of the command.
-     * @param c       The command itself.
-     * @param command The string version of the command.
-     * @param args    The arguments of the command.
-     * @return True if the command was successful.
-     */
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
+    public String getPermission() {
+        return "betterlife.eco";
+    }
+
+    @Override
+    public List<String> getHelpList() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Allows players to control the economy.";
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, String[] args) {
+        Player commandReceiver;
         if (economy == null) {
             sendMessage(sender, "&4Vault not found! Eco commands won't work.", true);
             return false;
@@ -47,7 +47,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
         if (sender instanceof Player player) {
             switch (args.length) {
                 case 0 -> {
-                    sendHelpMessage(sender, "eco", helpHash);
+                    //sendHelpMessage(sender, "eco");
                     return true;
                 }
                 case 1 -> {
@@ -60,7 +60,7 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
                             }
                         }
                         case "give", "set" -> {
-                            sendHelpMessage(sender, "eco", helpHash);
+                            //sendHelpMessage(sender, "eco", helpHash);
                         }
                         default -> {
                             return false;
@@ -143,5 +143,37 @@ public class ECO extends BetterLifeCommands implements CommandExecutor {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
+        final List<String> subCommands = new ArrayList<>();
+        if (economy == null) {
+            return Collections.emptyList();
+        }
+
+        if (sender instanceof Player player) {
+            switch (args.length) {
+                case 1 -> {
+                    var ecoCmds = Arrays.asList("bal");
+                    for (String cmd : ecoCmds) {
+                        if (player.hasPermission("betterlife.eco." + cmd)) {
+                            subCommands.add(cmd);
+                        }
+                    }
+                }
+                case 2 -> {
+                    var ecoCmds = Arrays.asList("bal.others");
+                    for (String cmd : ecoCmds) {
+                        if (player.hasPermission("betterlife.eco." + cmd)) {
+                            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                subCommands.add(p.getName());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return subCommands;
     }
 }

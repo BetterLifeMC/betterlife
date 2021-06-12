@@ -1,52 +1,61 @@
 package me.gt3ch1.betterlife.commands;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.*;
 
-import me.gt3ch1.betterlife.Main.BetterLife;
-import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
+import com.google.inject.Inject;
+import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommand;
 import me.gt3ch1.betterlife.data.BL_HOME;
+import me.gt3ch1.betterlife.eventhelpers.PlayerTeleportHelper;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * This class represents the /home command for BetterLife.
- */
-public class HOME extends BetterLifeCommands implements CommandExecutor {
+import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendMessage;
+import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendPermissionErrorMessage;
 
-    BL_HOME homeGetter = BetterLife.bl_home;
 
-    /**
-     * Initializes the home command.
-     *
-     * @param permission Permission required to use /home
-     * @param cs         Sender of the command.
-     * @param c          The command itself.
-     * @param label      The string version of the command.
-     * @param args       The arguments of the command.
-     */
-    public HOME(String permission, CommandSender cs, Command c, String label, String[] args) {
-        super(permission, cs, c, label, args);
-        this.onCommand(cs, c, label, args);
+public class HomeCommand implements BetterLifeCommand {
+
+    private final BL_HOME blHome;
+    private final PlayerTeleportHelper teleportHelper;
+
+    @Inject
+    public HomeCommand(BL_HOME blHome, PlayerTeleportHelper teleportHelper) {
+        this.blHome = blHome;
+        this.teleportHelper = teleportHelper;
     }
 
     /**
-     * Runs the command.
+     * Sends the target a list of the homes of the source player.
      *
-     * @param sender  Sender of the command.
-     * @param c       The command itself.
-     * @param command The string version of the command.
-     * @param args    The arguments of the command.
-     * @return True if the command executed successfully.
+     * @param source Player to get the list of homes from.
+     * @param target Player to send a list of homes to.
      */
+    private void sendListOfHomes(OfflinePlayer source, Player target) {
+        var listOfHomes = blHome.getHomes(source.getUniqueId()).keySet();
+        sendMessage(target, "Valid homes: " + String.join(", ", listOfHomes), true);
+    }
+
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
+    public String getPermission() {
+        return "betterlife.home";
+    }
+
+    @Override
+    public List<String> getHelpList() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Allows you to teleport and set homes.";
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
             sendMessage(sender, "&4You must be a player to use this command!", false);
             return true;
@@ -55,7 +64,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
         Location home;
 
         // Get the list of homes and location pairs, then get just an array of the names
-        LinkedHashMap<String, Location> homeList = homeGetter.getHomes(player.getUniqueId());
+        LinkedHashMap<String, Location> homeList = blHome.getHomes(player.getUniqueId());
         var listOfHomes = new ArrayList<>(homeList.keySet());
 
         switch (args.length) {
@@ -96,7 +105,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                 switch (args[0]) {
                     case "set" -> {
                         if (player.hasPermission(getPermission())) {
-                            homeGetter.addHome(player, args[1]);
+                            blHome.addHome(player, args[1]);
                             sendMessage(player, "&aHome &f" + args[1] + " &acreated!", true);
                         } else {
                             sendPermissionErrorMessage(player);
@@ -104,7 +113,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
                     }
                     case "del" -> {
                         if (player.hasPermission(getPermission())) {
-                            if (homeGetter.delHome(player, args[1])) {
+                            if (blHome.delHome(player, args[1])) {
                                 sendMessage(player, "&aHome &f" + args[1] + " &adeleted!", true);
                             } else {
                                 sendMessage(player, "&4Home not found!", true);
@@ -135,14 +144,43 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
         return true;
     }
 
-    /**
-     * Sends the target a list of the homes of the source player.
-     *
-     * @param source Player to get the list of homes from.
-     * @param target Player to send a list of homes to.
-     */
-    private void sendListOfHomes(OfflinePlayer source, Player target) {
-        var listOfHomes = homeGetter.getHomes(source.getUniqueId()).keySet();
-        sendMessage(target, "Valid homes: " + String.join(", ", listOfHomes), true);
+    @Override
+    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
+        final List<String> subCommands = new ArrayList<>();
+        if (!(sender instanceof Player player)) {
+            return Collections.emptyList();
+        }
+        
+        switch (args.length) {
+            case 1 -> {
+                if (player.hasPermission("betterlife.home")) {
+                    subCommands.addAll(blHome.getHomes(player.getUniqueId()).keySet());
+                }
+
+                var homeCmds = Arrays.asList("set", "del", "list");
+                for (String cmd : homeCmds) {
+                    if (player.hasPermission("betterlife.home." + cmd)) {
+                        subCommands.add(cmd);
+                    }
+                }
+            }
+            case 2 -> {
+                switch (args[1]) {
+                    case "del" -> {
+                        if (player.hasPermission("betterlife.home.del")) {
+                            subCommands.addAll(blHome.getHomes(player.getUniqueId()).keySet());
+                        }
+                    }
+                    case "list" -> {
+                        if (player.hasPermission("betterlife.home.list.others")) {
+                            for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                subCommands.add(p.getName());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return subCommands;
     }
 }

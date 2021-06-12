@@ -1,13 +1,10 @@
 package me.gt3ch1.betterlife.configuration;
 
-import me.gt3ch1.betterlife.Main.BetterLife;
+import me.gt3ch1.betterlife.main.BetterLife;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -15,23 +12,21 @@ import java.nio.charset.StandardCharsets;
  *
  * @author gt3ch1
  */
-public class ConfigurationHelper {
+public abstract class YamlConfigurationHandler {
 
     private FileConfiguration customConfig = null;
     private File customConfigFile = null;
-    private String table;
     private String filename;
-    private BetterLife m = BetterLife.m;
+    private BetterLife m;
 
     /**
      * Creates a new configuration helper
      *
-     * @param table    SQL table/
      * @param filename File to be createad/writen to if not using SQL.
      */
-    public ConfigurationHelper(String table, String filename) {
-        this.table = table;
+    protected YamlConfigurationHandler(String filename, BetterLife m) {
         this.filename = filename + ".yml";
+        this.m = m;
     }
 
     /**
@@ -44,14 +39,14 @@ public class ConfigurationHelper {
         }
         customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
         Reader defConfigStream = null;
-
-        defConfigStream = new InputStreamReader(m.getResource(filename), StandardCharsets.UTF_8);
+        InputStream config = m.getResource(filename);
+        if (config != null) {
+            defConfigStream = new InputStreamReader(config, StandardCharsets.UTF_8);
+        }
 
         if (defConfigStream != null) {
-
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
             customConfig.setDefaults(defConfig);
-
         }
     }
 

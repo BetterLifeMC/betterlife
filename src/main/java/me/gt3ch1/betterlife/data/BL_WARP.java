@@ -4,8 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import me.gt3ch1.betterlife.Main.BetterLife;
+import me.gt3ch1.betterlife.main.BetterLife;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
@@ -15,13 +17,18 @@ import java.util.LinkedHashMap;
  * @author starmism
  * @version 12/2/20 Project betterlife
  */
+@Singleton
 public class BL_WARP {
 
-    private final Sql sql = BetterLife.sql;
-    private ResultSet rs;
+    private final Sql sql;
     private boolean noWarps = true;
 
     public static LinkedHashMap<String, Location> warps = new LinkedHashMap<>();
+
+    @Inject
+    public BL_WARP(Sql sql) {
+        this.sql = sql;
+    }
 
 
     /**
@@ -46,7 +53,7 @@ public class BL_WARP {
         LinkedHashMap<String, Location> warpList = new LinkedHashMap<>();
 
         try {
-            rs = sql.executeQuery(query);
+            ResultSet rs = sql.executeQuery(query);
             while (rs.next()) {
                 warpList.put(rs.getNString("Name"), new Location(
                     Bukkit.getWorld(rs.getString("World")),
@@ -73,6 +80,9 @@ public class BL_WARP {
      * @param warp   Name of the warp.
      */
     private void addWarp(Player player, String warp) {
+        if (noWarps) {
+            warps = getWarpsSql();
+        }
 
         String query = "INSERT INTO BL_WARP VALUES ("
             + "'" + warp + "',"
@@ -95,6 +105,10 @@ public class BL_WARP {
      * @param warp   Warp name we are setting.
      */
     public void setWarp(Player player, String warp) {
+        if (noWarps) {
+            warps = getWarpsSql();
+        }
+
         if (getWarps().containsKey(warp)) {
             String query = "UPDATE `BL_WARP` SET "
                 + "`X`='" + player.getLocation().getX() + "',"
@@ -119,6 +133,10 @@ public class BL_WARP {
      * @return True if the given warp exists and was deleted.
      */
     public boolean delWarp(String home) {
+        if (noWarps) {
+            warps = getWarpsSql();
+        }
+
         if (warps.containsKey(home)) {
             String query = "DELETE FROM BL_WARP WHERE `Name` = ?;";
             sql.modifyHome(query, home);

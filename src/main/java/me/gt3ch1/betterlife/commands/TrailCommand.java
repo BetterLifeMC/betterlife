@@ -1,54 +1,50 @@
 package me.gt3ch1.betterlife.commands;
 
-import java.util.HashSet;
-import java.util.UUID;
-import me.gt3ch1.betterlife.Main.BetterLife;
-import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
-import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import java.util.*;
+
+import com.google.inject.Inject;
+import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommand;
+import me.gt3ch1.betterlife.configuration.ParticleConfigurationHandler;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class TRAIL extends BetterLifeCommands implements CommandExecutor {
+import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendMessage;
 
-    BL_PLAYER playerGetter = BetterLife.bl_player;
+public class TrailCommand implements BetterLifeCommand {
 
-    /**
-     * Handles the command /trail
-     *
-     * @param permission Permission required to use /home
-     * @param cs         Sender of the command.
-     * @param c          The command itself.
-     * @param label      The string version of the command.
-     * @param args       The arguments of the command.
-     */
-    public TRAIL(String permission, CommandSender cs, Command c, String label, String[] args) {
+    BL_PLAYER blPlayer;
+    ParticleConfigurationHandler partch;
 
-        super(permission, cs, c, label, args);
-        this.onCommand(cs, c, label, args);
-
+    @Inject
+    public TrailCommand(BL_PLAYER blPlayer, ParticleConfigurationHandler partch) {
+        this.blPlayer = blPlayer;
+        this.partch = partch;
     }
 
-    /**
-     * Runs the /trail command
-     *
-     * @param sender  Sender of the command.
-     * @param c       The command itself.
-     * @param command The string version of the command.
-     * @param args    The arguments of the command.
-     * @return True if the command was successful.
-     */
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
+    public String getPermission() {
+        return "betterlife.trail";
+    }
 
-        var allowedParticles = new HashSet<>(CommandUtils.partch.getCustomConfig().getStringList("particle"));
+    @Override
+    public List<String> getHelpList() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Allows you to have a pretty particle trail!";
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, String[] args) {
+        var allowedParticles = new HashSet<>(partch.getCustomConfig().getStringList("particle"));
 
         if (args.length == 0) {
-            sendHelpMessage(sender, "trail", helpHash);
+            //sendHelpMessage(sender, "trail", helpHash);
             return true;
         }
 
@@ -72,14 +68,13 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                                 sendMessage(sender, "&d" + allowedParticle, true);
                             }
                         }
-                        return true;
                     }
                     case "toggle" -> {
                         if (sender instanceof Player player) {
                             UUID playerUUID = player.getUniqueId();
                             if (player.hasPermission("betterlife.trail.toggle")) {
-                                boolean trailsEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
-                                playerGetter.setPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
+                                boolean trailsEnabled = blPlayer.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
+                                blPlayer.setPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
                                 String toggleState = trailsEnabled ? "&cdisabled" : "&aenabled";
                                 sendMessage(player, "&7Trail " + toggleState + "&7!", true);
                             }
@@ -87,14 +82,9 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                             // TODO: Add console support for attaching a username target as arg[1]
                             sendMessage(sender, "&4You must be a player to use this command!", true);
                         }
-                        return true;
                     }
                     case "trail" -> {
-                        sendHelpMessage(sender, "trail", helpHash);
-                        return true;
-                    }
-                    default -> {
-                        return false;
+                        //sendHelpMessage(sender, "trail", helpHash);
                     }
                 }
             }
@@ -107,7 +97,7 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                                 player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase())
                                         || player.hasPermission("betterlife.trail.particle.*"))) {
 
-                            playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, args[1].toUpperCase());
+                            blPlayer.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, args[1].toUpperCase());
                             sendMessage(player, "&7Your trail is now set to: &6" + args[1].toUpperCase(), true);
 
                         } else if (!player.hasPermission("betterlife.trail.particle." + args[1].toLowerCase())) {
@@ -121,12 +111,43 @@ public class TRAIL extends BetterLifeCommands implements CommandExecutor {
                         sendMessage(sender, "&4You must be a player to use this command!", true);
                     }
                 }
-                return true;
             }
             default -> {
-                sendHelpMessage(sender, "trail", helpHash);
+                //sendHelpMessage(sender, "trail", helpHash);
                 return true;
             }
         }
+        return true;
+    }
+
+    @Override
+    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
+        final List<String> subCommands = new ArrayList<>();
+        if (!(sender instanceof Player player)) {
+            return Collections.emptyList();
+        }
+
+        switch (args.length) {
+            case 1 -> {
+                var trailCmds = Arrays.asList("set", "list", "help", "toggle");
+                for (String cmd : trailCmds) {
+                    if (player.hasPermission("betterlife.trail." + cmd)) {
+                        subCommands.add(cmd);
+                    }
+                }
+            }
+            case 2 -> {
+                // If it is set, return the list of currently enabled particles,
+                // and append them to the tablist list.
+                if (args[0].equalsIgnoreCase("set")) {
+                    for (String particle : partch.getCustomConfig().getStringList("particle")) {
+                        if (player.hasPermission("betterlife.trail.particle." + particle.toLowerCase())) {
+                            subCommands.add(particle);
+                        }
+                    }
+                }
+            }
+        }
+        return subCommands;
     }
 }

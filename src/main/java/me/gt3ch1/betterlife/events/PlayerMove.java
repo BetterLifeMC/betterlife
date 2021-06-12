@@ -2,8 +2,8 @@ package me.gt3ch1.betterlife.events;
 
 import java.util.UUID;
 
-import me.gt3ch1.betterlife.Main.BetterLife;
-import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import com.google.inject.Inject;
+import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
 import me.gt3ch1.betterlife.data.Sql;
@@ -17,17 +17,21 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-/**
- * This class contains all of the listeners and events for BetterLife's player movement-based modifications.
- */
 public class PlayerMove implements Listener {
 
-    BL_PLAYER playerGetter = BetterLife.bl_player;
-    private final Sql sql = BetterLife.sql;
+    private final BL_PLAYER blPlayer;
+    private final Sql sql;
+    private final MainConfigurationHandler ch;
+
+    @Inject
+    public PlayerMove(BL_PLAYER blPlayer, Sql sql, MainConfigurationHandler ch) {
+        this.blPlayer = blPlayer;
+        this.sql = sql;
+        this.ch = ch;
+    }
 
     /**
      * Checks to even to see if the player has roadboost enabled.
-     *
      * @param e Move event to check to see if the player move event.
      */
     @EventHandler
@@ -37,7 +41,7 @@ public class PlayerMove implements Listener {
         }
 
         UUID playerUUID = e.getPlayer().getUniqueId();
-        boolean boostEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
+        boolean boostEnabled = blPlayer.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER);
 
         Location loc = e.getPlayer().getLocation();
         loc.setY(loc.getY() + 0.06250);
@@ -50,7 +54,6 @@ public class PlayerMove implements Listener {
 
     /**
      * Checks to see if the player has a trail enabled.
-     *
      * @param e Move event to check for trails.
      */
     @EventHandler
@@ -64,7 +67,7 @@ public class PlayerMove implements Listener {
         Location location = e.getPlayer().getLocation();
 
         try {
-            trailEnabled = playerGetter.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
+            trailEnabled = blPlayer.getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER);
         } catch (NullPointerException npe) {
             trailEnabled = false;
         }
@@ -91,10 +94,10 @@ public class PlayerMove implements Listener {
             location.setY(location.getY() + 1);
 
             try {
-                p = Particle.valueOf(playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
+                p = Particle.valueOf(blPlayer.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
                 e.getPlayer().getWorld().spawnParticle(p, location, 1);
             } catch (Exception ex) {
-                p = Particle.valueOf(CommandUtils.ch.getCustomConfig().getString("defaultParticle"));
+                p = Particle.valueOf(ch.getCustomConfig().getString("defaultParticle"));
                 e.getPlayer().getWorld().spawnParticle(p, location, 1);
             }
         }
