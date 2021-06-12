@@ -43,7 +43,7 @@ public class PlayerMove implements Listener {
         loc.setY(loc.getY() + 0.06250);
         Material currentBlock = loc.getWorld().getBlockAt(loc).getRelative(BlockFace.DOWN).getType();
 
-        if (currentBlock == Material.GRASS_PATH && e.getPlayer().isSprinting() && boostEnabled) {
+        if (currentBlock == Material.DIRT_PATH && e.getPlayer().isSprinting() && boostEnabled) {
             e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 40, 0));
         }
     }
