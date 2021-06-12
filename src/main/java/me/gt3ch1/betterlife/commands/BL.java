@@ -7,11 +7,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class BL extends BetterLifeCommands implements CommandExecutor {
 
     // Get the plugin from Main
-    private static BetterLife m = BetterLife.m;
+    private final BetterLife m = BetterLife.m;
 
     /**
      * Handles the /bl command
@@ -32,16 +33,16 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
      *
      * @param sender Who sent the command.
      */
-    private static void sendVersion(CommandSender sender) {
+    private void sendVersion(CommandSender sender) {
         sendMessage(sender, "&7Version &6" + m.getDescription().getVersion() + " &7of BetterLife installed.", true);
     }
 
     /**
      * Reloads the configuration and sends messages to the sender.
      *
-     * @param sender Who sent the commmand.
+     * @param sender Who sent the command.
      */
-    private static void reloadConfig(CommandSender sender) {
+    private void reloadConfig(CommandSender sender) {
         sendMessage(sender, "&eConfiguration file reloading...", true);
         CommandUtils.reloadConfiguration();
         sendMessage(sender, "&aConfiguration file reloaded!", true);
@@ -51,18 +52,14 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
      * When /bl is sent
      */
     @Override
-    public boolean onCommand(CommandSender sender, Command cs, String command, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cs, @NotNull String command, String[] args) {
 
         switch (args.length) {
-            case 0:
-                sendVersion(sender);
-                break;
-            case 1:
+            case 0 -> sendVersion(sender);
+            case 1 -> {
                 switch (args[0]) {
-                    case "reload":
-                        if (sender instanceof Player) {
-                            Player p = (Player) sender;
-
+                    case "reload" -> {
+                        if (sender instanceof Player p) {
                             if (p.hasPermission("betterlife.reload")) {
                                 reloadConfig(p);
                             } else {
@@ -71,18 +68,10 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
                         } else {
                             reloadConfig(sender);
                         }
-                        break;
-
-                    case "version":
-                        sendVersion(sender);
-                        break;
-
-                    default:
-                        return false;
+                    }
+                    case "version" -> sendVersion(sender);
                 }
-                return true;
-            default:
-                return false;
+            }
         }
         return true;
     }
