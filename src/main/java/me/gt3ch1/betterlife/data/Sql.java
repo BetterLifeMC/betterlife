@@ -54,8 +54,6 @@ public class Sql {
      */
     private void setupTestSql() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Class.forName("org.mariadb.jdbc.Driver");
             con = DriverManager
                 .getConnection("jdbc:mysql://" + host + ":" + port + "/" + database,
                     username, password);
@@ -64,7 +62,7 @@ public class Sql {
             setupTables();
             checkIfColumnsExists();
             Main.setupOnlinePlayers();
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -77,8 +75,6 @@ public class Sql {
             @Override
             public void run() {
                 try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    Class.forName("org.mariadb.jdbc.Driver");
                     con = DriverManager
                         .getConnection("jdbc:mysql://" + host + ":" + port + "/" + database,
                             username, password);
@@ -89,7 +85,7 @@ public class Sql {
                     checkIfColumnsExists();
                     Main.setupOnlinePlayers();
                     Main.bl_warp.getWarps();
-                } catch (ClassNotFoundException | SQLException e) {
+                } catch (SQLException e) {
                     Main.doBukkitLog(ChatColor.RED + "SQL Failed!");
                     e.printStackTrace();
                 }
