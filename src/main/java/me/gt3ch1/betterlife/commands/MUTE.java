@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This class represents the /mute command for BetterLife.
@@ -38,7 +39,7 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
      * @return True if the command was successful.
      */
     @Override
-    public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
         switch (args.length) {
             case 1 -> {
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
@@ -48,6 +49,7 @@ public class MUTE extends BetterLifeCommands implements CommandExecutor {
                     return true;
                 }
 
+                //TODO: Add caching so you can mute/unmute offline players
                 if (!otherPlayer.isOnline()) {
                     sendMessage(sender, "&e" + otherPlayer.getName() + " &4must be online to be muted.", true);
                     return true;
