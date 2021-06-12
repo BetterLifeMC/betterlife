@@ -41,8 +41,7 @@ public class CommandUtils {
      */
     public static void sendMessage(CommandSender sender, String message, boolean banner) {
         String coloredMessage = ChatColor.translateAlternateColorCodes('&', message);
-        boolean player = sender instanceof Player;
-        if (player) {
+        if (sender instanceof Player) {
             if (banner) {
                 sender.sendMessage(betterLifeBanner + coloredMessage);
             } else {
@@ -87,12 +86,9 @@ public class CommandUtils {
         m.saveDefaultConfig();
         partch.saveDefaultConfig();
 
-        int version;
-        if (ch.getCustomConfig().contains("version", true)) {
-            version = ch.getCustomConfig().getInt("version");
-        } else {
-            version = -1;
-        }
+        int version = ch.getCustomConfig().contains("version", true) ?
+            ch.getCustomConfig().getInt("version") :
+            -1;
 
         if (version != currentConfigVersion) {
             BetterLife.doBukkitLog(ChatColor.RED + "" + ChatColor.BOLD + "Config Version: " + version + " != " + currentConfigVersion);
