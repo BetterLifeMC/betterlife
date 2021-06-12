@@ -21,210 +21,147 @@ import java.util.*;
  */
 public class TabCompleterHelper implements TabCompleter {
 
-    private List<String> subCommands = new ArrayList<>();
-    private List<String> newList = new ArrayList<>();
+    private final List<String> subCommands = new ArrayList<>();
 
     /**
      * When we can tab complete commands. NOTE: Must be enabled in CommandUtils!
      */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        newList.clear();
         subCommands.clear();
-        String cmd = command.getLabel();
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            switch (cmd) {
-                case "trail":
+
+        if (sender instanceof Player player) {
+            switch (command.getLabel()) {
+                case "trail" -> {
                     switch (args.length) {
-                        case 1:
-                            // Add set, list, help, toggle, and if the player
-                            // has permissions, add and rm to the tab completion.
-                            if (Arrays.stream(args).anyMatch("set"::contains)) {
-                                subCommands.add("set");
+                        case 1 -> {
+                            var trailCmds = Arrays.asList("set", "list", "help", "toggle");
+                            for (String cmd : trailCmds) {
+                                if (player.hasPermission("betterlife.trail." + cmd)) {
+                                    subCommands.add(cmd);
+                                }
                             }
-                            if (Arrays.stream(args).anyMatch("list"::contains)) {
-                                subCommands.add("list");
-                            }
-                            if (Arrays.stream(args).anyMatch("help"::contains)) {
-                                subCommands.add("help");
-                            }
-                            if (Arrays.stream(args).anyMatch("toggle"::contains)) {
-                                subCommands.add("toggle");
-                            }
-                        case 2:
+                        }
+                        case 2 -> {
                             // If it is set, return the list of currently enabled particles,
                             // and append them to the tablist list.
-                            List<String> allowedParticles = CommandUtils.partch.getCustomConfig()
-                                .getStringList("particle");
-                            if ("set".equals(args[0])) {
-                                for (String particle : allowedParticles) {
-                                    if (Arrays.stream(args).anyMatch(particle::contains) && player
-                                        .hasPermission("betterlife.trail.particle." + particle.toLowerCase())) {
-                                        newList.add(particle);
+                            if (args[0].equalsIgnoreCase("set")) {
+                                for (String particle : CommandUtils.partch.getCustomConfig().getStringList("particle")) {
+                                    if (player.hasPermission("betterlife.trail.particle." + particle.toLowerCase())) {
+                                        subCommands.add(particle);
                                     }
                                 }
-                                subCommands = newList;
                             }
-                        default:
-                            break;
+                        }
                     }
-                    break;
-                case "toggledownfall":
-                    // If the player has permission, and the world is an overworld, show that world.
+                }
+                case "toggledownfall" -> {
+                    if (!player.hasPermission("betterlife.toggledownfall")) {
+                        break;
+                    }
+
+                    // Only show overworlds
                     for (World w : Bukkit.getServer().getWorlds()) {
-                        if (w.getEnvironment() != Environment.NETHER
-                            && w.getEnvironment() != Environment.THE_END
-                            && player.hasPermission("betterlife.toggledownfall")) {
+                        if (w.getEnvironment() != Environment.NETHER && w.getEnvironment() != Environment.THE_END) {
                             subCommands.add(w.getName());
                         }
-
                     }
-                    break;
-                case "bl":
+                }
+                case "bl" -> {
                     if (args.length == 1) {
                         if (player.hasPermission("betterlife.reload") || player.hasPermission("betterlife.admin")) {
-                            if (Arrays.stream(args).anyMatch("reload"::contains)) {
-                                subCommands.add("reload");
+                            subCommands.add("reload");
+                        }
+                        subCommands.add("version");
+                    }
+                }
+                case "eco" -> {
+                    if (Main.economy == null) {
+                        break;
+                    }
+
+                    switch (args.length) {
+                        case 1 -> {
+                            var ecoCmds = Arrays.asList("bal");
+                            for (String cmd : ecoCmds) {
+                                if (player.hasPermission("betterlife.eco." + cmd)) {
+                                    subCommands.add(cmd);
+                                }
                             }
                         }
-                        if (Arrays.stream(args).anyMatch("version"::contains)) {
-                            subCommands.add("version");
+                        case 2 -> {
+                            var ecoCmds = Arrays.asList("bal.others");
+                            for (String cmd : ecoCmds) {
+                                if (player.hasPermission("betterlife.eco." + cmd)) {
+                                    for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                        subCommands.add(p.getName());
+                                    }
+                                }
+                            }
                         }
                     }
-                    break;
-                case "eco":
+                }
+                case "home" -> {
                     switch (args.length) {
-                        case 1:
-                            if (player.hasPermission("betterlife.eco.bal")) {
-                                if (Arrays.stream(args).anyMatch("bal"::contains)) {
-                                    subCommands.add("bal");
+                        case 1 -> {
+                            if (player.hasPermission("betterlife.home")) {
+                                subCommands.addAll(Main.bl_home.getHomes(player.getUniqueId()).keySet());
+                            }
+
+                            var homeCmds = Arrays.asList("set", "del", "list");
+                            for (String cmd : homeCmds) {
+                                if (player.hasPermission("betterlife.home." + cmd)) {
+                                    subCommands.add(cmd);
                                 }
                             }
-                            if (player.hasPermission("betterlife.eco.give")) {
-                                if (Arrays.stream(args).anyMatch("give"::contains)) {
-                                    subCommands.add("give");
+                        }
+                        case 2 -> {
+                            switch (args[1]) {
+                                case "del" -> {
+                                    if (player.hasPermission("betterlife.home.del")) {
+                                        subCommands.addAll(Main.bl_home.getHomes(player.getUniqueId()).keySet());
+                                    }
+                                }
+                                case "list" -> {
+                                    if (player.hasPermission("betterlife.home.list.others")) {
+                                        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+                                            subCommands.add(p.getName());
+                                        }
+                                    }
                                 }
                             }
-                            if (player.hasPermission("betterlife.eco.set")) {
-                                if (Arrays.stream(args).anyMatch("set"::contains)) {
-                                    subCommands.add("set");
-                                }
-                            }
-                            break;
-                        case 2:
-                            switch (args[0]) {
-                                case "bal":
-                                    if (player.hasPermission("betterlife.eco.bal")) {
-                                        for (OfflinePlayer p : Bukkit.getServer().getOfflinePlayers()) {
-                                            if (Arrays.stream(args).anyMatch(Objects.requireNonNull(p.getName())::contains)) {
-                                                subCommands.add(p.getName());
-                                            }
-                                        }
-                                    }
-                                    break;
-                                case "set":
-                                    if (player.hasPermission("betterlife.eco.set")) {
-                                        for (OfflinePlayer p : Bukkit.getServer().getOfflinePlayers()) {
-                                            if (Arrays.stream(args).anyMatch(Objects.requireNonNull(p.getName())::contains)) {
-                                                subCommands.add(p.getName());
-                                            }
-                                        }
-                                    }
-                                case "give":
-                                    if (player.hasPermission("betterlife.eco.give")) {
-                                        for (OfflinePlayer p : Bukkit.getServer().getOfflinePlayers()) {
-                                            if (Arrays.stream(args).anyMatch(Objects.requireNonNull(p.getName())::contains)) {
-                                                subCommands.add(p.getName());
-                                            }
-                                        }
-                                    }
-                                default:
-                                    break;
-                            }
-                        default:
-                            break;
+                        }
                     }
-                case "home":
+                }
+                case "warp" -> {
                     switch (args.length) {
-                        case 1:
-                            if (player.hasPermission("betterlife.home.set")) {
-                                if (Arrays.stream(args).anyMatch("set"::contains)) {
-                                    subCommands.add("set");
-                                }
-                            }
-                            if (player.hasPermission("betterlife.home.del")) {
-                                if (Arrays.stream(args).anyMatch("del"::contains)) {
-                                    subCommands.add("del");
-                                }
-                            }
-                            if (player.hasPermission("betterlife.home.list")) {
-                                if (Arrays.stream(args).anyMatch("list"::contains)) {
-                                    subCommands.add("list");
-                                }
-                            }
-                            if (player.hasPermission("betterlife.home.home")) {
-                                LinkedHashMap<String, Location> homes = Main.bl_home.getHomes(player.getUniqueId());
-                                for (String homeName : homes.keySet()) {
-                                    if (Arrays.stream(args).anyMatch(homeName::contains)) {
-                                        subCommands.add(homeName);
-                                    }
-                                }
-                            }
-                            break;
-                        case 2:
-                            if (player.hasPermission("betterlife.home.del")) {
-                                LinkedHashMap<String, Location> homes = Main.bl_home.getHomes(player.getUniqueId());
-                                for (String homeName : homes.keySet()) {
-                                    if (Arrays.stream(args).anyMatch(homeName::contains)) {
-                                        subCommands.add(homeName);
-                                    }
-                                }
-                            }
-                            break;
-                    }
-                case "warp":
-                    switch (args.length) {
-                        case 1:
-                            if (player.hasPermission("betterlife.warp.set")) {
-                                if (Arrays.stream(args).anyMatch("set"::contains)) {
-                                    subCommands.add("set");
-                                }
-                            }
-                            if (player.hasPermission("betterlife.warp.del")) {
-                                if (Arrays.stream(args).anyMatch("del"::contains)) {
-                                    subCommands.add("del");
-                                }
-                            }
-                            if (player.hasPermission("betterlife.warp.list")) {
-                                if (Arrays.stream(args).anyMatch("list"::contains)) {
-                                    subCommands.add("list");
-                                }
-                            }
+                        case 1 -> {
                             if (player.hasPermission("betterlife.warp")) {
-                                LinkedHashMap<String, Location> warps = Main.bl_warp.getWarps();
-                                for (String warpName : warps.keySet()) {
+                                for (String warpName : Main.bl_warp.getWarps().keySet()) {
                                     if (player.hasPermission("betterlife.warp." + warpName)) {
-                                        if (Arrays.stream(args).anyMatch(warpName::contains)) {
-                                            subCommands.add(warpName);
-                                        }
-                                    }
-                                }
-                            }
-                            break;
-                        case 2:
-                            if (player.hasPermission("betterlife.warp.del")) {
-                                LinkedHashMap<String, Location> warps = Main.bl_warp.getWarps();
-                                for (String warpName : warps.keySet()) {
-                                    if (Arrays.stream(args).anyMatch(warpName::contains)) {
                                         subCommands.add(warpName);
                                     }
                                 }
                             }
-                            break;
+
+                            var warpCmds = Arrays.asList("set", "del", "list");
+                            for (String cmd : warpCmds) {
+                                if (player.hasPermission("betterlife.warp." + cmd)) {
+                                    subCommands.add(cmd);
+                                }
+                            }
+                        }
+                        case 2 -> {
+                            if (player.hasPermission("betterlife.warp.del")) {
+                                for (String warpName : Main.bl_warp.getWarps().keySet()) {
+                                    if (player.hasPermission("betterlife.warp." + warpName)) {
+                                        subCommands.add(warpName);
+                                    }
+                                }
+                            }
+                        }
                     }
-                default:
-                    break;
+                }
             }
             return subCommands;
         }
