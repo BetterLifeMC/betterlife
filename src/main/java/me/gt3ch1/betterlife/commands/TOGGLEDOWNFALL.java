@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecutor {
 
@@ -37,35 +38,26 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
     @Override
     public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
         switch (args.length) {
-            case 0:
-                if (sender instanceof Player) {
-                    Player player = (Player) sender;
+            case 0 -> {
+                if (sender instanceof Player player) {
                     World world = player.getWorld();
                     toggleWeather(world, player);
                 } else {
                     World world = Bukkit.getServer().getWorlds().get(0);
                     toggleWeather(world, sender);
                 }
-                break;
-            case 1:
-                try {
-                    World world = Bukkit.getServer().getWorld(args[0]);
+            }
+            case 1 -> {
+                World world = Bukkit.getServer().getWorld(args[0]);
 
-                    if (world.getEnvironment() != Environment.NETHER && world.getEnvironment() != Environment.THE_END) {
-                        toggleWeather(world, sender);
-                    } else {
-                        sendMessage(sender, "&4Can't change weather in that world!", true);
-                    }
-                    break;
-
-                } catch (NullPointerException ex) {
-                    sendMessage(sender, "&4That world doesn't exist!", true);
-                    break;
+                if (world == null || world.getEnvironment() == Environment.NETHER || world.getEnvironment() == Environment.THE_END) {
+                    sendMessage(sender, "&4Can't change weather in that world!", true);
+                    return true;
                 }
 
-            default:
-                sendMessage(sender, "&4Too many arguments!", true);
-                return false;
+                toggleWeather(world, sender);
+            }
+            default -> sendMessage(sender, "&4Too many arguments!", true);
         }
         return true;
     }
@@ -76,7 +68,7 @@ public class TOGGLEDOWNFALL extends BetterLifeCommands implements CommandExecuto
      * @param world  World to change the weather of.
      * @param sender Who sent the command
      */
-    private void toggleWeather(World world, CommandSender sender) {
+    private void toggleWeather(@NotNull World world, @NotNull CommandSender sender) {
 
         if (world.hasStorm() || world.isThundering()) {
             world.setStorm(false);
