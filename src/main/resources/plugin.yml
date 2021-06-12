@@ -29,9 +29,6 @@ commands:
     trail:
         description: Sets a fancy trail behind your player
         permission: betterlife.trail
-    setspawn:
-        description: Sets a the games spawnpoint to your location.
-        permission: betterlife.setspawn
     spawn:
         description: Teleport to the game's spawn point.
         permission: betterlife.spawn
@@ -83,7 +80,7 @@ permissions:
     betterlife.spawn:
         description: Allows players to teleport to spawn
         default: op
-    betterlife.setspawn:
+    betterlife.spawn.setspawn:
         description: Allows a player to set the spawnpoint
         default: op
     betterlife.warp:
