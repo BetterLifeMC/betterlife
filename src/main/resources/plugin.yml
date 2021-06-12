@@ -3,7 +3,7 @@ name: BetterLife
 version: '0.5'
 description: "Making running a Minecraft server a little more humane."
 authors: [Starmism, GT3CH1]
-api-version: '1.16'
+api-version: '1.17'
 softdepend: [Vault]
 commands:
     bl:
