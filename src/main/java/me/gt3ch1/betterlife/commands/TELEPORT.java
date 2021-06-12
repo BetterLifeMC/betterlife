@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author gt3ch1
@@ -38,31 +39,35 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor {
      * @return True if the command was successful.
      */
     @Override
-    public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
         switch (args.length) {
-            case 1:
-                if (!(sender instanceof Player)) {
+            case 1 -> {
+                if (!(sender instanceof Player player)) {
                     sendMessage(sender, "Console can't teleport!", true);
                     return false;
                 }
+
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
                 if (otherPlayer == null) {
-                    sendMessage(sender, "You have teleported to someone that doesn't exist..?", false);
+                    sendMessage(player, "You have teleported to someone that doesn't exist..?", false);
                     return false;
                 }
-                if (otherPlayer.getName().equalsIgnoreCase(sender.getName())) {
-                    sendMessage(sender, "You have teleported to yourself..?", false);
+                if (otherPlayer.getName().equalsIgnoreCase(player.getName())) {
+                    sendMessage(player, "You have teleported to yourself..?", false);
                     return false;
                 }
-                teleportHelper.teleportPlayer((Player) sender, otherPlayer);
+
+                teleportHelper.teleportPlayer(player, otherPlayer);
                 return true;
-            case 2:
+            }
+            case 2 -> {
                 Player firstPlayer = Bukkit.getPlayer(args[0]);
                 Player secondPlayer = Bukkit.getPlayer(args[1]);
                 if (firstPlayer == null || secondPlayer == null) {
                     sendMessage(sender, "You have teleported to someone that doesn't exist..?", false);
                     return false;
                 }
+
                 if (sender.hasPermission("betterlife.teleport.others")) {
                     teleportHelper.teleportPlayer(firstPlayer, secondPlayer);
                 } else {
@@ -70,8 +75,10 @@ public class TELEPORT extends BetterLifeCommands implements CommandExecutor {
                     return false;
                 }
                 return true;
-            default:
+            }
+            default -> {
                 return false;
+            }
         }
     }
 }
