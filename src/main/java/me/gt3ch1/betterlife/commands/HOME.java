@@ -13,6 +13,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This class represents the /home command for BetterLife.
@@ -45,7 +46,7 @@ public class HOME extends BetterLifeCommands implements CommandExecutor {
      * @return True if the command executed successfully.
      */
     @Override
-    public boolean onCommand(CommandSender sender, Command c, String command, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
         if (!(sender instanceof Player player)) {
             sendMessage(sender, "&4You must be a player to use this command!", false);
             return true;
