@@ -1,10 +1,10 @@
-main: me.gt3ch1.betterlife.Main.BetterLife
+main: me.gt3ch1.betterlife.main.BetterLife
 name: BetterLife
-version: '0.5'
+version: '1.0'
 description: "Making running a Minecraft server a little more humane."
 authors: [Starmism, GT3CH1]
 api-version: '1.17'
-softdepend: [Vault]
+depend: [Vault]
 commands:
     bl:
         description: The primary command for BetterLife

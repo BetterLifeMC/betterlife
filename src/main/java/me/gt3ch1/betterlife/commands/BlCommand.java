@@ -1,31 +1,26 @@
 package me.gt3ch1.betterlife.commands;
 
-import me.gt3ch1.betterlife.Main.BetterLife;
-import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
-import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
+import me.gt3ch1.betterlife.main.BetterLife;
+import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommand;
+import me.gt3ch1.betterlife.configuration.ConfigurationManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.*;
 
-public class BL extends BetterLifeCommands implements CommandExecutor {
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
-    // Get the plugin from Main
-    private final BetterLife m = BetterLife.m;
+public class BlCommand implements BetterLifeCommand {
 
-    /**
-     * Handles the /bl command
-     *
-     * @param permission Permission required for the /bl command.
-     * @param cs         The command sender.
-     * @param c          The command.
-     * @param label      The String version of the command.
-     * @param args       The arguments to the command.
-     */
-    public BL(String permission, CommandSender cs, Command c, String label, String[] args) {
-        super(permission, cs, c, label, args);
-        this.onCommand(cs, c, label, args);
+    private final BetterLife m;
+    private final ConfigurationManager configurationManager;
+
+    @Inject
+    public BlCommand(BetterLife m, ConfigurationManager configurationManager) {
+        this.m = m;
+        this.configurationManager = configurationManager;
     }
 
     /**
@@ -44,16 +39,27 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
      */
     private void reloadConfig(CommandSender sender) {
         sendMessage(sender, "&eConfiguration file reloading...", true);
-        CommandUtils.reloadConfiguration();
+        configurationManager.reloadConfiguration();
         sendMessage(sender, "&aConfiguration file reloaded!", true);
     }
 
-    /**
-     * When /bl is sent
-     */
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cs, @NotNull String command, String[] args) {
+    public String getPermission() {
+        return "betterlife.bl";
+    }
 
+    @Override
+    public List<String> getHelpList() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return "The primary command for BetterLife.";
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, String[] args) {
         switch (args.length) {
             case 0 -> sendVersion(sender);
             case 1 -> {
@@ -74,5 +80,18 @@ public class BL extends BetterLifeCommands implements CommandExecutor {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
+        final List<String> subCommands = new ArrayList<>();
+
+        if (args.length == 1) {
+            if (sender.hasPermission("betterlife.reload")) {
+                subCommands.add("reload");
+            }
+            subCommands.add("version");
+        }
+        return subCommands;
     }
 }

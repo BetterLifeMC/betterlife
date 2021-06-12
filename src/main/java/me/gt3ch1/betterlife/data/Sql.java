@@ -1,14 +1,16 @@
 package me.gt3ch1.betterlife.data;
 
-import me.gt3ch1.betterlife.Main.BetterLife;
+import me.gt3ch1.betterlife.main.BetterLife;
+import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.sql.*;
 
-import static me.gt3ch1.betterlife.Main.BetterLife.doBukkitLog;
-import static me.gt3ch1.betterlife.Main.BetterLife.isTesting;
-import static me.gt3ch1.betterlife.Main.BetterLife.m;
+import static me.gt3ch1.betterlife.main.BetterLife.doBukkitLog;
+import static me.gt3ch1.betterlife.main.BetterLife.isTesting;
 
 /**
  * This class contains methods needed to provided SQL support for the BetterLife plugin.
@@ -16,6 +18,7 @@ import static me.gt3ch1.betterlife.Main.BetterLife.m;
  * @author Starmism
  * @author gt3ch1
  */
+@Singleton
 public class Sql {
 
     private final String host, database, username, password;
@@ -23,8 +26,21 @@ public class Sql {
     private Connection con;
     private Statement stmt;
     private ResultSet rs;
+    private final BetterLife m;
 
     private boolean isSqlConnected = false;
+
+    @Inject
+    public Sql(MainConfigurationHandler ch, BetterLife m) {
+        this(
+                ch.getCustomConfig().getString("sql.host"),
+                ch.getCustomConfig().getString("sql.database"),
+                ch.getCustomConfig().getString("sql.username"),
+                ch.getCustomConfig().getString("sql.password"),
+                ch.getCustomConfig().getInt("sql.port"),
+                m
+        );
+    }
 
     /**
      * Initializes support for an SQL database.
@@ -34,12 +50,13 @@ public class Sql {
      * @param username The login username
      * @param password The login password
      */
-    public Sql(String host, String database, String username, String password, int port) {
+    public Sql(String host, String database, String username, String password, int port, BetterLife m) {
         this.host = host;
         this.database = database;
         this.username = username;
         this.password = password;
         this.port = port;
+        this.m = m;
 
         BetterLife.doBukkitLog(ChatColor.YELLOW + "Connecting to SQL database...");
         if (isTesting) {
@@ -61,7 +78,6 @@ public class Sql {
             isSqlConnected = true;
             setupTables();
             checkIfColumnsExists();
-            BetterLife.setupOnlinePlayers();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -83,8 +99,6 @@ public class Sql {
                     isSqlConnected = true;
                     setupTables();
                     checkIfColumnsExists();
-                    BetterLife.setupOnlinePlayers();
-                    BetterLife.bl_warp.getWarps();
                 } catch (SQLException e) {
                     BetterLife.doBukkitLog(ChatColor.RED + "SQL Failed!");
                     e.printStackTrace();

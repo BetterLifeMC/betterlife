@@ -1,27 +1,35 @@
 package me.gt3ch1.betterlife.eventhelpers;
 
-import me.gt3ch1.betterlife.Main.BetterLife;
-import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
-import me.gt3ch1.betterlife.configuration.ConfigurationHelper;
+import me.gt3ch1.betterlife.main.BetterLife;
+import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
+import me.gt3ch1.betterlife.configuration.YamlConfigurationHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendMessage;
 
 /**
- * @author gt3ch1
- * @author starmism
- * @version 12/2/20 Project betterlife
+ * @author Starmism
  */
+@Singleton
 public class PlayerTeleportHelper {
 
     private int checkerID;
     private int taskID;
-    private BetterLife m = BetterLife.m;
-    private ConfigurationHelper ch = CommandUtils.ch;
+    private final BetterLife m;
+    private final YamlConfigurationHandler ch;
+
+    @Inject
+    public PlayerTeleportHelper(BetterLife m, MainConfigurationHandler ch) {
+        this.m = m;
+        this.ch = ch;
+    }
 
     /**
      * Teleports the given player to the location.

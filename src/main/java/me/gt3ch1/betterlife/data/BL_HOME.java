@@ -6,17 +6,24 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
-import me.gt3ch1.betterlife.Main.BetterLife;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class BL_HOME {
 
-    private final Sql sql = BetterLife.sql;
-    private ResultSet rs;
+    private final Sql sql;
 
     public HashMap<UUID, LinkedHashMap<String, Location>> homesPerPlayer = new HashMap<>();
+
+    @Inject
+    public BL_HOME(Sql sql) {
+        this.sql = sql;
+    }
 
     /**
      * Gets all of the homes belonging to player UUID.
@@ -42,7 +49,7 @@ public class BL_HOME {
         LinkedHashMap<String, Location> homeList = new LinkedHashMap<>();
 
         try {
-            rs = sql.executeQuery(query);
+            ResultSet rs = sql.executeQuery(query);
             while (rs.next()) {
                 homeList.put(rs.getNString("Home"), new Location(
                     Bukkit.getWorld(rs.getString("World")),

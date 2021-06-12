@@ -5,17 +5,26 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
-import me.gt3ch1.betterlife.Main.BetterLife;
+import me.gt3ch1.betterlife.main.BetterLife;
 import org.bukkit.ChatColor;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+@Singleton
 public class BL_PLAYER {
 
-    private final Sql sql = BetterLife.sql;
+    private final Sql sql;
     public HashMap<UUID, Boolean> trailEnabledPerPlayer = new HashMap<>();
     public HashMap<UUID, String> trailPerPlayer = new HashMap<>();
     public HashMap<UUID, Boolean> roadboostPerPlayer = new HashMap<>();
     public HashMap<UUID, Boolean> mutePerPlayer = new HashMap<>();
     private ResultSet rs;
+
+    @Inject
+    public BL_PLAYER(Sql sql) {
+        this.sql = sql;
+    }
 
     /**
      * @param playerUUID The UUID we are getting the toggle for.
@@ -138,8 +147,6 @@ public class BL_PLAYER {
                 mutePerPlayer.put(playerUUID, !currentVal);
                 setPlayerToggleSQL(playerUUID, type);
                 break;
-            default:
-                break;
         }
     }
 
@@ -160,7 +167,7 @@ public class BL_PLAYER {
             if (rs.next()) {
                 query = "UPDATE `" + toggle.getTable() + "` SET `" + toggle.getColumn() + "` = '"
                     + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
-                    + playerUUID.toString() + "'";
+                    + playerUUID + "'";
 
                 sql.executeUpdate(query);
             } else {
@@ -184,8 +191,6 @@ public class BL_PLAYER {
             case TRAIL_PER_PLAYER:
                 trailPerPlayer.put(playerUUID, stringToSet);
                 setPlayerStringSQL(playerUUID, type, stringToSet);
-                break;
-            default:
                 break;
         }
     }
@@ -232,5 +237,17 @@ public class BL_PLAYER {
 
         BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
         sql.executeUpdate(query);
+    }
+
+    /**
+     * Sets up the cache for the given player uuid.
+     *
+     * @param playerUUID Player's UUID to cache.
+     */
+    public void setupPlayerConfig(UUID playerUUID) {
+        trailEnabledPerPlayer.put(playerUUID, getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER));
+        trailPerPlayer.put(playerUUID, getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
+        roadboostPerPlayer.put(playerUUID, getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER));
+        mutePerPlayer.put(playerUUID, getPlayerToggle(playerUUID, BL_PLAYER_ENUM.MUTE_PER_PLAYER));
     }
 }

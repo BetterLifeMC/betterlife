@@ -1,84 +1,91 @@
 package me.gt3ch1.betterlife.commands;
 
-import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommands;
+import com.google.inject.Inject;
+import me.gt3ch1.betterlife.commandhelpers.BetterLifeCommand;
+import me.gt3ch1.betterlife.eventhelpers.PlayerTeleportHelper;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
+
+import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendMessage;
+import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendPermissionErrorMessage;
+
 /**
  * @author gt3ch1
- * @author starmism
- * @version 12/15/20
+ * @author Starmism
  */
-public class TELEPORT extends BetterLifeCommands implements CommandExecutor {
+public class TeleportCommand implements BetterLifeCommand {
 
-    /**
-     * Creates a new BetterLife command.
-     *
-     * @param permission Permission needed to run the command.
-     * @param cs         Person who sent the command.
-     * @param c          The command.
-     * @param label      The string version of command.
-     * @param args       the arguments to the command.
-     */
-    public TELEPORT(String permission, CommandSender cs, Command c, String label, String[] args) {
-        super(permission, cs, c, label, args);
-        this.onCommand(cs, c, label, args);
+    private final PlayerTeleportHelper teleportHelper;
+
+    @Inject
+    public TeleportCommand(PlayerTeleportHelper teleportHelper) {
+        this.teleportHelper = teleportHelper;
     }
 
-    /**
-     * Runs the /teleport command
-     *
-     * @param sender  Sender of the command.
-     * @param c       The command itself.
-     * @param command The string version of the command.
-     * @param args    The arguments of the command.
-     * @return True if the command was successful.
-     */
+
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command c, @NotNull String command, String[] args) {
+    public String getPermission() {
+        return "betterlife.teleport";
+    }
+
+    @Override
+    public List<String> getHelpList() {
+        return null;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Allows players to teleport to each other, or to teleport one person to another person";
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, String[] args) {
         switch (args.length) {
             case 1 -> {
                 if (!(sender instanceof Player player)) {
                     sendMessage(sender, "Console can't teleport!", true);
-                    return false;
+                    return true;
                 }
 
                 Player otherPlayer = Bukkit.getPlayer(args[0]);
                 if (otherPlayer == null) {
                     sendMessage(player, "You have teleported to someone that doesn't exist..?", false);
-                    return false;
+                    return true;
                 }
                 if (otherPlayer.getName().equalsIgnoreCase(player.getName())) {
                     sendMessage(player, "You have teleported to yourself..?", false);
-                    return false;
+                    return true;
                 }
 
                 teleportHelper.teleportPlayer(player, otherPlayer);
-                return true;
             }
             case 2 -> {
                 Player firstPlayer = Bukkit.getPlayer(args[0]);
                 Player secondPlayer = Bukkit.getPlayer(args[1]);
                 if (firstPlayer == null || secondPlayer == null) {
                     sendMessage(sender, "You have teleported to someone that doesn't exist..?", false);
-                    return false;
+                    return true;
                 }
 
                 if (sender.hasPermission("betterlife.teleport.others")) {
                     teleportHelper.teleportPlayer(firstPlayer, secondPlayer);
                 } else {
                     sendPermissionErrorMessage(sender);
-                    return false;
+                    return true;
                 }
-                return true;
-            }
-            default -> {
-                return false;
             }
         }
+        return true;
+    }
+
+    @Override
+    public List<String> tabComplete(@NotNull CommandSender sender, @NotNull String[] args) {
+        //TODO: do this
+        return Collections.emptyList();
     }
 }
