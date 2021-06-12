@@ -9,8 +9,8 @@ import java.util.LinkedHashMap;
  */
 public class HelpHelper {
 
-    private static LinkedHashMap<String, String> trailHelpHash = new LinkedHashMap<>();
-    private static LinkedHashMap<String, String> ecoHelpHash = new LinkedHashMap<>();
+    private static final LinkedHashMap<String, String> trailHelpHash = new LinkedHashMap<>();
+    private static final LinkedHashMap<String, String> ecoHelpHash = new LinkedHashMap<>();
 
     /**
      * Returns the help commands for the given command
@@ -19,14 +19,11 @@ public class HelpHelper {
      * @return The help message.
      */
     public static LinkedHashMap<String, String> getAHelpHash(String hash) {
-        switch (hash) {
-            case "trail":
-                return trailHelpHash;
-            case "eco":
-                return ecoHelpHash;
-            default:
-                return null;
-        }
+        return switch (hash) {
+            case "trail" -> trailHelpHash;
+            case "eco" -> ecoHelpHash;
+            default -> null;
+        };
     }
 
     /**
