@@ -8,6 +8,8 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 
 
+import java.util.ArrayList;
+
 import static me.gt3ch1.betterlife.main.BetterLife.doBukkitLog;
 
 /**
@@ -18,6 +20,7 @@ import static me.gt3ch1.betterlife.main.BetterLife.doBukkitLog;
  */
 public class ListenerManager {
 
+    private final ArrayList<Listener> listeners = new ArrayList<>();
     private final PlayerJoin playerJoin;
     private final PlayerMove playerMove;
     private final BlockFade blockFade;
@@ -33,16 +36,16 @@ public class ListenerManager {
     }
 
     public void setupListeners(BetterLife plugin) {
-        plugin.listeners.add(blockFade);
-        plugin.listeners.add(playerMove);
-        plugin.listeners.add(playerJoin);
-        plugin.listeners.add(playerChatEvent);
+        listeners.add(blockFade);
+        listeners.add(playerMove);
+        listeners.add(playerJoin);
+        listeners.add(playerChatEvent);
         /*plugin.listeners.add(new PlayerInteract());
         plugin.listeners.add(new BlockBreak());
         plugin.listeners.add(new BlockExplode());
         plugin.listeners.add(new BlockIgnite());*/
 
-        for (Listener listener : plugin.listeners) {
+        for (Listener listener : listeners) {
             Bukkit.getPluginManager().registerEvents(listener, plugin);
             doBukkitLog("Enabling listener: " + ChatColor.GOLD + listener);
         }
