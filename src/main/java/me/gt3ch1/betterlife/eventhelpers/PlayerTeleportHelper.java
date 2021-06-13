@@ -31,13 +31,6 @@ public class PlayerTeleportHelper {
         this.ch = ch;
     }
 
-    /**
-     * Teleports the given player to the location.
-     *
-     * @param player   Player to teleport.
-     * @param location Location to teleport player.
-     * @param home     "Home" to display.
-     */
     public void teleportPlayer(Player player, Location location, String home) {
         teleportPlayerHelper(player, location, home, false);
     }
@@ -46,12 +39,6 @@ public class PlayerTeleportHelper {
         teleportPlayerHelper(player, otherPlayer.getLocation(), otherPlayer.getName(), false);
     }
 
-    /**
-     * Teleports the given player to the location.
-     *
-     * @param player   Player to teleport.
-     * @param location Location we want to teleport to.
-     */
     public void teleportPlayer(Player player, Location location, String home, boolean forceTeleport) {
         teleportPlayerHelper(player, location, home, forceTeleport);
     }
@@ -72,8 +59,8 @@ public class PlayerTeleportHelper {
 
         final Location initial = player.getLocation();
 
-        //BL-Test
-        if (BetterLife.isTesting || forceTeleport) {
+        // Force teleport means instant teleport
+        if (forceTeleport) {
             player.teleport(location);
             return;
         }
