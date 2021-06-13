@@ -15,8 +15,8 @@ import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendMessage;
 
 public class TrailCommand implements BetterLifeCommand {
 
-    BL_PLAYER blPlayer;
-    ParticleConfigurationHandler partch;
+    private final BL_PLAYER blPlayer;
+    private final ParticleConfigurationHandler partch;
 
     @Inject
     public TrailCommand(BL_PLAYER blPlayer, ParticleConfigurationHandler partch) {
