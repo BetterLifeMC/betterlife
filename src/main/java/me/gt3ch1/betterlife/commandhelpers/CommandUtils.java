@@ -7,8 +7,7 @@ import org.bukkit.entity.Player;
 import java.util.LinkedHashMap;
 
 /**
- * Base class for BetterLifeCommand, and various other methods required to send messages to players, or to add tab completion for certain commands.
- * This class also stores all of the configuration data required to run the plugin.
+ * Class contains helper methods for Commands, primarily involved with sending messages that are formatted prettily.
  */
 public class CommandUtils {
 
@@ -51,6 +50,7 @@ public class CommandUtils {
      * @param commandName The name of the command.
      * @param args        Arguments of the command.
      */
+    @Deprecated
     public static void sendHelpMessage(CommandSender sender, String commandName, LinkedHashMap<String, String> args) {
         sendMessage(sender, "&b&lby GT3CH1 & Starmism", true);
         sendMessage(sender, "&6--== [ Available commands ] ==--", true);

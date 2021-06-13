@@ -4,9 +4,10 @@ import java.util.LinkedHashMap;
 
 /**
  * Handles all help messages for BetterLife.
- *
+ * //TODO: CLASS IS DEPRECATED, ONLY KEPT FOR REFERENCE
  * @author Starmism
  */
+@Deprecated
 public class HelpHelper {
 
     private static final LinkedHashMap<String, String> trailHelpHash = new LinkedHashMap<>();
