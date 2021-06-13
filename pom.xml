@@ -6,7 +6,7 @@
 
   <groupId>me.gtc3ch1.betterlife</groupId>
   <artifactId>betterlife</artifactId>
-  <version>0.5</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
   <name>BetterLife</name>
