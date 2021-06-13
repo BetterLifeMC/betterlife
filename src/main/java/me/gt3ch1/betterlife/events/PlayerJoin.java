@@ -1,7 +1,6 @@
 package me.gt3ch1.betterlife.events;
 
 import com.google.inject.Inject;
-import me.gt3ch1.betterlife.main.BetterLife;
 import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
 import me.gt3ch1.betterlife.data.BL_PLAYER;
 import me.gt3ch1.betterlife.data.BL_PLAYER_ENUM;
@@ -55,7 +54,7 @@ public class PlayerJoin implements Listener {
         if (playerGetter.getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER) == null) {
             playerGetter.setPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER, newPlayerParticle.toString());
         }
-        if (!p.hasPlayedBefore() && blWarp.getWarps().containsKey("spawn") && !BetterLife.isTesting) {
+        if (!p.hasPlayedBefore() && blWarp.getWarps().containsKey("spawn")) {
             teleportHelper.teleportPlayer(p, blWarp.getWarps().get("spawn"), "spawn", true);
         }
     }

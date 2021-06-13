@@ -10,7 +10,6 @@ import javax.inject.Singleton;
 import java.sql.*;
 
 import static me.gt3ch1.betterlife.main.BetterLife.doBukkitLog;
-import static me.gt3ch1.betterlife.main.BetterLife.isTesting;
 
 /**
  * This class contains methods needed to provided SQL support for the BetterLife plugin.
@@ -59,28 +58,7 @@ public class Sql {
         this.m = m;
 
         BetterLife.doBukkitLog(ChatColor.YELLOW + "Connecting to SQL database...");
-        if (isTesting) {
-            setupTestSql();
-        } else {
-            connectAndSetup();
-        }
-    }
-
-    /**
-     * Sets up the SQL database in a way we can test it.
-     */
-    private void setupTestSql() {
-        try {
-            con = DriverManager
-                .getConnection("jdbc:mysql://" + host + ":" + port + "/" + database,
-                    username, password);
-            stmt = con.createStatement();
-            isSqlConnected = true;
-            setupTables();
-            checkIfColumnsExists();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        connectAndSetup();
     }
 
     /**
@@ -283,16 +261,12 @@ public class Sql {
             doBukkitLog(ChatColor.RED + "SQL isn't connected.");
             return;
         }
-        if (isTesting) {
-            modifyHomeHelper(query, home);
-        } else {
-            new BukkitRunnable() {
+        new BukkitRunnable() {
                 @Override
                 public void run() {
                     modifyHomeHelper(query, home);
                 }
             }.runTaskAsynchronously(m);
-        }
     }
 
     /**
