@@ -2,12 +2,14 @@ package me.gt3ch1.betterlife.data;
 
 /**
  * Represents all the enums for betterlife.
- *
- * MUTE_PER_PLAYER          - SQL column: MuteToggle,       Table: BL_PLAYER,   sqlType: BOOL
- * ROADBOOST_PER_PLAYER     - SQL column: RoadBoostToggle,  Table: BL_PLAYER,   sqlType: BOOL
- * TRAIL_ENABLED_PER_PLAYER - SQL column: TrailToggle,      Table: BL_PLAYER,   sqlType: BOOL
- * TRAIL_PER_PLAYER         - SQL column: Trail,            Table: BL_PLAYER,   sqlType: NVCHAR
- * HOME_PER_PLAYER          - SQL column: Home,             Table: BL_HOME,     sqlType: none
+ * <p>
+ * MUTE_PER_PLAYER  -   SQL column: MuteToggle, Table: BL_PLAYER, sqlType: BOOL
+ * ROADBOOST_PER_PLAYER - SQL column: RoadBoostToggle, Table: BL_PLAYER, sqlType: BOOL
+ * TRAIL_ENABLED_PER_PLAYER - SQL column: TrailToggle, Table: BL_PLAYER, sqlType: BOOL
+ * <p>
+ * TRAIL_PER_PLAYER - SQL column: Trail, Table: BL_PLAYER, sqlType: NVCHAR
+ * <p>
+ * HOME_PER_PLAYER - SQL column: Home, Table: BL_HOME, sqlType: none
  */
 public enum BL_PLAYER_ENUM {
 
@@ -18,7 +20,7 @@ public enum BL_PLAYER_ENUM {
 
     // BL_PLAYER Strings
     TRAIL_PER_PLAYER("Trail", "BL_PLAYER", "NVCHAR(30)"),
-
+  
     // BL_HOME
     HOME_PER_PLAYER("Home", "BL_HOME");
 
@@ -26,7 +28,7 @@ public enum BL_PLAYER_ENUM {
     private String table;
     private String sqlType;
 
-    BL_PLAYER_ENUM(String column, String table, String sqlType) {
+    BL_PLAYER_ENUM(String column, String table, String sqlType){
         this.column = column;
         this.table = table;
         this.sqlType = sqlType;
@@ -72,7 +74,6 @@ public enum BL_PLAYER_ENUM {
 
     /**
      * Gets the default SQL value for the enum.
-     *
      * @return The default SQL value.
      */
     public String getDefault() {

@@ -5,33 +5,24 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
-import me.gt3ch1.betterlife.main.BetterLife;
+import me.gt3ch1.betterlife.Main.Main;
 import org.bukkit.ChatColor;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-@Singleton
 public class BL_PLAYER {
 
-    private final Sql sql;
+    private final Sql sql = Main.sql;
     public HashMap<UUID, Boolean> trailEnabledPerPlayer = new HashMap<>();
     public HashMap<UUID, String> trailPerPlayer = new HashMap<>();
     public HashMap<UUID, Boolean> roadboostPerPlayer = new HashMap<>();
-    public HashMap<UUID, Boolean> mutePerPlayer = new HashMap<>();
+    public HashMap<UUID,Boolean> mutePerPlayer = new HashMap<>();
     private ResultSet rs;
-
-    @Inject
-    public BL_PLAYER(Sql sql) {
-        this.sql = sql;
-    }
 
     /**
      * @param playerUUID The UUID we are getting the toggle for.
      * @param type       The Type of the toggle
      * @return Varies, depending on the context that the player sat.
      */
-    public boolean getPlayerToggle(UUID playerUUID, BL_PLAYER_ENUM type) {
+    public boolean getPlayerToggle (UUID playerUUID, BL_PLAYER_ENUM type) {
         switch (type) {
             case TRAIL_ENABLED_PER_PLAYER:
                 if (!trailEnabledPerPlayer.containsKey(playerUUID)) {
@@ -44,7 +35,7 @@ public class BL_PLAYER {
                 }
                 return roadboostPerPlayer.get(playerUUID);
             case MUTE_PER_PLAYER:
-                if (!mutePerPlayer.containsKey(playerUUID)) {
+                if(!mutePerPlayer.containsKey(playerUUID)){
                     mutePerPlayer.put(playerUUID, getPlayerToggleSQL(playerUUID, type));
                 }
                 return mutePerPlayer.get(playerUUID);
@@ -62,8 +53,9 @@ public class BL_PLAYER {
      */
     private boolean getPlayerToggleSQL(UUID playerUUID, BL_PLAYER_ENUM toggle) {
         String query =
-            "SELECT `" + toggle.getColumn() + "` FROM `" + toggle.getTable() + "` WHERE `UUID` = '"
-                + playerUUID.toString() + "'";
+                "SELECT `" + toggle.getColumn() + "` FROM `" + toggle.getTable() + "` WHERE `UUID` = '"
+                        + playerUUID.toString()
+                        + "'";
 
         try {
             rs = sql.executeQuery(query);
@@ -89,7 +81,7 @@ public class BL_PLAYER {
             case TRAIL_PER_PLAYER:
                 if (!trailPerPlayer.containsKey(playerUUID)) {
                     trailPerPlayer
-                        .put(playerUUID, getPlayerStringSQL(playerUUID, type.getColumn()));
+                            .put(playerUUID, getPlayerStringSQL(playerUUID, type.getColumn()));
                 }
                 return trailPerPlayer.get(playerUUID);
             default:
@@ -106,8 +98,8 @@ public class BL_PLAYER {
      */
     private String getPlayerStringSQL(UUID playerUUID, String string) {
         String query =
-            "SELECT `" + string + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
-                + "'";
+                "SELECT `" + string + "` FROM `BL_PLAYER` WHERE `UUID` = '" + playerUUID.toString()
+                        + "'";
 
         try {
             rs = sql.executeQuery(query);
@@ -133,19 +125,21 @@ public class BL_PLAYER {
         boolean currentVal;
         switch (type) {
             case TRAIL_ENABLED_PER_PLAYER:
-                currentVal = getPlayerToggle(playerUUID, type);
+                currentVal = getPlayerToggle(playerUUID,type);
                 trailEnabledPerPlayer.put(playerUUID, !currentVal);
                 setPlayerToggleSQL(playerUUID, type);
                 break;
             case ROADBOOST_PER_PLAYER:
-                currentVal = getPlayerToggle(playerUUID, type);
+                currentVal = getPlayerToggle(playerUUID,type);
                 roadboostPerPlayer.put(playerUUID, !currentVal);
                 setPlayerToggleSQL(playerUUID, type);
                 break;
             case MUTE_PER_PLAYER:
-                currentVal = getPlayerToggle(playerUUID, type);
+                currentVal = getPlayerToggle(playerUUID,type);
                 mutePerPlayer.put(playerUUID, !currentVal);
                 setPlayerToggleSQL(playerUUID, type);
+                break;
+            default:
                 break;
         }
     }
@@ -161,14 +155,15 @@ public class BL_PLAYER {
 
         try {
             rs = sql.executeQuery(
-                "SELECT * FROM `" + toggle.getTable() + "` WHERE `UUID` = '" + playerUUID.toString()
-                    + "'");
+                    "SELECT * FROM `" + toggle.getTable() + "` WHERE `UUID` = '" + playerUUID.toString()
+                            + "'");
 
             if (rs.next()) {
                 query = "UPDATE `" + toggle.getTable() + "` SET `" + toggle.getColumn() + "` = '"
-                    + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
-                    + playerUUID + "'";
+                        + (getPlayerToggleSQL(playerUUID, toggle) ? 0 : 1) + "' WHERE `UUID` = '"
+                        + playerUUID.toString() + "'";
 
+                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
             } else {
                 insertNewPlayer(playerUUID);
@@ -192,11 +187,14 @@ public class BL_PLAYER {
                 trailPerPlayer.put(playerUUID, stringToSet);
                 setPlayerStringSQL(playerUUID, type, stringToSet);
                 break;
+            default:
+                break;
         }
     }
 
     /**
-     * SQL helper method for setPlayerString - sets the given string to the row corresponding to type.
+     * SQL helper method for setPlayerString - sets the given string to the row corresponding to
+     * type.
      *
      * @param playerUUID Player UUID we are modifying.
      * @param type       The Enum type
@@ -207,14 +205,14 @@ public class BL_PLAYER {
 
         try {
             rs = sql.executeQuery(
-                "SELECT * FROM `" + type.getTable() + "` WHERE `UUID` = '" + playerUUID.toString()
-                    + "'");
+                    "SELECT * FROM `" + type.getTable() + "` WHERE `UUID` = '" + playerUUID.toString()
+                            + "'");
 
             if (rs.next()) {
                 query = "UPDATE `" + type.getTable() + "` SET `" + type.getColumn() + "` = '"
-                    + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
+                        + newString + "' WHERE `UUID` = '" + playerUUID.toString() + "'";
 
-                BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+                Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
                 sql.executeUpdate(query);
             } else {
                 insertNewPlayer(playerUUID);
@@ -232,22 +230,10 @@ public class BL_PLAYER {
      */
     private void insertNewPlayer(UUID playerUUID) {
         String query =
-            "INSERT INTO `BL_PLAYER` (`UUID`) VALUES ('"
-                + playerUUID.toString() + "')";
+                "INSERT INTO `BL_PLAYER` (`UUID`) VALUES ('"
+                        + playerUUID.toString() + "')";
 
-        BetterLife.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
+        Main.doBukkitLog(ChatColor.LIGHT_PURPLE + query);
         sql.executeUpdate(query);
-    }
-
-    /**
-     * Sets up the cache for the given player uuid.
-     *
-     * @param playerUUID Player's UUID to cache.
-     */
-    public void setupPlayerConfig(UUID playerUUID) {
-        trailEnabledPerPlayer.put(playerUUID, getPlayerToggle(playerUUID, BL_PLAYER_ENUM.TRAIL_ENABLED_PER_PLAYER));
-        trailPerPlayer.put(playerUUID, getPlayerString(playerUUID, BL_PLAYER_ENUM.TRAIL_PER_PLAYER));
-        roadboostPerPlayer.put(playerUUID, getPlayerToggle(playerUUID, BL_PLAYER_ENUM.ROADBOOST_PER_PLAYER));
-        mutePerPlayer.put(playerUUID, getPlayerToggle(playerUUID, BL_PLAYER_ENUM.MUTE_PER_PLAYER));
     }
 }

@@ -1,48 +1,29 @@
 package me.gt3ch1.betterlife.eventhelpers;
 
-import me.gt3ch1.betterlife.main.BetterLife;
-import me.gt3ch1.betterlife.configuration.MainConfigurationHandler;
-import me.gt3ch1.betterlife.configuration.YamlConfigurationHandler;
+import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.commandhelpers.CommandUtils;
+import me.gt3ch1.betterlife.configuration.ConfigurationHelper;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import static me.gt3ch1.betterlife.commandhelpers.CommandUtils.sendMessage;
 
 /**
- * @author Starmism
+ * @author gt3ch1
+ * @author starmism
+ * @version 12/2/20
+ * Project betterlife
  */
-@Singleton
 public class PlayerTeleportHelper {
 
     private int checkerID;
     private int taskID;
-    private final BetterLife m;
-    private final YamlConfigurationHandler ch;
-
-    @Inject
-    public PlayerTeleportHelper(BetterLife m, MainConfigurationHandler ch) {
-        this.m = m;
-        this.ch = ch;
-    }
-
-    public void teleportPlayer(Player player, Location location, String home) {
-        teleportPlayerHelper(player, location, home, false);
-    }
-
-    public void teleportPlayer(Player player, Player otherPlayer) {
-        teleportPlayerHelper(player, otherPlayer.getLocation(), otherPlayer.getName(), false);
-    }
-
-    public void teleportPlayer(Player player, Location location, String home, boolean forceTeleport) {
-        teleportPlayerHelper(player, location, home, forceTeleport);
-    }
-
+    private Main m = Main.m;
+    private ConfigurationHelper ch = CommandUtils.ch;
 
     /**
      * Teleports the given player to the location.
@@ -51,16 +32,16 @@ public class PlayerTeleportHelper {
      * @param location Location to teleport player.
      * @param home     The name of the home (used for command output).
      */
-    private void teleportPlayerHelper(Player player, Location location, String home, boolean forceTeleport) {
+    public void teleportPlayer(Player player, Location location, String home) {
         int ticks = ch.getCustomConfig().getInt("home-countdown") * 20;
-        if (home != null) {
-            sendMessage(player, "&bTeleporting to &e" + home + "&b in &a" + ticks / 20 + "&b seconds...", true);
-        }
+
+        sendMessage(player, ChatColor.AQUA + "Teleporting to " + ChatColor.YELLOW +
+                home + ChatColor.AQUA + " in " + ChatColor.GREEN + ticks / 20 + ChatColor.AQUA + " seconds...", true);
 
         final Location initial = player.getLocation();
 
-        // Force teleport means instant teleport
-        if (forceTeleport) {
+        //BL-Test
+        if (Main.isTesting) {
             player.teleport(location);
             return;
         }
@@ -68,7 +49,7 @@ public class PlayerTeleportHelper {
         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
         BukkitTask task = scheduler.runTaskLater(m, () -> {
             player.teleport(location);
-            sendMessage(player, "&aTeleportation successful!", true);
+            sendMessage(player, ChatColor.RED + "Teleportation successful!", true);
         }, ticks);
 
         BukkitTask checker = scheduler.runTaskTimer(m, () -> {
@@ -81,7 +62,7 @@ public class PlayerTeleportHelper {
                 if (scheduler.isQueued(task.getTaskId())) {
                     cancelTask();
                     cancelChecker();
-                    sendMessage(player, "&4Teleportation cancelled.", true);
+                    sendMessage(player, ChatColor.DARK_RED + "Teleportation cancelled.", true);
                 }
             }
         }, 10, 10);
@@ -121,6 +102,7 @@ public class PlayerTeleportHelper {
         minZ = initial.getZ() - 0.5;
 
         return !(cur.getX() >= minX && cur.getX() <= maxX
-            && cur.getZ() >= minZ && cur.getZ() <= maxZ);
+                && cur.getZ() >= minZ && cur.getZ() <= maxZ);
     }
+
 }
