@@ -1,13 +1,10 @@
 package me.gt3ch1.betterlife.configuration;
 
-import me.gt3ch1.betterlife.Main.Main;
+import me.gt3ch1.betterlife.main.BetterLife;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -15,21 +12,21 @@ import java.nio.charset.StandardCharsets;
  *
  * @author gt3ch1
  */
-public class ConfigurationHelper {
+public abstract class YamlConfigurationHandler {
 
     private FileConfiguration customConfig = null;
     private File customConfigFile = null;
-    private String table;
     private String filename;
-    private Main m = Main.m;
+    private BetterLife m;
+
     /**
      * Creates a new configuration helper
-     * @param table SQL table/
+     *
      * @param filename File to be createad/writen to if not using SQL.
      */
-    public ConfigurationHelper(String table,String filename){
-        this.table = table;
+    protected YamlConfigurationHandler(String filename, BetterLife m) {
         this.filename = filename + ".yml";
+        this.m = m;
     }
 
     /**
@@ -42,39 +39,50 @@ public class ConfigurationHelper {
         }
         customConfig = YamlConfiguration.loadConfiguration(customConfigFile);
         Reader defConfigStream = null;
-
-        defConfigStream = new InputStreamReader(m.getResource(filename), StandardCharsets.UTF_8);
+        InputStream config = m.getResource(filename);
+        if (config != null) {
+            defConfigStream = new InputStreamReader(config, StandardCharsets.UTF_8);
+        }
 
         if (defConfigStream != null) {
-
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
             customConfig.setDefaults(defConfig);
-
         }
     }
 
     /**
-     * Returns the current instance of the player configuration
-     * file.
+     * Returns the current instance of the player configuration file.
      *
      * @return PlayerConfiguration
      */
     public FileConfiguration getCustomConfig() {
 
-        if (customConfig == null)
+        if (customConfig == null) {
             reloadCustomConfig();
+        }
 
         return customConfig;
     }
 
     /**
-     * Save the current state of the player configuration in to
-     * it's file.
+     * Returns the file used for the config.
+     * @return Config file
+     */
+    public File getFile() {
+        if (customConfigFile != null) {
+            return customConfigFile;
+        }
+        return null;
+    }
+
+    /**
+     * Save the current state of the player configuration in to it's file.
      */
     public void saveCustomConfig() {
 
-        if (customConfig == null || customConfigFile == null)
+        if (customConfig == null || customConfigFile == null) {
             return;
+        }
 
         try {
             getCustomConfig().save(customConfigFile);

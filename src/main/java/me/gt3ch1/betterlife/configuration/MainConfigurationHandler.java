@@ -1,12 +1,19 @@
 package me.gt3ch1.betterlife.configuration;
 
+import com.google.inject.Singleton;
+import me.gt3ch1.betterlife.main.BetterLife;
+
+import javax.inject.Inject;
+
 /**
  * This class handles the main configuration of the plugin.
  */
-public class MainConfigurationHandler extends ConfigurationHelper {
+@Singleton
+public class MainConfigurationHandler extends YamlConfigurationHandler {
 
-    public MainConfigurationHandler() {
-        super("config", "config");
+    @Inject
+    public MainConfigurationHandler(BetterLife m) {
+        super("config", m);
     }
 
 }

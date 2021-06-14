@@ -1,45 +1,39 @@
-main: me.gt3ch1.betterlife.Main.Main
+main: me.gt3ch1.betterlife.main.BetterLife
 name: BetterLife
-version: '0.5'
+version: '1.0'
 description: "Making running a Minecraft server a little more humane."
 authors: [Starmism, GT3CH1]
-api-version: '1.13'
-softdepend: [Vault]
+api-version: '1.17'
+depend: [Vault]
 commands:
     bl:
         description: The primary command for BetterLife
-        usage: "Usage: /bl [args]"
     eco:
         description: Various economy-related commands
-        usage: "Usage: /eco [ bal ]"
         permission: betterlife.eco
     home:
         description: Allows users to go home!
-        usage: "Usage: /home [ home ] or /home [ set / del ] [ home ]"
         permission: betterlife.home
     mute:
         description: Mutes a player
-        usage: "Usage: /mute [ player ]"
         permission: betterlife.mute
     roadboost:
         description: Toggles if you get speed 1 when you are over a defined road.
-        usage: "Usage: /roadboost"
         permission: betterlife.roadboost
+    teleport:
+        description: Teleports a player to another player.
+        permission: betterlife.teleport
     toggledownfall:
         description: Toggles whether or not it is storming
-        usage: "Usage: /toggledownfall"
         permission: betterlife.toggledownfall
     trail:
         description: Sets a fancy trail behind your player
-        usage: "Usage: /trail [ list | help | set ]"
         permission: betterlife.trail
-    unmute:
-        description: Unmutes a player
-        usage: "Usage: /unmute [ player ]"
-        permission: betterlife.unmute
+    spawn:
+        description: Teleport to the game's spawn point.
+        permission: betterlife.spawn
     warp:
         description: Teleports a player to a warp!
-        usage: "Usage: /warp <set, list, del> [ location ]"
         permission: betterlife.warp
 permissions:
     betterlife.eco.bal:
@@ -48,7 +42,13 @@ permissions:
         description: Allows player to see other players' current balance
         default: op
     betterlife.home:
-        description: Allows player to set a home
+        description: Allows player to go home
+        default: op
+    betterlife.home.set:
+        description: Allows player to go home, delete a home, and list homes.
+        default: op
+    betterlife.home.list.others:
+        description: Allows player to list others homes.
         default: op
     betterlife.mute:
         description: Allows muting of players.
@@ -59,6 +59,12 @@ permissions:
     betterlife.roadboost:
         description: Gain a speed 1 boost over paths.
         default: op
+    betterlife.teleport:
+        description: Teleports a player.
+        default: op
+    betterlife.teleport.others:
+        description: Teleports a player to other players.
+        default: op
     betterlife.toggledownfall:
         description: Toggles the weather
         default: op
@@ -68,14 +74,14 @@ permissions:
     betterlife.trail.toggle:
         description: Allows toggling of the trail.
         default: op
-    betterlife.trail.particle.*:
-        description: Allows access to every trail particle.
-        default: op
     betterlife.reload:
         description: Reloads the configuration files of betterlife
         default: op
-    betterlife.unmute:
-        description: Allows unmuting of players.
+    betterlife.spawn:
+        description: Allows players to teleport to spawn
+        default: op
+    betterlife.spawn.setspawn:
+        description: Allows a player to set the spawnpoint
         default: op
     betterlife.warp:
         description: Allows access to the /warp command
@@ -89,4 +95,3 @@ permissions:
     betterlife.warp.list:
         description: Allows players to list warps
         default: op
-    
